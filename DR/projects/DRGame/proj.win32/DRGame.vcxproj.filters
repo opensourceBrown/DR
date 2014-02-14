@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="win32">
+      <UniqueIdentifier>{84a8ebd7-7cf0-47f6-b75e-d441df67da40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\UI">
+      <UniqueIdentifier>{1f8989c1-2c51-4edb-828a-798958e26392}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Controller">
+      <UniqueIdentifier>{0d227d58-8d94-4100-9664-4bf99c89b4e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Managers">
+      <UniqueIdentifier>{95c31cb2-ecc5-4305-a820-f52b9e618337}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\UI\Scene">
+      <UniqueIdentifier>{19daf08b-f985-40c0-82be-11dc85151869}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\UI\Layer">
+      <UniqueIdentifier>{2e0f5ae8-c268-43ab-942e-0c462a4dba29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\UI\Base">
+      <UniqueIdentifier>{d07fdcb5-9f0b-4e22-8f80-6215acb3883c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\DataModel">
+      <UniqueIdentifier>{6e50969b-6f0b-4b24-97d4-14f2455b67a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\UI\Sprite">
+      <UniqueIdentifier>{ad365272-8f10-4de1-a8bf-7f03340cca88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Utils">
+      <UniqueIdentifier>{e96fe998-4248-4e64-9d46-cdec30985ce3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AppDelegate.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Controller\MainGameController.cpp">
+      <Filter>Classes\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\UI\Scene\MainGameScene.cpp">
+      <Filter>Classes\UI\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\DataModel\GeneralDataModel.cpp">
+      <Filter>Classes\DataModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Controller\BaseController.cpp">
+      <Filter>Classes\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\UI\Base\BaseScene.cpp">
+      <Filter>Classes\UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\UI\Base\BaseLayer.cpp">
+      <Filter>Classes\UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\UI\Layer\MainGameGridLayer.cpp">
+      <Filter>Classes\UI\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\UI\Sprite\GridCell.cpp">
+      <Filter>Classes\UI\Sprite</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main.h">
+      <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AppDelegate.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Controller\MainGameController.h">
+      <Filter>Classes\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UI\Scene\MainGameScene.h">
+      <Filter>Classes\UI\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\DataModel\GeneralDataModel.h">
+      <Filter>Classes\DataModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Controller\BaseController.h">
+      <Filter>Classes\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UI\Base\BaseScene.h">
+      <Filter>Classes\UI\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UI\Base\BaseLayer.h">
+      <Filter>Classes\UI\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UI\Layer\MainGameGridLayer.h">
+      <Filter>Classes\UI\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameConstant.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UI\Sprite\GridCell.h">
+      <Filter>Classes\UI\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Utils\Functions.h">
+      <Filter>Classes\Utils</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
