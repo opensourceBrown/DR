@@ -11,3 +11,7 @@
 *.lai
 *.la
 *.a
+
+*.xcuserstate
+
+DR/projects/DRGame/proj.ios/DRGame.xcodeproj/project.xcworkspace/xcuserdata/SJKP.xcuserdatad/UserInterfaceState.xcuserstate

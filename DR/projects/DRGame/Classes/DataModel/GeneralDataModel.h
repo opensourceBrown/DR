@@ -57,7 +57,7 @@ typedef enum{
 }MagicType;
 	
 //定义魔法的结构
-typedef struc{
+typedef struct{
 	MagicType				mMagicType;
 	unsigned int			mID;
 	unsigned int			mCDTime;
@@ -129,7 +129,7 @@ typedef struct{
 
 //定义怪结构
 typedef struct{
-	BustyType			mType;
+	BustyType               mType;
 	BossBustyType			mSkillType;
 	unsigned int			mID;
 	char					mName[GENERAL_CHAR_LENGTH];
@@ -141,8 +141,9 @@ typedef struct{
 
 //定义关卡结构
 typedef struct{
-
-};
+    unsigned int            mID;
+    
+}GameStageProperty;
 
 class GeneralDataModel : public CCObject
 {
