@@ -33,3 +33,18 @@ void MainGameGridLayer::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
 {
 
 }
+
+void  MainGameGridLayer::constructUI()
+{
+
+}
+
+void MainGameGridLayer::updateGridCell()
+{
+
+}
+
+void MainGameGridLayer::moveGridCellAnimation(unsigned int pIdx)
+{
+
+}

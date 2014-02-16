@@ -29,6 +29,8 @@ private:
 	//判断滑动过程中的元素是否可以相连
 	bool judgeElementsCanConnected();
 
+
+
 	
 private:
 	unsigned int			mCoins;						//每一关卡(stage）累计的金币
@@ -40,6 +42,7 @@ private:
 	
 	CCArray					*mMagicInStage;				//当前关卡中可以使用的魔法
 	CCArray					*mStageConnectedElements;	//每一回合中已经相连的元素（按顺序存储元素的类型和对应cell的标识，可加可删）
+	CCArray					*mGridCellContainer;
 	
 
 private:

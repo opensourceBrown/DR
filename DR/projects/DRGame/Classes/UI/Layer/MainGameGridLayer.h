@@ -12,6 +12,12 @@ public:
     virtual void onEnter();
 	virtual void onExit();
 
+	void constructUI();
+	void updateGridCell();
+
+private:
+	void moveGridCellAnimation(unsigned int pIdx);				//ÏÂÒÆcell¶¯»­
+
 	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
 	virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
 	virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
@@ -19,6 +25,8 @@ public:
 
 private:
 	CCLayerColor				*m_containerLayer;
+	CCArray					*m_GridCellArray;
+
 };
 
 #endif
