@@ -18,5 +18,5 @@ public:
 
 private:
 	BaseController		*m_delegate;
-}
+};
 #endif
