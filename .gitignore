@@ -11,3 +11,17 @@
 *.lai
 *.la
 *.a
+
+DR/cocos2dx/proj.ios/cocos2dx.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+
+DR/cocos2dx/proj.ios/cocos2dx.xcodeproj/project.xcworkspace/xcuserdata/magic.xcuserdatad/UserInterfaceState.xcuserstate
+
+DR/cocos2dx/proj.ios/cocos2dx.xcodeproj/xcuserdata/magic.xcuserdatad/xcschemes/cocos2dx.xcscheme
+
+DR/cocos2dx/proj.ios/cocos2dx.xcodeproj/xcuserdata/magic.xcuserdatad/xcschemes/xcschememanagement.plist
+
+DR/projects/DRGame/proj.ios/DRGame.xcodeproj/project.xcworkspace/xcuserdata/magic.xcuserdatad/UserInterfaceState.xcuserstate
+
+DR/projects/DRGame/proj.ios/DRGame.xcodeproj/xcuserdata/magic.xcuserdatad/xcschemes/DRGame.xcscheme
+
+DR/projects/DRGame/proj.ios/DRGame.xcodeproj/xcuserdata/magic.xcuserdatad/xcschemes/xcschememanagement.plist
