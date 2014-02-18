@@ -19,8 +19,8 @@ public:
 	GridCell();
 	virtual ~GridCell();
 
-	//设置cell的索引，rIdx:行索引，vIdx:列索引
 	void setCellIndex(GIRDCELL_INDEX pIndex,GRIDINDEX_TYPE pType=kGRIDINDEX_TYPE_DEFAULT);
+
 	GIRDCELL_INDEX getCellIndex(GRIDINDEX_TYPE pType);
     void setCellElementType(ElementType pType=kElementType_Posion);
 

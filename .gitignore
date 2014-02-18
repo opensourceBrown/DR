@@ -10,8 +10,18 @@
 # Compiled Static libraries
 *.lai
 *.la
-*.a
+*.xcuserstate
+
+*.xcworkspacedata
+
+*.xcscheme
+
+*.plist
+
+*.xccheckout
 
 *.xcuserstate
 
-DR/projects/DRGame/proj.ios/DRGame.xcodeproj/project.xcworkspace/xcuserdata/SJKP.xcuserdatad/UserInterfaceState.xcuserstate
+*.xcuserstate
+
+DR/projects/DRGame/Classes/UI/Base/BaseScene.h

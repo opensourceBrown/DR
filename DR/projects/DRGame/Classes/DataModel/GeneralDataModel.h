@@ -6,25 +6,24 @@
 
 USING_NS_CC;
 
+//å®šä¹‰é€šç”¨æ•°æ®æ¨¡å‹
 
-//¶¨ÒåÍ¨ÓÃÊı¾İÄ£ĞÍ
-
-//¶¨ÒåÓÎÏ·Ïû³ıÔªËØÀàĞÍ
+//å®šä¹‰æ¸¸æˆæ¶ˆé™¤å…ƒç´ ç±»å‹
 typedef enum{
-    kElementType_Monster=0,					//¹Ö
-    kElementType_Sword,						//½£
-    kElementType_Bow,						//¹­
-    kElementType_Coin,						//½ğ±Ò
-    kElementType_Posion,					//ÑªÆ¿
+    kElementType_Monster=0,					//æ€ª
+    kElementType_Sword,						//å‰‘
+    kElementType_Bow,						//å¼“
+    kElementType_Coin,						//é‡‘å¸
+    kElementType_Posion,					//è¡€ç“¶
 }ElementType;
 
-//¶¨Òå¹ÖÀàĞÍ
+//å®šä¹‰æ€ªç±»å‹
 typedef enum{
-    kBustyType_Common=0,              	   //ÆÕÍ¨¹Ö
-    kBustyType_Boss,                  	   //boss¹Ö
+    kBustyType_Common=0,              	   //æ™®é€šæ€ª
+    kBustyType_Boss,                  	   //bossæ€ª
 }BustyType;
 
-//¶¨Òåboss¹ÖµÄÀàĞÍ
+//å®šä¹‰bossæ€ªçš„ç±»å‹
 typedef enum{
     kBossBustyType_Chaotic=0,
     kBossBustyType_Poisonous,
@@ -42,7 +41,7 @@ typedef enum{
     kBossBustyType_Kamikaze,
 }BossBustyType;
 
-//¶¨ÒåÄ§·¨ÀàĞÍ
+//å®šä¹‰é­”æ³•ç±»å‹
 typedef enum{
     kMagicType_Steal=0,
     kMagicType_Fireball,
@@ -56,78 +55,78 @@ typedef enum{
     kMagicType_Heal,
 }MagicType;
 	
-//¶¨ÒåÄ§·¨µÄ½á¹¹
+//å®šä¹‰é­”æ³•çš„ç»“æ„
 typedef struct{
 	MagicType				mMagicType;
 	unsigned int			mID;
 	unsigned int			mCDTime;
 }MagicProperty;
 
-//¶¨ÒåÖ°ÒµÀàĞÍ
+//å®šä¹‰èŒä¸šç±»å‹
 typedef enum{
-    kOccupationType_Human=0,					//ÈËÀà
-    kOccupationType_Bower,						//¹­ÊÖ
-    kOccupationType_Hunter,						//ÁÔÈË
-    kOccupationType_Master,						//·¨Ê¦
-    kOccupationType_Barbarian,					//Âù×å
-    kOccupationType_Assassin,					//°µÉ±Õß
-    kOccupationType_Soldier,					//Õ½Ê¿
-    kOccupationType_Paladin,					//Ê¥ÆïÊ¿
-    kOccupationType_Trader,						//ÉÌÈË
+    kOccupationType_Human=0,					//äººç±»
+    kOccupationType_Bower,						//å¼“æ‰‹
+    kOccupationType_Hunter,						//çŒäºº
+    kOccupationType_Master,						//æ³•å¸ˆ
+    kOccupationType_Barbarian,					//è›®æ—
+    kOccupationType_Assassin,					//æš—æ€è€…
+    kOccupationType_Soldier,					//æˆ˜å£«
+    kOccupationType_Paladin,					//åœ£éª‘å£«
+    kOccupationType_Trader,						//å•†äºº
 }OccupationType;
 
-//¶¨Òå×°±¸½á¹¹
+//å®šä¹‰è£…å¤‡ç»“æ„
 typedef struct{
-	char mName[GENERAL_CHAR_LENGTH];			//×°±¸Ãû³Æ
-	unsigned char mLevel;						//¼¶±ğ
-	unsigned int mCoin;							//¸Ã×°±¸ËùĞèµÄ½ğ±Ò
-	unsigned int mPay;							//¹ºÂò»òÉı¼¶µ½¸Ã×°±¸ËùĞèÒªµÄÖ§¸¶·ÑÓÃ
-	unsigned int mCompositeExperience;			//ºÏ³É¸Ã×°±¸Ê±ĞèÒªµÄ¾­ÑéÖµ
-	unsigned int mUpdateExperience;				//Éı¼¶¸Ã×°±¸Ê±ĞèÒªµÄ¾­ÑéÖµ
-	unsigned int mUpdatePreWeapon;				//Éı¼¶Ç°Ò»¸ö×°±¸
-	unsigned int mMaxHealth;					//×î´óÉúÃüÖµ
-	unsigned int mDefencePerShield;				//Ã¿¸ö¶ÜµÄ·ÀÓùÁ¦
-	unsigned int mMaxShield;					//×î¶à³ÖÓĞ¶ÜÊı
-	unsigned char mHealthPerPotion;				//Ã¿¸öÑ©Æ¿µÄ»Ö¸´Öµ
-	unsigned char mBasicDamage;					//»ù±¾¹¥»÷Á¦
-	unsigned char mWeaponDamage;				//ÎäÆ÷¹¥»÷Á¦
-	float 	mLeech;								//ÎüÑª£¬Í¨¹ı¹¥»÷¿ÉÒÔ»Ö¸´µÄÑªÁ¿
-	float 	mCriticalDamageRate;				//±©»÷¸ÅÂÊ
-	float	mPierce;							//´©Í¸ÂÊ
+	char mName[GENERAL_CHAR_LENGTH];			//è£…å¤‡åç§°
+	unsigned char mLevel;						//çº§åˆ«
+	unsigned int mCoin;							//è¯¥è£…å¤‡æ‰€éœ€çš„é‡‘å¸
+	unsigned int mPay;							//è´­ä¹°æˆ–å‡çº§åˆ°è¯¥è£…å¤‡æ‰€éœ€è¦çš„æ”¯ä»˜è´¹ç”¨
+	unsigned int mCompositeExperience;			//åˆæˆè¯¥è£…å¤‡æ—¶éœ€è¦çš„ç»éªŒå€¼
+	unsigned int mUpdateExperience;				//å‡çº§è¯¥è£…å¤‡æ—¶éœ€è¦çš„ç»éªŒå€¼
+	unsigned int mUpdatePreWeapon;				//å‡çº§å‰ä¸€ä¸ªè£…å¤‡
+	unsigned int mMaxHealth;					//æœ€å¤§ç”Ÿå‘½å€¼
+	unsigned int mDefencePerShield;				//æ¯ä¸ªç›¾çš„é˜²å¾¡åŠ›
+	unsigned int mMaxShield;					//æœ€å¤šæŒæœ‰ç›¾æ•°
+	unsigned char mHealthPerPotion;				//æ¯ä¸ªé›ªç“¶çš„æ¢å¤å€¼
+	unsigned char mBasicDamage;					//åŸºæœ¬æ”»å‡»åŠ›
+	unsigned char mWeaponDamage;				//æ­¦å™¨æ”»å‡»åŠ›
+	float 	mLeech;								//å¸è¡€ï¼Œé€šè¿‡æ”»å‡»å¯ä»¥æ¢å¤çš„è¡€é‡
+	float 	mCriticalDamageRate;				//æš´å‡»æ¦‚ç‡
+	float	mPierce;							//ç©¿é€ç‡
 }EquipmentProperty;
 
-//¶¨ÒåÖ°Òµ½á¹¹
+//å®šä¹‰èŒä¸šç»“æ„
 typedef struct{
-	char mName[GENERAL_CHAR_LENGTH];			//Ö°ÒµÃû³Æ
-	unsigned char mLevel;						//¼¶±ğ
-	unsigned int mCoin;							//¸ÃÖ°ÒµËùĞèµÄ½ğ±Ò
-	unsigned int mPay;							//¹ºÂò»òÉı¼¶µ½¸ÃÖ°ÒµËùĞèÒªµÄÖ§¸¶·ÑÓÃ
-	unsigned int mMaxHealth;					//×î´óÉúÃüÖµ
-	unsigned int mDefencePerShield;				//Ã¿¸ö¶ÜµÄ·ÀÓùÁ¦
-	unsigned int mMaxShield;					//×î¶à³ÖÓĞ¶ÜÊı
-	unsigned char mHealthPerPotion;				//Ã¿¸öÑ©Æ¿µÄ»Ö¸´Öµ
-	unsigned char mBasicDamage;					//»ù±¾¹¥»÷Á¦
-	unsigned char mWeaponDamage;				//ÎäÆ÷¹¥»÷Á¦
-	float 	mLeech;								//ÎüÑª£¬Í¨¹ı¹¥»÷¿ÉÒÔ»Ö¸´µÄÑªÁ¿
-	float 	mCriticalDamageRate;				//±©»÷¸ÅÂÊ
-	float	mPierce;							//´©Í¸ÂÊ
+	char mName[GENERAL_CHAR_LENGTH];			//èŒä¸šåç§°
+	unsigned char mLevel;						//çº§åˆ«
+	unsigned int mCoin;							//è¯¥èŒä¸šæ‰€éœ€çš„é‡‘å¸
+	unsigned int mPay;							//è´­ä¹°æˆ–å‡çº§åˆ°è¯¥èŒä¸šæ‰€éœ€è¦çš„æ”¯ä»˜è´¹ç”¨
+	unsigned int mMaxHealth;					//æœ€å¤§ç”Ÿå‘½å€¼
+	unsigned int mDefencePerShield;				//æ¯ä¸ªç›¾çš„é˜²å¾¡åŠ›
+	unsigned int mMaxShield;					//æœ€å¤šæŒæœ‰ç›¾æ•°
+	unsigned char mHealthPerPotion;				//æ¯ä¸ªé›ªç“¶çš„æ¢å¤å€¼
+	unsigned char mBasicDamage;					//åŸºæœ¬æ”»å‡»åŠ›
+	unsigned char mWeaponDamage;				//æ­¦å™¨æ”»å‡»åŠ›
+	float 	mLeech;								//å¸è¡€ï¼Œé€šè¿‡æ”»å‡»å¯ä»¥æ¢å¤çš„è¡€é‡
+	float 	mCriticalDamageRate;				//æš´å‡»æ¦‚ç‡
+	float	mPierce;							//ç©¿é€ç‡
 }OccupationProperty;
 
-//¶¨ÒåÍæ¼Ò½á¹¹
+//å®šä¹‰ç©å®¶ç»“æ„
 typedef struct{
-	unsigned int mMaxHealth;					//×î´óÉúÃüÖµ
-	unsigned int mDefencePerShield;				//Ã¿¸ö¶ÜµÄ·ÀÓùÁ¦
-	unsigned int mMaxShield;					//×î¶à³ÖÓĞ¶ÜÊı
-	unsigned char mHealthPerPotion;				//Ã¿¸öÑ©Æ¿µÄ»Ö¸´Öµ
-	unsigned char mBasicDamage;					//»ù±¾¹¥»÷Á¦
-	unsigned char mWeaponDamage;				//ÎäÆ÷¹¥»÷Á¦
-	float 	mLeech;								//ÎüÑª£¬Í¨¹ı¹¥»÷¿ÉÒÔ»Ö¸´µÄÑªÁ¿
-	float 	mCriticalDamageRate;				//±©»÷¸ÅÂÊ
-	float	mPierce;							//´©Í¸ÂÊ
+	unsigned int mMaxHealth;					//æœ€å¤§ç”Ÿå‘½å€¼
+	unsigned int mDefencePerShield;				//æ¯ä¸ªç›¾çš„é˜²å¾¡åŠ›
+	unsigned int mMaxShield;					//æœ€å¤šæŒæœ‰ç›¾æ•°
+	unsigned char mHealthPerPotion;				//æ¯ä¸ªé›ªç“¶çš„æ¢å¤å€¼
+	unsigned char mBasicDamage;					//åŸºæœ¬æ”»å‡»åŠ›
+	unsigned char mWeaponDamage;				//æ­¦å™¨æ”»å‡»åŠ›
+	float 	mLeech;								//å¸è¡€ï¼Œé€šè¿‡æ”»å‡»å¯ä»¥æ¢å¤çš„è¡€é‡
+	float 	mCriticalDamageRate;				//æš´å‡»æ¦‚ç‡
+	float	mPierce;							//ç©¿é€ç‡
 	
 }PlayerProperty;
 
-//¶¨Òå¹Ö½á¹¹
+//å®šä¹‰æ€ªç»“æ„
 typedef struct{
 	BustyType               mType;
 	BossBustyType			mSkillType;
@@ -139,7 +138,7 @@ typedef struct{
 	unsigned int			mPotion;
 }BustyProperty;
 
-//¶¨Òå¹Ø¿¨½á¹¹
+//å®šä¹‰å…³å¡ç»“æ„
 typedef struct{
     unsigned int             mID;					//¹Ø¿¨id
 
