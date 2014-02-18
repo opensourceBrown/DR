@@ -13,14 +13,14 @@ public:
 	GridCell();
 	virtual ~GridCell();
 
-	//ÉèÖÃcellµÄË÷Òý£¬rIdx:ÐÐË÷Òý£¬vIdx:ÁÐË÷Òý
+	//è®¾ç½®cellçš„ç´¢å¼•ï¼ŒrIdx:è¡Œç´¢å¼•ï¼ŒvIdx:åˆ—ç´¢å¼•
 	void setCellIndex(GIRDCELL_INDEX pIndex,GRIDINDEX_TYPE pType);
 	GIRDCELL_INDEX getCellIndex(GRIDINDEX_TYPE pType);
 
 private:
-	GIRDCELL_INDEX		m_index;					//×ÔÉíµÄË÷Òý£ºÄ¬ÈÏÎª£¨0£¬0£©
-	GIRDCELL_INDEX		m_nextIndex;				//Á¬½ÓÏÂÒ»¸öcellµÄË÷Òý£ºÄ¬ÈÏÎª£¨0£¬0£©
-	GIRDCELL_INDEX		m_preIndex;				//Á¬½ÓÉÏÒ»¸öcellµÄË÷Òý£ºÄ¬ÈÏÎª£¨0£¬0£©
+	GIRDCELL_INDEX		m_index;					//è‡ªèº«çš„ç´¢å¼•ï¼šé»˜è®¤ä¸ºï¼ˆ0ï¼Œ0ï¼‰
+	GIRDCELL_INDEX		m_nextIndex;				//è¿žæŽ¥ä¸‹ä¸€ä¸ªcellçš„ç´¢å¼•ï¼šé»˜è®¤ä¸ºï¼ˆ0ï¼Œ0ï¼‰
+	GIRDCELL_INDEX		m_preIndex;                 //è¿žæŽ¥ä¸Šä¸€ä¸ªcellçš„ç´¢å¼•ï¼šé»˜è®¤ä¸ºï¼ˆ0ï¼Œ0ï¼‰
 
 };
 
