@@ -27,6 +27,11 @@ bool BaseLayer::initWithDelegate(BaseController *pDelegate)
 	return tRet;
 }
 
+void BaseLayer::setDelegate(BaseController *pDelegate)
+{
+	m_delegate=pDelegate;
+}
+
 void BaseLayer::onEnter()
 {
 	CCLayer::onEnter();

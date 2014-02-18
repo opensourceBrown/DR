@@ -14,6 +14,8 @@
 #define GRID_ROW_COUNT					6						//游戏界面网格的行数
 #define GRID_VOLUME_COUNT				6						//游戏界面网格的列数
 
+#define WIN_SIZE			CCDirector::sharedDirector()->getWinSize()
+
 //定义网格cell的索引类型
 enum GRIDINDEX_TYPE{
 	kGRIDINDEX_TYPE_DEFAULT=0,									//自身

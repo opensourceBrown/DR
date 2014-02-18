@@ -141,8 +141,14 @@ typedef struct{
 
 //定义关卡结构
 typedef struct{
-    unsigned int            mID;
-    
+    unsigned int             mID;					//关卡id
+
+	float					mCommMosterRate;		//普通怪出现的概率
+	float					mCoinRate;			//金币出现的概率
+	float					mPotionRate;			//血瓶出现的概率
+	float					mBossMosterRate;		//boss怪出现的概率
+	float					mShieldRate;			//盾出现的概率
+	unsigned int				mPassCondID;			//关卡通过条件的id
 }GameStageProperty;
 
 class GeneralDataModel : public CCObject

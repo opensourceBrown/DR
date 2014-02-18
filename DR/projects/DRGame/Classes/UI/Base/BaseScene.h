@@ -15,8 +15,9 @@ public:
 	~BaseScene(){}
 
 	bool initWithDelegate(BaseController *pDelegate);
+	void setDelegate(BaseController *pDelegate);
 
-private:
+public:
 	BaseController		*m_delegate;
-}
+};
 #endif

@@ -14,3 +14,7 @@ bool BaseScene::initWithDelegate(BaseController *pDelegate)
 	return tRet;
 }
 
+void BaseScene::setDelegate(BaseController *pDelegate)
+{
+	m_delegate=pDelegate;
+}

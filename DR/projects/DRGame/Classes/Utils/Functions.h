@@ -1,13 +1,13 @@
 #ifndef _FUNCTION_H_
 #define _FUNCTION_H_
-
+/*
 //网格cell的索引结构及相关方法
 typedef struct{
 	unsigned int		rIndex;			//行索引：起始值为1
 	unsigned int		vIndex;			//列索引：起始值为1
 }GIRDCELL_INDEX;	
 
-/*
+
 GIRDCELL_INDEX GridCellIndexMake(unsigned int a,unsigned int b)
 {
 	GIRDCELL_INDEX tIndex;
@@ -15,15 +15,6 @@ GIRDCELL_INDEX GridCellIndexMake(unsigned int a,unsigned int b)
 	tIndex.vIndex=b;
 	return tIndex;
 }
-
-GIRDCELL_INDEX GridCellIndexCopy(GIRDCELL_INDEX idx)
-{
-	GIRDCELL_INDEX tIndex;
-	tIndex.rIndex=idx.rIndex;
-	tIndex.vIndex=idx.vIndex;
-	return tIndex;
-}
-*/
 
 bool IsEqualGridCellIndexs(GIRDCELL_INDEX a,GIRDCELL_INDEX b)
 {
@@ -33,5 +24,6 @@ bool IsEqualGridCellIndexs(GIRDCELL_INDEX a,GIRDCELL_INDEX b)
 	}
 	return isEqual;
 }
+ */
 
 #endif

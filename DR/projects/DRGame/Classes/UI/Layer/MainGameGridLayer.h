@@ -2,6 +2,7 @@
 #define __MAINGAME_GRID_LAYER_H__
 
 #include "BaseLayer.h"
+#include "GeneralDataModel.h"
 
 class MainGameGridLayer : public BaseLayer
 {

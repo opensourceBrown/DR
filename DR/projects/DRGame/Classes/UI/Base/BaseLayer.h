@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "BaseController.h"
 #include "GameConstant.h"
+#include "Functions.h"
 
 USING_NS_CC;
 
@@ -17,6 +18,7 @@ public:
 	virtual void onExit();
 
 	bool initWithDelegate(BaseController *pDelegate);
+	void setDelegate(BaseController *pDelegate);
 
 	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
 	virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
@@ -26,7 +28,7 @@ public:
 private:
 	bool init();
 
-private:
+public:
 	BaseController		*m_delegate;
 
 };
