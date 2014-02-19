@@ -16,12 +16,12 @@ MainGameController::~MainGameController()
 
 bool MainGameController::judgeGameIsEnd()
 {
-	
+	return true;
 }
 
 bool MainGameController::judgeConnectedElementsCanClear()
 {
-	
+	return true;
 }
 
 //Éú³Égrid cell
