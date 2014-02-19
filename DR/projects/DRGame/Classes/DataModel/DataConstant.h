@@ -13,7 +13,7 @@
 typedef enum{
     kElementType_Monster=0,					//怪
     kElementType_Sword,						//剑
-    kElementType_Bow,						//弓
+//    kElementType_Bow,						//弓
     kElementType_Coin,						//金币
     kElementType_Medicine,					//血瓶
 }ElementType;

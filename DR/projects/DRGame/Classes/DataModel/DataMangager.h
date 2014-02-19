@@ -10,8 +10,11 @@
 #define __DRGame__DataMangager__
 
 #include <iostream>
+#include "cocos2d.h"
 
-class DataManager
+USING_NS_CC;
+
+class DataManager : public CCObject
 {
     
 private:
