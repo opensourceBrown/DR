@@ -2,25 +2,25 @@
 #define _GAME_CONSTANT_H_
 
 
-//¶¨ÒåÓÎÏ·³£Á¿
-#define GENERAL_CHAR_LENGTH			128						//Í¨ÓÃ×Ö·ûÊý×é³¤¶È
+//å®šä¹‰æ¸¸æˆå¸¸é‡
+#define GENERAL_CHAR_LENGTH			128						//é€šç”¨å­—ç¬¦æ•°ç»„é•¿åº¦
 
-//¶¨Òå´¥ÃþÊÂ¼þÏìÓ¦ÓÅÏÈ¼¶
+//å®šä¹‰è§¦æ‘¸äº‹ä»¶å“åº”ä¼˜å…ˆçº§
 #define TOUCH_EVENT_PRIORITY_DEFAULT	128
 #define TOUCH_EVENT_PRIORITY_MID		256
 #define TOUCH_EVENT_PRIORITY_TOP		512
 
-//¶¨ÒåÓÎÏ·½çÃæÍø¸ñµÄÐÐÊýºÍÁÐÊý
-#define GRID_ROW_COUNT					6						//ÓÎÏ·½çÃæÍø¸ñµÄÐÐÊý
-#define GRID_VOLUME_COUNT				6						//ÓÎÏ·½çÃæÍø¸ñµÄÁÐÊý
+//å®šä¹‰æ¸¸æˆç•Œé¢ç½‘æ ¼çš„è¡Œæ•°å’Œåˆ—æ•°
+#define GRID_ROW_COUNT					6						//æ¸¸æˆç•Œé¢ç½‘æ ¼çš„è¡Œæ•°
+#define GRID_VOLUME_COUNT				6						//æ¸¸æˆç•Œé¢ç½‘æ ¼çš„åˆ—æ•°
 
 #define WIN_SIZE			CCDirector::sharedDirector()->getWinSize()
 
-//¶¨ÒåÍø¸ñcellµÄË÷ÒýÀàÐÍ
+//å®šä¹‰ç½‘æ ¼cellçš„ç´¢å¼•ç±»åž‹
 enum GRIDINDEX_TYPE{
-	kGRIDINDEX_TYPE_DEFAULT=0,									//×ÔÉí
-	kGRIDINDEX_TYPE_NEXT,										//ÏÂÒ»¸ö
-	kGRIDINDEX_TYPE_PRE,										//ÏÂÒ»¸ö
+	kGRIDINDEX_TYPE_DEFAULT=0,									//è‡ªèº«
+	kGRIDINDEX_TYPE_NEXT,										//ä¸‹ä¸€ä¸ª
+	kGRIDINDEX_TYPE_PRE,										//ä¸‹ä¸€ä¸ª
 };
 
 

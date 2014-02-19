@@ -3,14 +3,15 @@
 
 #include "cocos2d.h"
 #include "GameConstant.h"
+#include "DataConstant.h"
 #include "Functions.h"
 #include "GeneralDataModel.h"
 
 USING_NS_CC;
 
 typedef struct{
-	unsigned int		rIndex;			//ĞĞË÷Òı£ºÆğÊ¼ÖµÎª1
-	unsigned int		vIndex;			//ÁĞË÷Òı£ºÆğÊ¼ÖµÎª1
+	unsigned int		rIndex;			//â€“â€“Ã€Ëœâ€œËÂ£âˆ«âˆ†ï£¿Â ÂºÃ·ÂµÅ’â„¢1
+	unsigned int		vIndex;			//Â¡â€“Ã€Ëœâ€œËÂ£âˆ«âˆ†ï£¿Â ÂºÃ·ÂµÅ’â„¢1
 }GIRDCELL_INDEX;
 
 class GridCell : public CCSprite
@@ -22,12 +23,12 @@ public:
 	void setCellIndex(GIRDCELL_INDEX pIndex,GRIDINDEX_TYPE pType=kGRIDINDEX_TYPE_DEFAULT);
 
 	GIRDCELL_INDEX getCellIndex(GRIDINDEX_TYPE pType);
-    void setCellElementType(ElementType pType=kElementType_Posion);
+    void setCellElementType(ElementType pType=kElementType_Medicine);
 
 private:
-	GIRDCELL_INDEX		m_index;					//×ÔÉíµÄË÷Òı£ºÄ¬ÈÏÎª£¨0£¬0£©
-	GIRDCELL_INDEX		m_nextIndex;				//Á¬½ÓÏÂÒ»¸öcellµÄË÷Òı£ºÄ¬ÈÏÎª£¨0£¬0£©
-	GIRDCELL_INDEX		m_preIndex;				//Á¬½ÓÉÏÒ»¸öcellµÄË÷Òı£ºÄ¬ÈÏÎª£¨0£¬0£©
+	GIRDCELL_INDEX		m_index;					//â—Šâ€˜â€¦ÃŒÂµÆ’Ã€Ëœâ€œËÂ£âˆ«Æ’Â¨Â»Å“Å’â„¢Â£Â®0Â£Â¨0Â£Â©
+	GIRDCELL_INDEX		m_nextIndex;				//Â¡Â¨Î©â€Å“Â¬â€œÂªâˆË†cellÂµÆ’Ã€Ëœâ€œËÂ£âˆ«Æ’Â¨Â»Å“Å’â„¢Â£Â®0Â£Â¨0Â£Â©
+	GIRDCELL_INDEX		m_preIndex;				//Â¡Â¨Î©â€â€¦Å“â€œÂªâˆË†cellÂµÆ’Ã€Ëœâ€œËÂ£âˆ«Æ’Â¨Â»Å“Å’â„¢Â£Â®0Â£Â¨0Â£Â©
     
     ElementType         m_type;
 

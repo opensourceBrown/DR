@@ -11,9 +11,6 @@
 
 #include <iostream>
 
-#endif /* defined(__DRGame__DataMangager__) */
-
-
 class DataManager
 {
     
@@ -24,3 +21,5 @@ private:
 public:
     static DataManager *sharedInstance(void);
 };
+
+#endif /* defined(__DRGame__DataMangager__) */

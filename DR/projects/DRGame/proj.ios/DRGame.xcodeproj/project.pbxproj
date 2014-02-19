@@ -598,6 +598,7 @@
 		302F91E918B471DF0091D479 /* DataMangager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataMangager.h; sourceTree = "<group>"; };
 		305ACA5918B1CB5300A38B3D /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libwebsockets.a; sourceTree = "<group>"; };
 		305ACA5B18B1CD8200A38B3D /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcurl.a; sourceTree = "<group>"; };
+		30DFE5F718B49A1A005F89C2 /* DataConstant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataConstant.h; sourceTree = "<group>"; };
 		373B911F18788FB000198F86 /* CCComBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCComBase.h; sourceTree = "<group>"; };
 		375BD4BB1868411B0024609E /* ObjectFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectFactory.cpp; sourceTree = "<group>"; };
 		375BD4BC1868411B0024609E /* ObjectFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectFactory.h; sourceTree = "<group>"; };
@@ -1766,6 +1767,7 @@
 		9CD09CD218AAFB4600882D50 /* DataModel */ = {
 			isa = PBXGroup;
 			children = (
+				30DFE5F718B49A1A005F89C2 /* DataConstant.h */,
 				302F91E818B471DF0091D479 /* DataMangager.cpp */,
 				302F91E918B471DF0091D479 /* DataMangager.h */,
 				9CD09CD318AAFB4600882D50 /* GeneralDataModel.cpp */,
