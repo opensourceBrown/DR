@@ -593,6 +593,7 @@
 		1D6058910D05DD3D006BFB54 /* DRGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DRGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		302BEAEB18B4800000B59235 /* BaseScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseScene.h; sourceTree = "<group>"; };
 		302F91E818B471DF0091D479 /* DataMangager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DataMangager.cpp; sourceTree = "<group>"; };
 		302F91E918B471DF0091D479 /* DataMangager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataMangager.h; sourceTree = "<group>"; };
 		305ACA5918B1CB5300A38B3D /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libwebsockets.a; sourceTree = "<group>"; };
@@ -734,7 +735,6 @@
 		9CD09CD818AAFB5000882D50 /* BaseLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BaseLayer.cpp; sourceTree = "<group>"; };
 		9CD09CD918AAFB5000882D50 /* BaseLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseLayer.h; sourceTree = "<group>"; };
 		9CD09CDA18AAFB5000882D50 /* BaseScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BaseScene.cpp; sourceTree = "<group>"; };
-		9CD09CDB18AAFB5000882D50 /* BaseScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseScene.h; sourceTree = "<group>"; };
 		9CD09CDD18AAFB5000882D50 /* MainGameGridLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainGameGridLayer.cpp; sourceTree = "<group>"; };
 		9CD09CDE18AAFB5000882D50 /* MainGameGridLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainGameGridLayer.h; sourceTree = "<group>"; };
 		9CD09CE018AAFB5000882D50 /* MainGameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainGameScene.cpp; sourceTree = "<group>"; };
@@ -1790,10 +1790,10 @@
 		9CD09CD718AAFB5000882D50 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				302BEAEB18B4800000B59235 /* BaseScene.h */,
 				9CD09CD818AAFB5000882D50 /* BaseLayer.cpp */,
 				9CD09CD918AAFB5000882D50 /* BaseLayer.h */,
 				9CD09CDA18AAFB5000882D50 /* BaseScene.cpp */,
-				9CD09CDB18AAFB5000882D50 /* BaseScene.h */,
 			);
 			path = Base;
 			sourceTree = "<group>";
