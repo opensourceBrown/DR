@@ -168,8 +168,9 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		302F91EA18B471DF0091D479 /* DataMangager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 302F91E818B471DF0091D479 /* DataMangager.cpp */; };
-		305ACA5A18B1CB5300A38B3D /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 305ACA5918B1CB5300A38B3D /* libwebsockets.a */; };
-		305ACA5C18B1CD8200A38B3D /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 305ACA5B18B1CD8200A38B3D /* libcurl.a */; };
+		305B87AA18B5E57400EEEAB6 /* DRUtility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 305B87A818B5E57400EEEAB6 /* DRUtility.cpp */; };
+		305B87AB18B5F1EA00EEEAB6 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 305ACA5918B1CB5300A38B3D /* libwebsockets.a */; };
+		30AF56CB18B5F2A400C9DB6B /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30AF56CA18B5F2A400C9DB6B /* libcurl.a */; };
 		375BD4C31868411B0024609E /* ObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD4BB1868411B0024609E /* ObjectFactory.cpp */; };
 		375BD4C41868411B0024609E /* TriggerBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD4BD1868411B0024609E /* TriggerBase.cpp */; };
 		375BD4C51868411B0024609E /* TriggerMng.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD4BF1868411B0024609E /* TriggerMng.cpp */; };
@@ -598,6 +599,9 @@
 		302F91E918B471DF0091D479 /* DataMangager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataMangager.h; sourceTree = "<group>"; };
 		305ACA5918B1CB5300A38B3D /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libwebsockets.a; sourceTree = "<group>"; };
 		305ACA5B18B1CD8200A38B3D /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcurl.a; sourceTree = "<group>"; };
+		305B87A818B5E57400EEEAB6 /* DRUtility.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DRUtility.cpp; sourceTree = "<group>"; };
+		305B87A918B5E57400EEEAB6 /* DRUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DRUtility.h; sourceTree = "<group>"; };
+		30AF56CA18B5F2A400C9DB6B /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		30DFE5F718B49A1A005F89C2 /* DataConstant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataConstant.h; sourceTree = "<group>"; };
 		373B911F18788FB000198F86 /* CCComBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCComBase.h; sourceTree = "<group>"; };
 		375BD4BB1868411B0024609E /* ObjectFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectFactory.cpp; sourceTree = "<group>"; };
@@ -764,6 +768,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30AF56CB18B5F2A400C9DB6B /* libcurl.a in Frameworks */,
+				305B87AB18B5F1EA00EEEAB6 /* libwebsockets.a in Frameworks */,
 				15A3DA6A1682F886002FB0C5 /* libcocos2dx.a in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
@@ -772,8 +778,6 @@
 				BF1712461292920000B8313A /* libxml2.dylib in Frameworks */,
 				BF1712471292920000B8313A /* libz.dylib in Frameworks */,
 				BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */,
-				305ACA5A18B1CB5300A38B3D /* libwebsockets.a in Frameworks */,
-				305ACA5C18B1CD8200A38B3D /* libcurl.a in Frameworks */,
 				D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */,
 				D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */,
 				D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */,
@@ -1401,6 +1405,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				30AF56CA18B5F2A400C9DB6B /* libcurl.a */,
 				305ACA5B18B1CD8200A38B3D /* libcurl.a */,
 				BF170DB212928DE900B8313A /* libxml2.dylib */,
 				BF170DB412928DE900B8313A /* libz.dylib */,
@@ -1831,6 +1836,8 @@
 			isa = PBXGroup;
 			children = (
 				9CD09CEB18AAFB5600882D50 /* Functions.h */,
+				305B87A818B5E57400EEEAB6 /* DRUtility.cpp */,
+				305B87A918B5E57400EEEAB6 /* DRUtility.h */,
 			);
 			name = Utils;
 			path = ../Classes/Utils;
@@ -2100,6 +2107,7 @@
 				379BB9A217F03F3700829B88 /* CCDisplayFactory.cpp in Sources */,
 				379BB9A317F03F3700829B88 /* CCDisplayManager.cpp in Sources */,
 				379BB9A417F03F3700829B88 /* CCSkin.cpp in Sources */,
+				305B87AA18B5E57400EEEAB6 /* DRUtility.cpp in Sources */,
 				379BB9A517F03F3700829B88 /* CCColliderDetector.cpp in Sources */,
 				379BB9A617F03F3700829B88 /* CCArmatureDataManager.cpp in Sources */,
 				379BB9A717F03F3700829B88 /* CCArmatureDefine.cpp in Sources */,
@@ -2193,11 +2201,13 @@
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
-					"\\\"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios/libraries\\\"",
-					"\\\"$(SRCROOT)/../../../external/libwebsockets/ios/lib\\\"",
+					"\\\\\\\\\\\\\\\"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios/libraries\\\\\\\\\\\\\\\"",
+					"\\\\\\\\\\\\\\\"$(SRCROOT)/../../../external/libwebsockets/ios/lib\\\\\\\\\\\\\\\"",
 					"/Volumes/Work/项目/Github项目/地牢突击/DR/DR/external/libwebsockets/ios",
 					"/Volumes/Work/项目/Github项目/地牢突击/DR/DR/external/libwebsockets/ios/include/lib",
 					"/Volumes/Work/项目/Github项目/地牢突击/DR/DR/projects/DRGame/proj.ios",
+					"/Volumes/WorkSpace/练习代码/DR/DR/external/libwebsockets/ios/include/lib",
+					"/Volumes/WorkSpace/练习代码/DR/DR/cocos2dx/platform/third_party/ios/libraries",
 				);
 				OTHER_CFLAGS = "-O2";
 				PRODUCT_NAME = DRGame;
@@ -2244,11 +2254,13 @@
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
-					"\\\"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios/libraries\\\"",
-					"\\\"$(SRCROOT)/../../../external/libwebsockets/ios/lib\\\"",
+					"\\\\\\\\\\\\\\\"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios/libraries\\\\\\\\\\\\\\\"",
+					"\\\\\\\\\\\\\\\"$(SRCROOT)/../../../external/libwebsockets/ios/lib\\\\\\\\\\\\\\\"",
 					"/Volumes/Work/项目/Github项目/地牢突击/DR/DR/external/libwebsockets/ios",
 					"/Volumes/Work/项目/Github项目/地牢突击/DR/DR/external/libwebsockets/ios/include/lib",
 					"/Volumes/Work/项目/Github项目/地牢突击/DR/DR/projects/DRGame/proj.ios",
+					"/Volumes/WorkSpace/练习代码/DR/DR/external/libwebsockets/ios/include/lib",
+					"/Volumes/WorkSpace/练习代码/DR/DR/cocos2dx/platform/third_party/ios/libraries",
 				);
 				PRODUCT_NAME = DRGame;
 				PROVISIONING_PROFILE = "";
