@@ -11,6 +11,8 @@
 
 #include <iostream>
 #include "cocos2d.h"
+#include "DataConstant.h"
+#include <list.h>
 
 USING_NS_CC;
 
@@ -23,6 +25,19 @@ private:
     
 public:
     static DataManager *sharedInstance(void);
+    
+    inline GameLayerElement gameLayerElement(void) {
+        return _gameLayerElement;
+    };
+    
+    inline list<BlockData> blocks(void) {   //TODO:先这么写着，貌似用不了
+        
+        return  _blocks;
+    };
+    
+protected:
+    GameLayerElement    _gameLayerElement;
+    list<BlockData>     _blocks;
 };
 
 #endif /* defined(__DRGame__DataMangager__) */

@@ -9,6 +9,8 @@
 #ifndef DRGame_DataConstant_h
 #define DRGame_DataConstant_h
 
+#include "GameConstant.h"
+
 //定义游戏消除元素类型
 typedef enum{
     kElementType_Monster=0,					//怪
@@ -18,11 +20,68 @@ typedef enum{
     kElementType_Medicine,					//血瓶
 }ElementType;
 
-//ÂÆö‰πâÊÄ™Á±ªÂûã
+//定义怪物的类型
 typedef enum{
     kBustyType_Common=0,              	   //普通怪
     kBustyType_Boss,                  	   //boss怪
 }BustyType;
+
+//定义界面元素结构体
+typedef struct{
+	int     attack;        //剑攻击力
+    int     monsterAttack; //怪物总攻击力
+    int     defence;       //当前防御力
+    int     maxdefence;    //最大防御力
+    int     life;          //生命值
+    int     maxLife;       //最大生命值
+    
+    int     roundNumber;   //回合数
+    int     score;         //得分
+} GameLayerElement;
+
+//消除元素对应的结构体
+typedef struct {
+    ElementType elementType;    //游戏消除元素类型
+    int         attackPower;    //怪物攻击力
+    int         defencePower;   //怪物防御力
+    BustyType   bustyType;      //怪物类型(boss or 普通怪)
+} BlockData;
+
+static inline GameLayerElement GameLayerElementMake(
+                                                    int attack,
+                                                    int monsterAttack,
+                                                    int defence,
+                                                    int maxdefence,
+                                                    int life,
+                                                    int maxlife,
+                                                    int roundNumber,
+                                                    int score
+                                                    ) {
+    GameLayerElement gameLayerElement;
+    gameLayerElement.attack = attack;
+    gameLayerElement.monsterAttack = monsterAttack;
+    gameLayerElement.defence = defence;
+    gameLayerElement.maxdefence = maxdefence;
+    gameLayerElement.life = life;
+    gameLayerElement.maxLife = maxlife;
+    gameLayerElement.roundNumber = roundNumber;
+    gameLayerElement.score = score;
+    return gameLayerElement;
+}
+
+static inline BlockData BlockDataMake(
+                                      ElementType elementType,
+                                      int   attackPower,
+                                      int   defencePower,
+                                      BustyType bustyType
+                                      ) {
+    BlockData   blockData;
+    blockData.elementType = elementType;
+    blockData.attackPower = attackPower;
+    blockData.defencePower = defencePower;
+    blockData.bustyType = bustyType;
+    return blockData;
+}
 
 //定义boss怪的类型
 typedef enum{

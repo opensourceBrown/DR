@@ -39,5 +39,5 @@ void updateGridCell(unsigned int rIndex,unsigned int vIndex)
 //判断滑动过程中的元素是否可以相连
 bool judgeElementsCanConnected()
 {
-
+    return true;
 }
