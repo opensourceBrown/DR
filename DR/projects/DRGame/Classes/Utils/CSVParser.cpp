@@ -8,12 +8,12 @@
 
 #include "CSVParser.h"
 
-CCSVParser::~CCSVParser(void)
+CSVParser::~CSVParser(void)
 {
     
 }
 
-void CCSVParser::StringSplit( const string& str, vector<string>& tokens, const char& delimiters )
+void CSVParser::StringSplit( const string& str, vector<string>& tokens, const char& delimiters )
 {
     string::size_type lastPos = str.find_first_not_of(delimiters, 0);
     string::size_type pos = str.find_first_of(delimiters, lastPos);
@@ -26,7 +26,7 @@ void CCSVParser::StringSplit( const string& str, vector<string>& tokens, const c
 }
 
 
-void CCSVParser::split( vector<string>& field, string line )
+void CSVParser::split( vector<string>& field, string line )
 {
     string fld;
     unsigned int i,j=0;
@@ -49,7 +49,7 @@ void CCSVParser::split( vector<string>& field, string line )
 
 
 
-int CCSVParser::advplain( const string& s, string& fld, int i)
+int CSVParser::advplain( const string& s, string& fld, int i)
 {
     unsigned int j;
     j = s.find_first_of(fieldsep, i);
@@ -59,7 +59,7 @@ int CCSVParser::advplain( const string& s, string& fld, int i)
     return j;
 }
 
-int CCSVParser::advquoted( const string& s, string& fld, int i)
+int CSVParser::advquoted( const string& s, string& fld, int i)
 {
     unsigned int j;
     fld = "";
@@ -80,7 +80,7 @@ int CCSVParser::advquoted( const string& s, string& fld, int i)
 }
 
 //解析 CVS 文件
-bool CCSVParser::openFile( string fileName )
+bool CSVParser::openFile( string fileName )
 {
     string pathKey = CCFileUtils::sharedFileUtils()->getWritablePath()+fileName;
     unsigned char* pBuffer = NULL;
@@ -104,17 +104,22 @@ bool CCSVParser::openFile( string fileName )
 }
 
 //获取指定行列的数据
-const char* CCSVParser::getData(unsigned int rows, unsigned int cols )
+const char* CSVParser::getData(unsigned int rows, unsigned int cols )
+{
+    return getStringData(rows,cols).c_str();
+}
+
+string CSVParser::getStringData(unsigned int rows, unsigned int cols)
 {
     if (rows>=data.size() || cols>=data[rows].size())
     {
         return "";
     }
-    return data[rows][cols].c_str();
+    return data[rows][cols];
 }
 
 //获取指定数据的列下标
-int CCSVParser::findColsData( int cols, const char* value )
+int CSVParser::findColsData( int cols, const char* value )
 {
     for (unsigned int i=0; i<data.size(); ++i)
     {

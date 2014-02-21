@@ -24,6 +24,7 @@ private:
     MainGameGridLayer   *m_gridLayer;
     CCLayer             *m_statusBar;
     CCLayer             *m_toolBar;
+    
 };
 
 #endif
