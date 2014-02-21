@@ -31,6 +31,19 @@ void MainGameGridLayer::onExit()
 
 bool MainGameGridLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
+    CCPoint location;
+	if(m_GridCellArray && m_GridCellArray->count()){
+		for(int i=0;i<m_GridCellArray->count();i++){
+			GridCell *cell=dynamic_cast<GridCell *>(m_GridCellArray->objectAtIndex(i));
+			CC_BREAK_IF(!cell);
+			if(rectContainPoint(CCRectMake(cell->getPosition().x, cell->getPosition().y, cell->getContentSize().width, cell->getContentSize().height),location))
+			{
+                //notify controller to judge whether the cell can be connected
+                
+			}
+		}
+	}
+    
 	return true;
 }
 
@@ -70,6 +83,8 @@ void  MainGameGridLayer::constructUI()
 				item->setCellElementType();
 				item->setPosition(ccp(0+j*100,0+i*100));
 				m_containerLayer->addChild(item);
+                
+                m_GridCellArray->addObject(item);
 			}
 		}
 	}while(0);
@@ -83,4 +98,9 @@ void MainGameGridLayer::updateGridCell()
 void MainGameGridLayer::moveGridCellAnimation(unsigned int pIdx)
 {
 
+}
+
+bool MainGameGridLayer::rectContainPoint(CCRect pRect,CCPoint pPoint)
+{
+    
 }

@@ -18,6 +18,7 @@ public:
 
 private:
 	void moveGridCellAnimation(unsigned int pIdx);				//ÏÂÒÆcell¶¯»­
+    bool rectContainPoint(CCRect pRect,CCPoint pPoint);
 
 	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
 	virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
