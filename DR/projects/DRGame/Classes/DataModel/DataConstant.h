@@ -188,7 +188,7 @@ typedef struct{
 
 //定义怪结构
 typedef struct{
-	BustyType               mType;
+	BustyType               mType;              
 	BossBustyType			mSkillType;
 	unsigned int			mID;
 	char					mName[GENERAL_CHAR_LENGTH];
@@ -200,14 +200,29 @@ typedef struct{
 
 //定义关卡结构
 typedef struct{
-    unsigned int             mID;					//πÿø®id
+    unsigned int             mID;					//πÿø®id                //关卡id
     
-	float					mCommMosterRate;		//∆’Õ®π÷≥ˆœ÷µƒ∏≈¬
-	float					mCoinRate;			//Ω±“≥ˆœ÷µƒ∏≈¬
-	float					mPotionRate;			//—™∆ø≥ˆœ÷µƒ∏≈¬
-	float					mBossMosterRate;		//bossπ÷≥ˆœ÷µƒ∏≈¬
-	float					mShieldRate;			//∂‹≥ˆœ÷µƒ∏≈¬
-	unsigned int				mPassCondID;			//πÿø®Õ®π˝Ãıº˛µƒid
+	float					mCommMosterRate;		//∆’Õ®π÷≥ˆœ÷µƒ∏≈¬       //普通怪出现的概率
+	float					mCoinRate;			//Ω±“≥ˆœ÷µƒ∏≈¬             //金币出现的概率
+	float					mPotionRate;			//—™∆ø≥ˆœ÷µƒ∏≈¬         //血瓶出现的概率
+	float					mBossMosterRate;		//bossπ÷≥ˆœ÷µƒ∏≈¬       //boss怪出现的概率
+	float					mShieldRate;			//∂‹≥ˆœ÷µƒ∏≈¬           //盾出现的概率
+    float                   mSwordRate;                                     //剑出现的概率
+    float                   mBowRate;                                       //弓出现的概率
+	unsigned int				mPassCondID;			//πÿø®Õ®π˝Ãıº˛µƒid  //闯关通过的条件id
 }GameStageProperty;
+
+//grid cell index struct
+typedef struct{
+	unsigned int            rIndex;			//––À˜“˝£∫∆ º÷µŒ™1             //行索引
+	unsigned int            vIndex;			//¡–À˜“˝£∫∆ º÷µŒ™1             //列索引
+}GIRDCELL_INDEX;
+
+//grid cell data struct
+typedef struct{
+	GIRDCELL_INDEX          mIndex;             //索引
+	ElementType             mType;              //cell对应的类型：怪、盾、、、、、
+	unsigned int            mID;                //怪id
+}GridElementProperty;
 
 #endif
