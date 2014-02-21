@@ -168,6 +168,7 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		302F91EA18B471DF0091D479 /* DataMangager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 302F91E818B471DF0091D479 /* DataMangager.cpp */; };
+		3032AF9C18B7240800327858 /* CSVParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3032AF9A18B7240800327858 /* CSVParser.cpp */; };
 		305B87AA18B5E57400EEEAB6 /* DRUtility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 305B87A818B5E57400EEEAB6 /* DRUtility.cpp */; };
 		305B87AB18B5F1EA00EEEAB6 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 305ACA5918B1CB5300A38B3D /* libwebsockets.a */; };
 		30AF56CB18B5F2A400C9DB6B /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30AF56CA18B5F2A400C9DB6B /* libcurl.a */; };
@@ -597,6 +598,8 @@
 		302BEAEB18B4800000B59235 /* BaseScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseScene.h; sourceTree = "<group>"; };
 		302F91E818B471DF0091D479 /* DataMangager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DataMangager.cpp; sourceTree = "<group>"; };
 		302F91E918B471DF0091D479 /* DataMangager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataMangager.h; sourceTree = "<group>"; };
+		3032AF9A18B7240800327858 /* CSVParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSVParser.cpp; sourceTree = "<group>"; };
+		3032AF9B18B7240800327858 /* CSVParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSVParser.h; sourceTree = "<group>"; };
 		305ACA5918B1CB5300A38B3D /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libwebsockets.a; sourceTree = "<group>"; };
 		305ACA5B18B1CD8200A38B3D /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcurl.a; sourceTree = "<group>"; };
 		305B87A818B5E57400EEEAB6 /* DRUtility.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DRUtility.cpp; sourceTree = "<group>"; };
@@ -1838,6 +1841,8 @@
 				9CD09CEB18AAFB5600882D50 /* Functions.h */,
 				305B87A818B5E57400EEEAB6 /* DRUtility.cpp */,
 				305B87A918B5E57400EEEAB6 /* DRUtility.h */,
+				3032AF9A18B7240800327858 /* CSVParser.cpp */,
+				3032AF9B18B7240800327858 /* CSVParser.h */,
 			);
 			name = Utils;
 			path = ../Classes/Utils;
@@ -1946,6 +1951,7 @@
 				15A3D9091682F7D5002FB0C5 /* b2EdgeShape.cpp in Sources */,
 				15A3D90A1682F7D5002FB0C5 /* b2PolygonShape.cpp in Sources */,
 				15A3D90B1682F7D5002FB0C5 /* b2BlockAllocator.cpp in Sources */,
+				3032AF9C18B7240800327858 /* CSVParser.cpp in Sources */,
 				15A3D90C1682F7D5002FB0C5 /* b2Draw.cpp in Sources */,
 				375BD4C61868411B0024609E /* TriggerObj.cpp in Sources */,
 				375BD4C31868411B0024609E /* ObjectFactory.cpp in Sources */,
