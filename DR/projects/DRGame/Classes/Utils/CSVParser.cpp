@@ -80,7 +80,7 @@ int CCSVParser::advquoted( const string& s, string& fld, int i)
 }
 
 //解析 CVS 文件
-bool CCSVParser::openFile( const char* fileName )
+bool CCSVParser::openFile( string fileName )
 {
     string pathKey = CCFileUtils::sharedFileUtils()->getWritablePath()+fileName;
     unsigned char* pBuffer = NULL;

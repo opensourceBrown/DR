@@ -29,7 +29,7 @@ public:
     
     //用以存储数据
     std::vector<std::vector<std::string> > data;
-    bool openFile(const char* fileName);
+    bool openFile(string fileName);
     const char* getData(unsigned int rows, unsigned int cols);
     int findColsData(int cols, const char* value);
     
