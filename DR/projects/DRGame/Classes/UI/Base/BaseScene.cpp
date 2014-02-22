@@ -1,18 +1,14 @@
 #include "BaseScene.h"
+#include "BaseController.h"
 
 
-bool BaseScene::initWithDelegate(BaseController *pDelegate)
+BaseScene::BaseScene():
+    m_delegate(NULL)
 {
-	bool tRet = false;
-	do{
-		CC_BREAK_IF(!pDelegate);
-		m_delegate=pDelegate;
-
-		tRet = true;
-	}while(0);
-
-	return tRet;
+    
 }
+
+
 
 void BaseScene::setDelegate(BaseController *pDelegate)
 {

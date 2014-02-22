@@ -6,11 +6,19 @@
 
 USING_NS_CC;
 
+class BaseScene;
+
 class BaseController : public CCObject
 {
 public:
     BaseController();
     ~BaseController();
+    
+    BaseScene *getScene(){return m_scene;}
+    
+    
+public:
+    BaseScene   *m_scene;
 };
 
 #endif

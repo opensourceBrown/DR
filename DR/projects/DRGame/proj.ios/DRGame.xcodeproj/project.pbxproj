@@ -1801,9 +1801,9 @@
 			isa = PBXGroup;
 			children = (
 				302BEAEB18B4800000B59235 /* BaseScene.h */,
+				9CD09CDA18AAFB5000882D50 /* BaseScene.cpp */,
 				9CD09CD818AAFB5000882D50 /* BaseLayer.cpp */,
 				9CD09CD918AAFB5000882D50 /* BaseLayer.h */,
-				9CD09CDA18AAFB5000882D50 /* BaseScene.cpp */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -2207,8 +2207,8 @@
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
-					"\\\\\\\\\\\\\\\"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios/libraries\\\\\\\\\\\\\\\"",
-					"\\\\\\\\\\\\\\\"$(SRCROOT)/../../../external/libwebsockets/ios/lib\\\\\\\\\\\\\\\"",
+					"\"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios/libraries\"",
+					"\"$(SRCROOT)/../../../external/libwebsockets/ios/lib\"",
 					"/Volumes/Work/项目/Github项目/地牢突击/DR/DR/external/libwebsockets/ios",
 					"/Volumes/Work/项目/Github项目/地牢突击/DR/DR/external/libwebsockets/ios/include/lib",
 					"/Volumes/Work/项目/Github项目/地牢突击/DR/DR/projects/DRGame/proj.ios",
@@ -2260,8 +2260,8 @@
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
-					"\\\\\\\\\\\\\\\"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios/libraries\\\\\\\\\\\\\\\"",
-					"\\\\\\\\\\\\\\\"$(SRCROOT)/../../../external/libwebsockets/ios/lib\\\\\\\\\\\\\\\"",
+					"\"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios/libraries\"",
+					"\"$(SRCROOT)/../../../external/libwebsockets/ios/lib\"",
 					"/Volumes/Work/项目/Github项目/地牢突击/DR/DR/external/libwebsockets/ios",
 					"/Volumes/Work/项目/Github项目/地牢突击/DR/DR/external/libwebsockets/ios/include/lib",
 					"/Volumes/Work/项目/Github项目/地牢突击/DR/DR/projects/DRGame/proj.ios",

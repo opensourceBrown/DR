@@ -19,6 +19,35 @@ MainGameScene::~MainGameScene()
     
 }
 
+MainGameScene *MainGameScene::create(BaseController *pDelegate)
+{
+    MainGameScene *scene=new MainGameScene();
+    do {
+        CC_BREAK_IF(!scene || !(scene->initWith(pDelegate)));
+        scene->autorelease();
+        return scene;
+    } while (0);
+    
+    CC_SAFE_DELETE(scene);
+    return NULL;
+}
+
+bool MainGameScene::initWith(BaseController *pDelegate)
+{
+	bool tRet = false;
+	do{
+        CC_BREAK_IF(!init());
+		CC_BREAK_IF(!pDelegate);
+		m_delegate=pDelegate;
+        
+        this->constructUI();
+        
+		tRet = true;
+	}while(0);
+    
+	return tRet;
+}
+
 void MainGameScene::constructUI()
 {
     do{
@@ -65,7 +94,7 @@ void MainGameScene::constructUI()
 
          */
         
-        testDataMethod();
+        //testDataMethod();
     }while(0);
 }
 

@@ -14,10 +14,17 @@ public:
     MainGameScene();
     virtual ~MainGameScene();
     
-    void constructUI();
+    static MainGameScene *create(BaseController *pDelegate);
+    
     MainGameGridLayer *getGridLayer(){return m_gridLayer;}
     CCLayer *getStatusLayer(){return m_statusBar;}
     CCLayer *getToolBar(){return m_toolBar;}
+    
+    
+    
+private:
+    virtual bool initWith(BaseController *pDelegate);
+    void constructUI();
     
 private:
     

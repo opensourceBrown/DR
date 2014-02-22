@@ -3,7 +3,6 @@
 
 
 #include "BaseController.h"
-//#include "cocos2dx.h"
 #include "cocos2d.h"
 
 
@@ -12,8 +11,11 @@ class MainGameController : public BaseController
 public:
     MainGameController();
     ~MainGameController();
+    
+    static MainGameController *create();
 
 private:
+    bool initWith();
 
 	//Éú³Égrid cell
 	void generateGridCell(unsigned int rIndex,unsigned int vIndex);

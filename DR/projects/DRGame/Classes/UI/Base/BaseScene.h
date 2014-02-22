@@ -2,20 +2,23 @@
 #define __BASE_SCENE_H__
 
 #include "cocos2d.h"
-#include "BaseController.h"
 #include "GameConstant.h"
 
 USING_NS_CC;
+
+class BaseController;
 
 class BaseScene : public cocos2d::CCScene
 {
 
 public:
-	BaseScene(){}
+	BaseScene();
 	~BaseScene(){}
-
-	bool initWithDelegate(BaseController *pDelegate);
-	void setDelegate(BaseController *pDelegate);
+    
+    
+    
+    void setDelegate(BaseController *pDelegate);
+    BaseController *getDelegate(){return m_delegate;}
 
 public:
 	BaseController		*m_delegate;
