@@ -23,3 +23,5 @@
 DR/cocos2dx/proj.ios/cocos2dx.xcodeproj/xcuserdata/magic.xcuserdatad/xcschemes/xcschememanagement.plist
 
 DR/projects/DRGame/proj.ios/DRGame.xcodeproj/xcuserdata/magic.xcuserdatad/xcschemes/xcschememanagement.plist
+
+*.xcbkptlist

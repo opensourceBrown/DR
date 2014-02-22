@@ -68,7 +68,7 @@ void  MainGameGridLayer::constructUI()
 		m_containerLayer=CCLayerColor::create(ccc4(0,0,255,255));
 		CC_BREAK_IF(!m_containerLayer);
 		CCLOG("win size(%f,%f)",WIN_SIZE.width,WIN_SIZE.height);
-		m_containerLayer->setContentSize(CCSizeMake(WIN_SIZE.width,WIN_SIZE.height-50));
+		m_containerLayer->setContentSize(CCSizeMake(WIN_SIZE.width,WIN_SIZE.height-200));
 		m_containerLayer->setPosition(ccp(0,(WIN_SIZE.height-m_containerLayer->getContentSize().height)/2));
 		addChild(m_containerLayer);
         
