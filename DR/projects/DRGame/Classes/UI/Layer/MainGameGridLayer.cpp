@@ -74,7 +74,7 @@ void  MainGameGridLayer::constructUI()
         
 		for(int i=0;i<GRID_ROW;i++){
 			for(int j=0;j<GRID_VOLUME;j++){
-                GIRDCELL_INDEX itemIndex;
+//                GIRDCELL_INDEX itemIndex;
 //                itemIndex.rIndex=i+1;
 //                itemIndex.vIndex=j+1;
 //				GridCell *item=new GridCell();
