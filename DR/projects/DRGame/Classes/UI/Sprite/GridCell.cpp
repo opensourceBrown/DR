@@ -6,12 +6,24 @@ GridCell::GridCell()
      *  TODO：CCSprite用继承的方式定义会出现执行问题
      *  初始化Texture保证创建ShaderProgram，不用继承后可以删除该初始化
      */
-    initWithTexture(NULL, CCRectZero);
+    //initWithTexture(NULL, CCRectZero);
 }
 
 GridCell::~GridCell()
 {
 
+}
+
+GridCell* GridCell::create(const char *pszFileName)
+{
+    GridCell *cell = new GridCell();
+    if (cell && cell->initWithFile(pszFileName))
+    {
+        cell->autorelease();
+        return cell;
+    }
+    CC_SAFE_DELETE(cell);
+    return NULL;
 }
 
 void GridCell::setCellIndex(GIRDCELL_INDEX pIndex,GRIDINDEX_TYPE pType)

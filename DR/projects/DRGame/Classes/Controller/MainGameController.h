@@ -30,7 +30,17 @@ private:
 	//判断滑动过程中的元素是否可以相连
 	bool judgeElementsCanConnected();
 
-
+    //insert a cell into the connected array
+	void insertCellIntoConnectedArray(unsigned int pIndex);
+    
+	//remove a cell from the connected array
+	void removeCellFromConnectedArray(unsigned int pIndex);
+    
+	//insert a cell into the cell container
+	void insertCellIntoGridContainer(unsigned int pIndex);
+    
+	//remove a cell from the cell container(clear a cell from the screen for connecting)
+	void removeCellFromGridContainer(unsigned int pIndex);
 
 	
 private:

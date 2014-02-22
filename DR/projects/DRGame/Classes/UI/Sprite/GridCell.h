@@ -9,16 +9,13 @@
 
 USING_NS_CC;
 
-typedef struct{
-	unsigned int		rIndex;			//––À˜“˝£∫∆ º÷µŒ™1
-	unsigned int		vIndex;			//¡–À˜“˝£∫∆ º÷µŒ™1
-}GIRDCELL_INDEX;
-
 class GridCell : public CCSprite
 {
 public:
 	GridCell();
 	virtual ~GridCell();
+    
+    static GridCell* create(const char *pszFileName);
 
 	void setCellIndex(GIRDCELL_INDEX pIndex,GRIDINDEX_TYPE pType=kGRIDINDEX_TYPE_DEFAULT);
 
