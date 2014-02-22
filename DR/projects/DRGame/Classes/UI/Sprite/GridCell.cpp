@@ -14,18 +14,41 @@ GridCell::~GridCell()
 
 }
 
-GridCell* GridCell::create(const char *pszFileName)
+GridCell* GridCell::createWithFrameName(const char *pszFileName)
 {
     GridCell *cell = new GridCell();
-    if (cell && cell->initWithFile(pszFileName))
+    if (cell && cell->initWith(pszFileName))
     {
         cell->autorelease();
+        
         return cell;
     }
     CC_SAFE_DELETE(cell);
     return NULL;
 }
 
+bool GridCell::initWith(const char *pszFileName)
+{
+    bool tRet=false;
+    
+    do {
+        CC_BREAK_IF(!pszFileName);
+        CCSprite *gridImg=CCSprite::createWithSpriteFrameName(pszFileName);
+        CC_BREAK_IF(!gridImg);
+        addChild(gridImg);
+        
+        tRet=true;
+    } while (0);
+    
+    return tRet;
+}
+
+void GridCell::setCellProperty(GridElementProperty pElement)
+{
+    
+}
+
+/*
 void GridCell::setCellIndex(GIRDCELL_INDEX pIndex,GRIDINDEX_TYPE pType)
 {
 	switch(pType){
@@ -75,4 +98,5 @@ void GridCell::setCellElementType(ElementType pType)
 {
 	m_type=pType;
 }
+ */
 

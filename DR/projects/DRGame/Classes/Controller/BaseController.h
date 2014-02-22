@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "GameConstant.h"
+#include "DataConstant.h"
 
 USING_NS_CC;
 

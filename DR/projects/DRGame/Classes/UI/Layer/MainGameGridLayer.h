@@ -4,6 +4,7 @@
 #include "BaseLayer.h"
 #include "GeneralDataModel.h"
 
+class GridCell;
 class MainGameGridLayer : public BaseLayer
 {
 public:
@@ -13,10 +14,12 @@ public:
     virtual void onEnter();
 	virtual void onExit();
 
-	void constructUI();
 	void updateGridCell();
-
+    
+    GridCell *getGridCell(unsigned int rIndex,unsigned int vIndex);
 private:
+    void constructUI();
+    
 	void moveGridCellAnimation(unsigned int pIdx);				//ÏÂÒÆcell¶¯»­
     bool rectContainPoint(CCRect pRect,CCPoint pPoint);
 
@@ -26,7 +29,7 @@ private:
 	virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
 
 private:
-	CCLayerColor				*m_containerLayer;
+	CCLayerColor			*m_containerLayer;
 	CCArray					*m_GridCellArray;
 
 };

@@ -13,12 +13,13 @@ public:
     ~MainGameController();
     
     static MainGameController *create();
+    
+    //生成grid cell
+	bool generateGridCell(unsigned int rIndex,unsigned int vIndex);
+    GridElementProperty getGridElementProperty(unsigned int rIndex,unsigned int vIndex);
 
 private:
     bool initWith();
-
-	//生成grid cell
-	void generateGridCell(unsigned int rIndex,unsigned int vIndex);
 	
 	//更新grid cell：位置和索引
 	void updateGridCell(unsigned int rIndex,unsigned int vIndex);
@@ -57,7 +58,7 @@ private:
 	CCArray					*mStageConnectedElements;	//每一回合中已经相连的元素（按顺序存储元素的类型和对应cell的标识，可加可删）
 	CCArray					*mGridCellContainer;
 	
-
+    GridElementProperty     mGridPropertyContainer[GRID_ROW*GRID_VOLUME];
 private:
 
 };

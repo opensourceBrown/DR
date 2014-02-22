@@ -5,7 +5,10 @@
 #include "MainGameScene.h"
 
 
-MainGameController::MainGameController()
+MainGameController::MainGameController():
+    mGridCellContainer(NULL),
+    mMagicInStage(NULL),
+    mStageConnectedElements(NULL)
 {
    
 }
@@ -36,6 +39,15 @@ bool MainGameController::initWith()
         //TO:DO initialization
         m_scene=MainGameScene::create(this);
         CC_BREAK_IF(!m_scene);
+        
+        mGridCellContainer=CCArray::create();
+        CC_BREAK_IF(!mGridCellContainer);
+        
+        mMagicInStage=CCArray::create();
+        CC_BREAK_IF(!mMagicInStage);
+        
+        mStageConnectedElements=CCArray::create();
+        CC_BREAK_IF(!mStageConnectedElements);
         tRet=true;
     } while (0);
     
@@ -53,9 +65,39 @@ bool MainGameController::judgeConnectedElementsCanClear()
 }
 
 //生成grid cell
-void MainGameController::generateGridCell(unsigned int rIndex,unsigned int vIndex)
+bool MainGameController::generateGridCell(unsigned int rIndex,unsigned int vIndex)
 {
+    bool tSuc=false;
+    
+    do {
+        GridElementProperty blockProperty;
+        blockProperty.init();
+        
+        //test
+        blockProperty.mIndex.rIndex=rIndex;
+        blockProperty.mIndex.vIndex=vIndex;
+        blockProperty.mType=kElementType_Sword;
+        blockProperty.mID=11;
+        
+        //generate cell property according to the configure(rate)
+        
+        mGridPropertyContainer[rIndex*GRID_ROW+vIndex]=blockProperty;
+        tSuc=true;
+    } while (0);
+    
+    return tSuc;
+}
 
+GridElementProperty MainGameController::getGridElementProperty(unsigned int rIndex,unsigned int vIndex)
+{
+    GridElementProperty blockProperty;
+    do {
+        CC_BREAK_IF(rIndex>=GRID_ROW || vIndex>=GRID_VOLUME);
+        
+        blockProperty=mGridPropertyContainer[rIndex*GRID_ROW+vIndex];
+    } while (0);
+    
+    return blockProperty;
 }
 	
 //更新grid cell：位置和索引

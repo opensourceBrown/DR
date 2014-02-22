@@ -54,7 +54,7 @@ void MainGameScene::constructUI()
         m_gridLayer=new MainGameGridLayer();
 		CC_BREAK_IF(!m_gridLayer);
 		m_gridLayer->initWithDelegate(m_delegate);
-        m_gridLayer->constructUI();
+        //m_gridLayer->constructUI();
 		addChild(m_gridLayer);
         
         /*

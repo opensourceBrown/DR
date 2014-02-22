@@ -23,5 +23,9 @@ enum GRIDINDEX_TYPE{
 	kGRIDINDEX_TYPE_PRE,										//下一个
 };
 
+//定义网格的行数和列数
+#define GRID_ROW			6
+#define GRID_VOLUME         6
+
 
 #endif

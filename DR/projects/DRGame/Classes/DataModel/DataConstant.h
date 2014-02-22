@@ -15,9 +15,10 @@
 typedef enum{
     kElementType_Monster=0,					//怪
     kElementType_Sword,						//剑
-//    kElementType_Bow,						//弓
+    kElementType_Bow,						//弓
     kElementType_Coin,						//金币
-    kElementType_Medicine,					//血瓶
+    kElementType_Potion,					//血瓶
+    kElementType_Shield,					//盾
 }ElementType;
 
 //定义怪物的类型
@@ -26,6 +27,9 @@ typedef enum{
     kBustyType_Boss,                  	   //boss怪
 }BustyType;
 
+//注：magic，与游戏界面cell对应的结构体暂时由我来定义吧，我下面添加了，暂时现不用你定义的这个结构体，因为后续这块可能要修改
+//比如怪，虽然分普通怪和boss怪，但是他们的配置是放在一个文件中的，通过id区分就可以了，所以下面的GameLayerElement和BlockData结构暂时我现不用了
+//暂时我先用自己定义的,稍后我们可以过一下这块
 //定义界面元素结构体
 typedef struct{
 	int     attack;        //剑攻击力
@@ -223,6 +227,13 @@ typedef struct{
 	GIRDCELL_INDEX          mIndex;             //索引
 	ElementType             mType;              //cell对应的类型：怪、盾、、、、、
 	unsigned int            mID;                //怪id
+    
+    void init(){
+        mIndex.rIndex=0;
+        mIndex.vIndex=0;
+        mType=kElementType_Coin;
+        mID=0;
+    }
 }GridElementProperty;
 
 #endif
