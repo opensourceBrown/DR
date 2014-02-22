@@ -113,7 +113,7 @@ bool MainGameController::judgeElementsCanConnected()
 }
 
 //insert a cell into the connected array
-void MainGameController::insertCellIntoConnectedArray(unsigned int pIndex)
+void MainGameController::insertCellIntoConnectedArray(unsigned int rIndex,unsigned int vIndex)
 {
     
 }
@@ -127,6 +127,9 @@ void MainGameController::removeCellFromConnectedArray(unsigned int pIndex)
 //insert a cell into the cell container
 void MainGameController::insertCellIntoGridContainer(unsigned int pIndex)
 {
+    //play sound effect
+    
+    //judge whether the cell has been in connected array
     
 }
 

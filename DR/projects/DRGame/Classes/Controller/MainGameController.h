@@ -16,7 +16,15 @@ public:
     
     //生成grid cell
 	bool generateGridCell(unsigned int rIndex,unsigned int vIndex);
+    
+    //get the grid cell property data struct
     GridElementProperty getGridElementProperty(unsigned int rIndex,unsigned int vIndex);
+    
+    //判断滑动过程中的元素是否可以相连
+	bool judgeElementsCanConnected();
+    
+    //insert a cell into the connected array
+	void insertCellIntoConnectedArray(unsigned int rIndex,unsigned int vIndex);
 
 private:
     bool initWith();
@@ -30,11 +38,7 @@ private:
 	//判断相连的元素是否可以消除
 	bool judgeConnectedElementsCanClear();
 	
-	//判断滑动过程中的元素是否可以相连
-	bool judgeElementsCanConnected();
-
-    //insert a cell into the connected array
-	void insertCellIntoConnectedArray(unsigned int pIndex);
+	
     
 	//remove a cell from the connected array
 	void removeCellFromConnectedArray(unsigned int pIndex);
