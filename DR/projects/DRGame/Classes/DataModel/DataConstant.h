@@ -204,16 +204,16 @@ typedef struct{
 
 //定义关卡结构
 typedef struct{
-    unsigned int             mID;					//πÿø®id                //关卡id
+    unsigned int             mID;					//barrier id
     
-	float					mCommMosterRate;		//∆’Õ®π÷≥ˆœ÷µƒ∏≈¬       //普通怪出现的概率
-	float					mCoinRate;			//Ω±“≥ˆœ÷µƒ∏≈¬             //金币出现的概率
-	float					mPotionRate;			//—™∆ø≥ˆœ÷µƒ∏≈¬         //血瓶出现的概率
-	float					mBossMosterRate;		//bossπ÷≥ˆœ÷µƒ∏≈¬       //boss怪出现的概率
-	float					mShieldRate;			//∂‹≥ˆœ÷µƒ∏≈¬           //盾出现的概率
-    float                   mSwordRate;                                     //剑出现的概率
-    float                   mBowRate;                                       //弓出现的概率
-	unsigned int				mPassCondID;			//πÿø®Õ®π˝Ãıº˛µƒid  //闯关通过的条件id
+	float					mCommMosterRate;		//appear rate of normal monster
+	float					mCoinRate;              //appear rate of coins
+	float					mPotionRate;			//appear rate of potion
+	float					mBossMosterRate;		//appear rate of boss
+	float					mShieldRate;			//appear rate of shield
+    float                   mSwordRate;             //appear rate of sword
+    float                   mBowRate;               //appear rate of bow
+	unsigned int				mPassCondID;		//condition of pass barrier
 }GameStageProperty;
 
 //grid cell index struct
