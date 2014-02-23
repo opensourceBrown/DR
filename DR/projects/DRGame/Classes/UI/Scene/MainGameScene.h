@@ -16,7 +16,7 @@ public:
     
     static MainGameScene *create(BaseController *pDelegate);
     
-    MainGameGridLayer *getGridLayer(){return m_gridLayer;}
+    MainGameGridLayer *getGridLayer();
     CCLayer *getStatusLayer(){return m_statusBar;}
     CCLayer *getToolBar(){return m_toolBar;}
     

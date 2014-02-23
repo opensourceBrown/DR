@@ -14,13 +14,15 @@ public:
     virtual void onEnter();
 	virtual void onExit();
 
-	void updateGridCell();
+    void addGridCell(unsigned int rIndex,unsigned int vIndex);
+    void removeGridCell(unsigned int rIndex,unsigned int vIndex);
+	void updateGridCell(unsigned int uIndex,unsigned int vIndex);
     
     GridCell *getGridCell(unsigned int rIndex,unsigned int vIndex);
 private:
     void constructUI();
     
-	void moveGridCellAnimation(unsigned int pIdx);				//下移cell动画
+	void moveGridCellAnimation(unsigned int rIndex,unsigned int vIndex);				//下移cell动画
     bool rectContainPoint(CCRect pRect,CCPoint pPoint);
 
 	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);

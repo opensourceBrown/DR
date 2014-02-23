@@ -41,7 +41,10 @@ bool GridCell::initWith(const char *pszFileName)
 
 void GridCell::setCellProperty(GridElementProperty pElement)
 {
-    
+    m_property.mID=pElement.mID;
+    m_property.mIndex.rIndex=pElement.mIndex.rIndex;
+    m_property.mIndex.vIndex=pElement.mIndex.vIndex;
+    m_property.mType=pElement.mType;
 }
 
 /*

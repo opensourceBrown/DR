@@ -11,12 +11,12 @@ MainGameScene::MainGameScene():
     m_statusBar(NULL),
     m_toolBar(NULL)
 {
-
+    LOG_TRACE
 }
 
 MainGameScene::~MainGameScene()
 {
-    
+    CC_SAFE_DELETE(m_gridLayer);
 }
 
 MainGameScene *MainGameScene::create(BaseController *pDelegate)
@@ -54,7 +54,6 @@ void MainGameScene::constructUI()
         m_gridLayer=new MainGameGridLayer();
 		CC_BREAK_IF(!m_gridLayer);
 		m_gridLayer->initWithDelegate(m_delegate);
-        //m_gridLayer->constructUI();
 		addChild(m_gridLayer);
         
         /*
@@ -96,6 +95,18 @@ void MainGameScene::constructUI()
         
 //        testDataMethod();
     }while(0);
+}
+
+MainGameGridLayer *MainGameScene::getGridLayer()
+{
+    LOG_TRACE
+    do{
+        CC_BREAK_IF(m_gridLayer);
+        CCLog("m_gridLayer=null");
+        return NULL;
+    }while(0);
+    
+    return m_gridLayer;
 }
 
 #include "CSVParser.h"

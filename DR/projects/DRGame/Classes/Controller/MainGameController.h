@@ -21,7 +21,7 @@ public:
     GridElementProperty getGridElementProperty(unsigned int rIndex,unsigned int vIndex);
     
     //判断滑动过程中的元素是否可以相连
-	bool judgeElementsCanConnected();
+	bool judgeElementsCanConnected(unsigned int rIndex,unsigned int vIndex);
     
     //insert a cell into the connected array
 	void insertCellIntoConnectedArray(unsigned int rIndex,unsigned int vIndex);
@@ -41,13 +41,24 @@ private:
 	
     
 	//remove a cell from the connected array
-	void removeCellFromConnectedArray(unsigned int pIndex);
+	void removeCellFromConnectedArray();
     
-	//insert a cell into the cell container
-	void insertCellIntoGridContainer(unsigned int pIndex);
+	//insert a cell into the cell container:
+	//void insertCellIntoGridContainer(unsigned int pIndex);
     
 	//remove a cell from the cell container(clear a cell from the screen for connecting)
 	void removeCellFromGridContainer(unsigned int pIndex);
+    
+    //play sound effect
+    void playSelctedSoundEffect(ElementType pType);             //when grid cell clicked or selected
+    void playClearSoundEffect();                                //when the connected cells clearing
+    
+    //draw or clear connected line between two cells
+    void addConnectedLine();
+    void cleanConnectedLine();
+    
+    //judge whether the cell can be insert into the connected array
+    bool judgeGridCellCanInserted(unsigned int rIndex,unsigned int vIndex);
 
 	
 private:
@@ -58,11 +69,20 @@ private:
 	unsigned int			mCurrentShield;				//当前的盾数
 	unsigned int			mCurrentPotion;				//当前的血量
 	
+    //current valid magic in current game stage
 	CCArray					*mMagicInStage;				//当前关卡中可以使用的魔法
+    
+    //connected elements array
 	CCArray					*mStageConnectedElements;	//每一回合中已经相连的元素（按顺序存储元素的类型和对应cell的标识，可加可删）
+    
+    //grid cell container:
 	CCArray					*mGridCellContainer;
 	
+    //grid cell property container
     GridElementProperty     mGridPropertyContainer[GRID_ROW*GRID_VOLUME];
+    
+    //current stage property
+    GameStageProperty       mStageProperty;
 private:
 
 };
