@@ -94,7 +94,7 @@ void MainGameScene::constructUI()
 
          */
         
-        //testDataMethod();
+        testDataMethod();
     }while(0);
 }
 

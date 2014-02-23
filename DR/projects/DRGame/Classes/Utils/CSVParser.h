@@ -41,7 +41,7 @@ private:
     string        fieldsep;
     int            cols;
     
-    void StringSplit(const string& str, vector<string>& tokens, const char& delimiters);
+    void StringSplit(const string& str, vector<string>& tokens, const char* delimiters);
     void split(vector<string>& field, string line);
     int advplain(const string& line, string& fld, int);
     int advquoted(const string& line, string& fld, int);

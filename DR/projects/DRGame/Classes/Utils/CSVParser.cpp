@@ -13,18 +13,17 @@ CSVParser::~CSVParser(void)
     
 }
 
-void CSVParser::StringSplit( const string& str, vector<string>& tokens, const char& delimiters )
+void CSVParser::StringSplit( const string& str, vector<string>& tokens, const char* delimiters )
 {
     string::size_type lastPos = str.find_first_not_of(delimiters, 0);
     string::size_type pos = str.find_first_of(delimiters, lastPos);
     while (string::npos != pos || string::npos != lastPos)
     {
         tokens.push_back(str.substr(lastPos, pos-lastPos));
-        lastPos = str.find_first_not_of(delimiters, pos);
+        lastPos = str.find_first_not_of(delimiters, pos, sizeof(delimiters));
         pos = str.find_first_of(delimiters, lastPos);
     }
 }
-
 
 void CSVParser::split( vector<string>& field, string line )
 {
@@ -91,7 +90,7 @@ bool CSVParser::openFile( string fileName )
     string str = s.substr(0,bufferSize);
     
     vector<string> line;
-    StringSplit(str, line, '\n');
+    StringSplit(str, line, "\r\n");
     for(unsigned int i=0; i<line.size(); ++i)
     {
         vector<string> field;

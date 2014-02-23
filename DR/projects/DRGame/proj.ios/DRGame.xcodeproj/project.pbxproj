@@ -169,6 +169,7 @@
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		302F91EA18B471DF0091D479 /* DataMangager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 302F91E818B471DF0091D479 /* DataMangager.cpp */; };
 		3032AF9C18B7240800327858 /* CSVParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3032AF9A18B7240800327858 /* CSVParser.cpp */; };
+		3033529718B9B23E009D9E29 /* testdata.csv in Resources */ = {isa = PBXBuildFile; fileRef = 3033529618B9B23E009D9E29 /* testdata.csv */; };
 		305B87AA18B5E57400EEEAB6 /* DRUtility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 305B87A818B5E57400EEEAB6 /* DRUtility.cpp */; };
 		305B87AB18B5F1EA00EEEAB6 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 305ACA5918B1CB5300A38B3D /* libwebsockets.a */; };
 		30AF56CB18B5F2A400C9DB6B /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30AF56CA18B5F2A400C9DB6B /* libcurl.a */; };
@@ -602,6 +603,7 @@
 		302F91E918B471DF0091D479 /* DataMangager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataMangager.h; sourceTree = "<group>"; };
 		3032AF9A18B7240800327858 /* CSVParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSVParser.cpp; sourceTree = "<group>"; };
 		3032AF9B18B7240800327858 /* CSVParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSVParser.h; sourceTree = "<group>"; };
+		3033529618B9B23E009D9E29 /* testdata.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testdata.csv; sourceTree = "<group>"; };
 		305ACA5918B1CB5300A38B3D /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libwebsockets.a; sourceTree = "<group>"; };
 		305ACA5B18B1CD8200A38B3D /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcurl.a; sourceTree = "<group>"; };
 		305B87A818B5E57400EEEAB6 /* DRUtility.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DRUtility.cpp; sourceTree = "<group>"; };
@@ -1749,6 +1751,7 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3033529618B9B23E009D9E29 /* testdata.csv */,
 				9C6C1EC718B8904D00678A2A /* MainGame.plist */,
 				9C6C1EC818B8904D00678A2A /* MainGame.png */,
 				1AFAF8B916D35E4900DB1158 /* CloseNormal.png */,
@@ -1935,6 +1938,7 @@
 				1AFAF8BD16D35E4900DB1158 /* CloseSelected.png in Resources */,
 				1AFAF8BE16D35E4900DB1158 /* HelloWorld.png in Resources */,
 				9C6C1EC918B8904D00678A2A /* MainGame.plist in Resources */,
+				3033529718B9B23E009D9E29 /* testdata.csv in Resources */,
 				9C6C1ECA18B8904D00678A2A /* MainGame.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
