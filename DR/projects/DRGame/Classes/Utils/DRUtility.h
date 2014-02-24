@@ -20,6 +20,9 @@ class DRUtility : cocos2d::CCObject
 public:
     static string getFileByName(string pFileName);
     static bool saveFile(char *pContent, string pFileName);
+    
+    static cocos2d::CCDictionary* loadDictFromEncFile(char* fileName);
+    
 private:
     
     

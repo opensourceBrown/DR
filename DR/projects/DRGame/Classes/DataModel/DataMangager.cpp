@@ -7,6 +7,7 @@
 //
 
 #include "DataMangager.h"
+#include "XMLParser.h"
 
 static DataManager *__sharedInstane = NULL;
 

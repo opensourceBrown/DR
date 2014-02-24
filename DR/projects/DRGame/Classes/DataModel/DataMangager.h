@@ -30,7 +30,7 @@ public:
         return _gameLayerElement;
     };
     
-    inline list<BlockData> blocks(void) {   //TODO:先这么写着，貌似用不了
+    inline list<BlockData> blocks(void) {
         
         return  _blocks;
     };

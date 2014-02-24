@@ -7,6 +7,7 @@
 //
 
 #include "DRUtility.h"
+#include "XMLParser.h"
 
 using namespace cocos2d;
 
@@ -70,4 +71,20 @@ bool DRUtility::saveFile(char *pContent, string pFileName)
         CCLOG("save file error.");
     
     return false;
+}
+
+CCDictionary* DRUtility::loadDictFromEncFile(char* fileName)
+{
+	if (!fileName)
+	{
+		return NULL;
+	}
+    
+	CCDictionary* dict = NULL;
+    
+    XMLParser* parser = new XMLParser;
+    dict = parser->dictionaryWithXmlData(fileName);
+    delete(parser);
+    
+	return dict;
 }
