@@ -168,6 +168,7 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		300CC5BD18BACEA6009E1EC8 /* XMLParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300CC5BB18BACEA6009E1EC8 /* XMLParser.cpp */; };
+		30218CBA18BAEFAD0027A5E2 /* GridElementProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30218CB818BAEFAD0027A5E2 /* GridElementProperty.cpp */; };
 		302F91EA18B471DF0091D479 /* DataMangager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 302F91E818B471DF0091D479 /* DataMangager.cpp */; };
 		3032AF9C18B7240800327858 /* CSVParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3032AF9A18B7240800327858 /* CSVParser.cpp */; };
 		3033529718B9B23E009D9E29 /* testdata.csv in Resources */ = {isa = PBXBuildFile; fileRef = 3033529618B9B23E009D9E29 /* testdata.csv */; };
@@ -601,6 +602,8 @@
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		300CC5BB18BACEA6009E1EC8 /* XMLParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XMLParser.cpp; sourceTree = "<group>"; };
 		300CC5BC18BACEA6009E1EC8 /* XMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLParser.h; sourceTree = "<group>"; };
+		30218CB818BAEFAD0027A5E2 /* GridElementProperty.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GridElementProperty.cpp; sourceTree = "<group>"; };
+		30218CB918BAEFAD0027A5E2 /* GridElementProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridElementProperty.h; sourceTree = "<group>"; };
 		302BEAEB18B4800000B59235 /* BaseScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseScene.h; sourceTree = "<group>"; };
 		302F91E818B471DF0091D479 /* DataMangager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DataMangager.cpp; sourceTree = "<group>"; };
 		302F91E918B471DF0091D479 /* DataMangager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataMangager.h; sourceTree = "<group>"; };
@@ -1792,6 +1795,8 @@
 				302F91E918B471DF0091D479 /* DataMangager.h */,
 				9CD09CD318AAFB4600882D50 /* GeneralDataModel.cpp */,
 				9CD09CD418AAFB4600882D50 /* GeneralDataModel.h */,
+				30218CB818BAEFAD0027A5E2 /* GridElementProperty.cpp */,
+				30218CB918BAEFAD0027A5E2 /* GridElementProperty.h */,
 			);
 			name = DataModel;
 			path = ../Classes/DataModel;
@@ -2058,6 +2063,7 @@
 				15A3DA431682F826002FB0C5 /* CCNodeLoader.cpp in Sources */,
 				15A3DA441682F826002FB0C5 /* CCNodeLoaderLibrary.cpp in Sources */,
 				15A3DA451682F826002FB0C5 /* CCParticleSystemQuadLoader.cpp in Sources */,
+				30218CBA18BAEFAD0027A5E2 /* GridElementProperty.cpp in Sources */,
 				15A3DA461682F826002FB0C5 /* CCScale9SpriteLoader.cpp in Sources */,
 				15A3DA471682F826002FB0C5 /* CCScrollViewLoader.cpp in Sources */,
 				15A3DA481682F826002FB0C5 /* CCSpriteLoader.cpp in Sources */,

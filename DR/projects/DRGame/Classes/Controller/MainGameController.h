@@ -4,6 +4,7 @@
 
 #include "BaseController.h"
 #include "cocos2d.h"
+#include "GridElementProperty.h"
 
 
 class MainGameController : public BaseController
@@ -18,7 +19,7 @@ public:
 	bool generateGridCell(unsigned int rIndex,unsigned int vIndex);
     
     //get the grid cell property data struct
-    GridElementProperty getGridElementProperty(unsigned int rIndex,unsigned int vIndex);
+    GridElementProperty *getGridElementProperty(unsigned int rIndex,unsigned int vIndex);
     
     //判断滑动过程中的元素是否可以相连
 	bool judgeElementsCanConnected(unsigned int rIndex,unsigned int vIndex);
@@ -79,7 +80,7 @@ private:
 	CCArray					*mGridCellContainer;
 	
     //grid cell property container
-    GridElementProperty     mGridPropertyContainer[GRID_ROW*GRID_VOLUME];
+    GridElementProperty     *mGridPropertyContainer[GRID_ROW*GRID_VOLUME];
     
     //current stage property
     GameStageProperty       mStageProperty;

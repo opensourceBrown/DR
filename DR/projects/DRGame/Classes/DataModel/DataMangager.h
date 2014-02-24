@@ -12,7 +12,7 @@
 #include <iostream>
 #include "cocos2d.h"
 #include "DataConstant.h"
-#include <list.h>
+#include "GridElementProperty.h"
 
 USING_NS_CC;
 
@@ -23,21 +23,13 @@ private:
     DataManager(void);
     ~DataManager(void);
     
+    CCDictionary *_savedDict;
+    
 public:
     static DataManager *sharedInstance(void);
-    
-    inline GameLayerElement gameLayerElement(void) {
-        return _gameLayerElement;
-    };
-    
-    inline list<BlockData> blocks(void) {
-        
-        return  _blocks;
-    };
-    
-protected:
-    GameLayerElement    _gameLayerElement;
-    list<BlockData>     _blocks;
+    GridElementProperty *getGridElementProperty(unsigned int rIndex,unsigned int vIndex);
+    CCDictionary * getGridElements(void);
+    bool saveGridElements(void);
 };
 
 #endif /* defined(__DRGame__DataMangager__) */

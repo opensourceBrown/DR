@@ -58,12 +58,12 @@ bool MainGameGridLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
             CCLog("cell rect:(%f,%f,%f,%f)",cell->getPosition().x-m_containerLayer->getContentSize().width/GRID_VOLUME,cell->getPosition().y+cell->getContentSize().height/2,cell->getContentSize().width,cell->getContentSize().height);
 			if(rectContainPoint(CCRectMake(cell->getPosition().x-m_containerLayer->getContentSize().width/GRID_VOLUME, cell->getPosition().y+cell->getContentSize().height/2, cell->getContentSize().width, cell->getContentSize().height),location))
 			{
-                GridElementProperty blockProperty=cell->getCellProperty();
+                GridElementProperty *blockProperty=cell->getCellProperty();
                 CCLog("------------------------------");
                 //notify controller to insert the cell into connected array if the cell can be connected
-                if (((MainGameController *)m_delegate)->judgeElementsCanConnected(blockProperty.mIndex.rIndex,blockProperty.mIndex.vIndex)) {
+                if (((MainGameController *)m_delegate)->judgeElementsCanConnected(blockProperty->mIndex.rIndex,blockProperty->mIndex.vIndex)) {
                     CCLog("+++++++++++++++++++++++++++++++");
-                    ((MainGameController *)m_delegate)->insertCellIntoConnectedArray(blockProperty.mIndex.rIndex,blockProperty.mIndex.vIndex);
+                    ((MainGameController *)m_delegate)->insertCellIntoConnectedArray(blockProperty->mIndex.rIndex,blockProperty->mIndex.vIndex);
                 }
                 break;
 			}
@@ -103,9 +103,9 @@ void  MainGameGridLayer::constructUI()
 		for(int i=0;i<GRID_ROW;i++){
 			for(int j=0;j<GRID_VOLUME;j++){
                 CC_BREAK_IF(!((MainGameController *)m_delegate)->generateGridCell(i,j));        //generate cell property success
-                GridElementProperty blockProperty=((MainGameController *)m_delegate)->getGridElementProperty(i, j);
+                GridElementProperty *blockProperty=((MainGameController *)m_delegate)->getGridElementProperty(i, j);
                 CCString *typeStr=NULL;
-                switch (blockProperty.mType) {
+                switch (blockProperty->mType) {
                     case kElementType_Monster:
                     {
                         //select monster image according to the type

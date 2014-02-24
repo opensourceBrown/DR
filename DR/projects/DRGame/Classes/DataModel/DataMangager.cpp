@@ -9,6 +9,8 @@
 #include "DataMangager.h"
 #include "XMLParser.h"
 
+#define GRID_ELEMENT_FILE_NAME  "gElementFileName.plist"
+
 static DataManager *__sharedInstane = NULL;
 
 DataManager * DataManager::sharedInstance(void)
@@ -26,5 +28,42 @@ DataManager::DataManager()
 
 DataManager::~DataManager()
 {
+    if (_savedDict != NULL) {
+        _savedDict->release();
+    }
+}
+
+GridElementProperty* DataManager::getGridElementProperty(unsigned int rIndex,unsigned int vIndex)
+{
     
+    return NULL;
+}
+
+CCDictionary * DataManager::getGridElements(void)
+{
+    std::string fileName = CCFileUtils::sharedFileUtils()->getWritablePath()+GRID_ELEMENT_FILE_NAME;
+    if (_savedDict == NULL) {
+        
+        CCDictionary *dict = NULL;
+        if (CCFileUtils::sharedFileUtils()->isFileExist(fileName)) {
+            dict = CCDictionary::createWithContentsOfFile(fileName.c_str());
+        }
+        if (dict == NULL) {
+            _savedDict = CCDictionary::create();
+        } else {
+            _savedDict = dict;
+        }
+        _savedDict->retain();
+    }
+    return _savedDict;
+}
+
+bool DataManager::saveGridElements(void)
+{
+    bool isSuccess = false;
+    if (_savedDict) {
+        std::string fileName = CCFileUtils::sharedFileUtils()->getWritablePath()+GRID_ELEMENT_FILE_NAME;
+        isSuccess = _savedDict->writeToFile(fileName.c_str());
+    }
+    return isSuccess;
 }

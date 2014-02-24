@@ -5,6 +5,7 @@
 #include "GameConstant.h"
 #include "DataConstant.h"
 #include "GeneralDataModel.h"
+#include "GridElementProperty.h"
 
 USING_NS_CC;
 
@@ -20,8 +21,8 @@ public:
 //
 //	GIRDCELL_INDEX getCellIndex(GRIDINDEX_TYPE pType);
 //    void setCellElementType(ElementType pType=kElementType_Medicine);
-    void setCellProperty(GridElementProperty pElement);
-    GridElementProperty getCellProperty(){return m_property;}
+    void setCellProperty(GridElementProperty *pElement);
+    GridElementProperty *getCellProperty(){return m_property;}
 
 private:
     bool initWith(const char *pszFileName);
@@ -30,7 +31,7 @@ private:
 //	GIRDCELL_INDEX		m_nextIndex;				//¡¨Ω”œ¬“ª∏ˆcellµƒÀ˜“˝£∫ƒ¨»œŒ™£®0£¨0£©
 //	GIRDCELL_INDEX		m_preIndex;				//¡¨Ω”…œ“ª∏ˆcellµƒÀ˜“˝£∫ƒ¨»œŒ™£®0£¨0£©
     
-    GridElementProperty m_property;             //cell对应的结构属性
+    GridElementProperty *m_property;             //cell对应的结构属性
 
 };
 

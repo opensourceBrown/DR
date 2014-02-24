@@ -1,5 +1,5 @@
 /****************************************************************************
-//Í¨ÓÃÊý¾ÝÄ£ÐÍÀà
+//Ã•Â®â€âˆšÂ ËÃ¦â€ºÆ’Â£â€“Ã•Â¿â€¡
 ****************************************************************************/
 #include "MainGameController.h"
 #include "MainGameScene.h"
@@ -91,20 +91,20 @@ bool MainGameController::judgeConnectedElementsCanClear()
 	return tRet;
 }
 
-//Éú³Égrid cell
+//â€¦Ë™â‰¥â€¦grid cell
 bool MainGameController::generateGridCell(unsigned int rIndex,unsigned int vIndex)
 {
     bool tSuc=false;
     
     do {
-        GridElementProperty blockProperty;
-        blockProperty.init();
+        GridElementProperty *blockProperty = new GridElementProperty();
+        blockProperty->init();
         
         //test
-        blockProperty.mIndex.rIndex=rIndex;
-        blockProperty.mIndex.vIndex=vIndex;
-        blockProperty.mType=kElementType_Sword;
-        blockProperty.mID=11;
+        blockProperty->mIndex.rIndex=rIndex;
+        blockProperty->mIndex.vIndex=vIndex;
+        blockProperty->mType=kElementType_Sword;
+        blockProperty->mID=11;
         
         //generate cell property according to the configure(rate)
         
@@ -115,9 +115,9 @@ bool MainGameController::generateGridCell(unsigned int rIndex,unsigned int vInde
     return tSuc;
 }
 
-GridElementProperty MainGameController::getGridElementProperty(unsigned int rIndex,unsigned int vIndex)
+GridElementProperty* MainGameController::getGridElementProperty(unsigned int rIndex,unsigned int vIndex)
 {
-    GridElementProperty blockProperty;
+    GridElementProperty *blockProperty;
     do {
         CC_BREAK_IF(rIndex>=GRID_ROW || vIndex>=GRID_VOLUME);
         
@@ -127,13 +127,13 @@ GridElementProperty MainGameController::getGridElementProperty(unsigned int rInd
     return blockProperty;
 }
 	
-//¸üÐÂgrid cell£ºÎ»ÖÃºÍË÷Òý
+//âˆÂ¸â€“Â¬grid cellÂ£âˆ«Å’ÂªÃ·âˆšâˆ«Ã•Ã€Ëœâ€œË
 void MainGameController::updateGridCell(unsigned int rIndex,unsigned int vIndex)
 {
     
 }
 	
-//ÅÐ¶Ï»¬¶¯¹ý³ÌÖÐµÄÔªËØÊÇ·ñ¿ÉÒÔÏàÁ¬
+//â‰ˆâ€“âˆ‚Å“ÂªÂ¨âˆ‚Ã˜Ï€Ëâ‰¥ÃƒÃ·â€“ÂµÆ’â€˜â„¢Ã€Ã¿Â Â«âˆ‘Ã’Ã¸â€¦â€œâ€˜Å“â€¡Â¡Â¨
 bool MainGameController::judgeElementsCanConnected(unsigned int rIndex,unsigned int vIndex)
 {
     bool tRet=false;
@@ -147,7 +147,7 @@ bool MainGameController::judgeElementsCanConnected(unsigned int rIndex,unsigned 
         GridCell *cell=gridLayer->getGridCell(rIndex, vIndex);
         CC_BREAK_IF(!cell);
         
-        GridElementProperty blockProperty=cell->getCellProperty();
+        GridElementProperty *blockProperty=cell->getCellProperty();
         
         if (mStageConnectedElements->count()<=0) {
             //activate the first selected effect
@@ -156,51 +156,51 @@ bool MainGameController::judgeElementsCanConnected(unsigned int rIndex,unsigned 
         
         
         if (mStageConnectedElements->count()==0) {
-            insertCellIntoConnectedArray(blockProperty.mIndex.rIndex, blockProperty.mIndex.vIndex);
+            insertCellIntoConnectedArray(blockProperty->mIndex.rIndex, blockProperty->mIndex.vIndex);
             tRet=true;
             break;
         }else{
             GridCell *preCell=dynamic_cast<GridCell *>(mStageConnectedElements->lastObject()) ;
             CC_BREAK_IF(!preCell);
-            GridElementProperty preBlockProperty=preCell->getCellProperty();
+            GridElementProperty *preBlockProperty=preCell->getCellProperty();
             
-            if (blockProperty.mIndex.vIndex==preBlockProperty.mIndex.vIndex && blockProperty.mIndex.rIndex== preBlockProperty.mIndex.rIndex) {
+            if (blockProperty->mIndex.vIndex==preBlockProperty->mIndex.vIndex && blockProperty->mIndex.rIndex== preBlockProperty->mIndex.rIndex) {
                 //remove
                 removeCellFromConnectedArray();
             }else{
-                if (blockProperty.mType == preBlockProperty.mType) {
+                if (blockProperty->mType == preBlockProperty->mType) {
                     //same type elements
-                    if (preBlockProperty.mType==kElementType_Bow) {
+                    if (preBlockProperty->mType==kElementType_Bow) {
                         //attach distance +1
-                        if (abs(preBlockProperty.mIndex.rIndex-blockProperty.mIndex.rIndex)<=2 && abs(preBlockProperty.mIndex.vIndex-blockProperty.mIndex.vIndex)<=2) {
+                        if (abs(preBlockProperty->mIndex.rIndex-blockProperty->mIndex.rIndex)<=2 && abs(preBlockProperty->mIndex.vIndex-blockProperty->mIndex.vIndex)<=2) {
                             
-                            insertCellIntoConnectedArray(blockProperty.mIndex.rIndex, blockProperty.mIndex.vIndex);
+                            insertCellIntoConnectedArray(blockProperty->mIndex.rIndex, blockProperty->mIndex.vIndex);
                             tRet=true;
                             break;
                         }
                     }else{
-                        if (abs(preBlockProperty.mIndex.rIndex-blockProperty.mIndex.rIndex)<=1 && abs(preBlockProperty.mIndex.vIndex-blockProperty.mIndex.vIndex)<=1) {
+                        if (abs(preBlockProperty->mIndex.rIndex-blockProperty->mIndex.rIndex)<=1 && abs(preBlockProperty->mIndex.vIndex-blockProperty->mIndex.vIndex)<=1) {
                             
-                            insertCellIntoConnectedArray(blockProperty.mIndex.rIndex, blockProperty.mIndex.vIndex);
+                            insertCellIntoConnectedArray(blockProperty->mIndex.rIndex, blockProperty->mIndex.vIndex);
                             tRet=true;
                             break;
                         }
                     }
                 }else{
                     //different type
-                    if (blockProperty.mType==kElementType_Bow || blockProperty.mType==kElementType_Sword || blockProperty.mType==kElementType_Monster) {
-                        if (preBlockProperty.mType==kElementType_Bow) {
+                    if (blockProperty->mType==kElementType_Bow || blockProperty->mType==kElementType_Sword || blockProperty->mType==kElementType_Monster) {
+                        if (preBlockProperty->mType==kElementType_Bow) {
                             //attach distance +1
-                            if (abs(preBlockProperty.mIndex.rIndex-blockProperty.mIndex.rIndex)<=2 && abs(preBlockProperty.mIndex.vIndex-blockProperty.mIndex.vIndex)<=2) {
+                            if (abs(preBlockProperty->mIndex.rIndex-blockProperty->mIndex.rIndex)<=2 && abs(preBlockProperty->mIndex.vIndex-blockProperty->mIndex.vIndex)<=2) {
                                 
-                                insertCellIntoConnectedArray(blockProperty.mIndex.rIndex, blockProperty.mIndex.vIndex);
+                                insertCellIntoConnectedArray(blockProperty->mIndex.rIndex, blockProperty->mIndex.vIndex);
                                 tRet=true;
                                 break;
                             }
                         }else{
-                            if (abs(preBlockProperty.mIndex.rIndex-blockProperty.mIndex.rIndex)<=1 && abs(preBlockProperty.mIndex.vIndex-blockProperty.mIndex.vIndex)<=1) {
+                            if (abs(preBlockProperty->mIndex.rIndex-blockProperty->mIndex.rIndex)<=1 && abs(preBlockProperty->mIndex.vIndex-blockProperty->mIndex.vIndex)<=1) {
                                 
-                                insertCellIntoConnectedArray(blockProperty.mIndex.rIndex, blockProperty.mIndex.vIndex);
+                                insertCellIntoConnectedArray(blockProperty->mIndex.rIndex, blockProperty->mIndex.vIndex);
                                 tRet=true;
                                 break;
                             }
@@ -234,8 +234,8 @@ void MainGameController::insertCellIntoConnectedArray(unsigned int rIndex,unsign
             addConnectedLine();
             
             //play sound effect
-            GridElementProperty blockProperty=cell->getCellProperty();
-            playSelctedSoundEffect(blockProperty.mType);
+            GridElementProperty *blockProperty=cell->getCellProperty();
+            playSelctedSoundEffect(blockProperty->mType);
         }
     }while(0);
 }
@@ -247,14 +247,14 @@ void MainGameController::removeCellFromConnectedArray()
     do{
         CC_BREAK_IF(!mStageConnectedElements || mStageConnectedElements->count()==0);
         GridCell *cell=dynamic_cast<GridCell *>(mStageConnectedElements->lastObject());
-        GridElementProperty blockProperty=cell->getCellProperty();
+        GridElementProperty *blockProperty=cell->getCellProperty();
         mStageConnectedElements->removeLastObject();
         
         //remove the connected line between the two cells
         cleanConnectedLine();
         
         //play sound effect
-        playSelctedSoundEffect(blockProperty.mType);
+        playSelctedSoundEffect(blockProperty->mType);
     }while(0);
 }
 
@@ -308,8 +308,8 @@ bool MainGameController::judgeGridCellCanInserted(unsigned int rIndex,unsigned i
             GridCell *item=dynamic_cast<GridCell *>(mStageConnectedElements->objectAtIndex(i));
             CC_BREAK_IF(!item);
             
-            GridElementProperty blockProperty=item->getCellProperty();
-            if (blockProperty.mIndex.rIndex==rIndex && blockProperty.mIndex.vIndex==vIndex) {
+            GridElementProperty *blockProperty=item->getCellProperty();
+            if (blockProperty->mIndex.rIndex==rIndex && blockProperty->mIndex.vIndex==vIndex) {
                 tRet=false;
                 break;
             }

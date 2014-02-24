@@ -46,9 +46,9 @@ typedef struct{
 //消除元素对应的结构体
 typedef struct {
     ElementType elementType;    //游戏消除元素类型
-    int         attackPower;    //怪物攻击力
-    int         defencePower;   //怪物防御力
-    BustyType   bustyType;      //怪物类型(boss or 普通怪)
+    int         attackPower;    //attack of monster
+    int         defencePower;   //defence of monster
+    BustyType   bustyType;      //monster type(boss or common)
 } BlockData;
 
 static inline GameLayerElement GameLayerElementMake(
@@ -223,17 +223,17 @@ typedef struct{
 }GIRDCELL_INDEX;
 
 //grid cell data struct
-typedef struct{
-	GIRDCELL_INDEX          mIndex;             //索引
-	ElementType             mType;              //cell对应的类型：怪、盾、、、、、
-	unsigned int            mID;                //怪id
-    
-    void init(){
-        mIndex.rIndex=0;
-        mIndex.vIndex=0;
-        mType=kElementType_Coin;
-        mID=0;
-    }
-}GridElementProperty;
+//typedef struct{
+//	GIRDCELL_INDEX          mIndex;             //索引
+//	ElementType             mType;              //cell对应的类型：怪、盾、、、、、
+//	unsigned int            mID;                //怪id
+//    
+//    void init(){
+//        mIndex.rIndex=0;
+//        mIndex.vIndex=0;
+//        mType=kElementType_Coin;
+//        mID=0;
+//    }
+//}GridElementProperty;
 
 #endif

@@ -2,12 +2,14 @@
 
 GridCell::GridCell()
 {
-    
+    m_property = new GridElementProperty();
 }
 
 GridCell::~GridCell()
 {
-
+    if (m_property != NULL) {
+        delete m_property;
+    }
 }
 
 GridCell* GridCell::createWithFrameName(const char *pszFileName)
@@ -39,12 +41,12 @@ bool GridCell::initWith(const char *pszFileName)
     return tRet;
 }
 
-void GridCell::setCellProperty(GridElementProperty pElement)
+void GridCell::setCellProperty(GridElementProperty *pElement)
 {
-    m_property.mID=pElement.mID;
-    m_property.mIndex.rIndex=pElement.mIndex.rIndex;
-    m_property.mIndex.vIndex=pElement.mIndex.vIndex;
-    m_property.mType=pElement.mType;
+    m_property->mID=pElement->mID;
+    m_property->mIndex.rIndex=pElement->mIndex.rIndex;
+    m_property->mIndex.vIndex=pElement->mIndex.vIndex;
+    m_property->mType=pElement->mType;
 }
 
 /*
