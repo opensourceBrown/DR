@@ -2,7 +2,7 @@
 #include "GridCell.h"
 #include "MainGameController.h"
 #include "DataConstant.h"
-
+#include "DataMangager.h"
 
 MainGameGridLayer::MainGameGridLayer():
     m_containerLayer(NULL),
@@ -104,42 +104,50 @@ void  MainGameGridLayer::constructUI()
 			for(int j=0;j<GRID_VOLUME;j++){
                 CC_BREAK_IF(!((MainGameController *)m_delegate)->generateGridCell(i,j));        //generate cell property success
                 GridElementProperty *blockProperty=((MainGameController *)m_delegate)->getGridElementProperty(i, j);
-                CCString *typeStr=NULL;
-                switch (blockProperty->mType) {
-                    case kElementType_Monster:
-                    {
-                        //select monster image according to the type
-                        typeStr=CCString::create("Grid_cell_monster.png");              //暂时写成固定
-                    }
-                        break;
-                    case kElementType_Sword:
-                        typeStr=CCString::create("Grid_cell_sword.png");
-                        break;
-                    case kElementType_Bow:
-                        typeStr=CCString::create("Grid_cell_sword.png");                //暂时都写成剑
-                        break;
-                    case kElementType_Coin:
-                        typeStr=CCString::create("Grid_cell_coin.png");
-                        break;
-                    case kElementType_Potion:
-                        typeStr=CCString::create("Grid_cell_potion.png");
-                        break;
-                    case kElementType_Shield:
-                        typeStr=CCString::create("Grid_cell_shield.png");
-                        break;
-                }
-				GridCell *item=GridCell::createWithFrameName(typeStr->getCString());
-				CC_BREAK_IF(!item);
-                item->setCellProperty(blockProperty);
-                item->setAnchorPoint(ccp(0.5,0.5));
-                item->setContentSize(CCSizeMake(m_containerLayer->getContentSize().width/GRID_VOLUME, m_containerLayer->getContentSize().height/GRID_ROW));
-                item->setPosition(ccp((j+1)*m_containerLayer->getContentSize().width/GRID_VOLUME,m_containerLayer->getContentSize().height-i*m_containerLayer->getContentSize().height/GRID_ROW));
-				m_containerLayer->addChild(item);
-
-                m_GridCellArray->addObject(item);
+                addGridCellToLayer(blockProperty);
 			}
 		}
+        DataManager::sharedInstance()->saveGridElements();  //save as plist
 	}while(0);
+}
+
+void MainGameGridLayer::addGridCellToLayer(GridElementProperty *gProperty)
+{
+    CCString *typeStr=NULL;
+    switch (gProperty->mType) {
+        case kElementType_Monster:
+        {
+            //select monster image according to the type
+            typeStr=CCString::create("Grid_cell_monster.png");              //暂时写成固定
+        }
+            break;
+        case kElementType_Sword:
+            typeStr=CCString::create("Grid_cell_sword.png");
+            break;
+        case kElementType_Bow:
+            typeStr=CCString::create("Grid_cell_sword.png");                //暂时都写成剑
+            break;
+        case kElementType_Coin:
+            typeStr=CCString::create("Grid_cell_coin.png");
+            break;
+        case kElementType_Potion:
+            typeStr=CCString::create("Grid_cell_potion.png");
+            break;
+        case kElementType_Shield:
+            typeStr=CCString::create("Grid_cell_shield.png");
+            break;
+    }
+    GridCell *item=GridCell::createWithFrameName(typeStr->getCString());
+    item->setCellProperty(gProperty);
+    item->setAnchorPoint(ccp(0.5,0.5));
+    item->setContentSize(CCSizeMake(m_containerLayer->getContentSize().width/GRID_VOLUME, m_containerLayer->getContentSize().height/GRID_ROW));
+    
+    int row = gProperty->mIndex.rIndex;
+    int col = gProperty->mIndex.vIndex;
+    item->setPosition(ccp((col+1)*m_containerLayer->getContentSize().width/GRID_VOLUME,m_containerLayer->getContentSize().height-row*m_containerLayer->getContentSize().height/GRID_ROW));
+    m_containerLayer->addChild(item);
+    
+    m_GridCellArray->addObject(item);
 }
 
 void MainGameGridLayer::updateGridCell(unsigned int uIndex,unsigned int vIndex)

@@ -30,6 +30,7 @@ DataManager::~DataManager()
 {
     if (_savedDict != NULL) {
         _savedDict->release();
+        _savedDict = NULL;
     }
 }
 
@@ -41,10 +42,10 @@ GridElementProperty* DataManager::getGridElementProperty(unsigned int rIndex,uns
 
 CCDictionary * DataManager::getGridElements(void)
 {
-    std::string fileName = CCFileUtils::sharedFileUtils()->getWritablePath()+GRID_ELEMENT_FILE_NAME;
+    
     if (_savedDict == NULL) {
-        
         CCDictionary *dict = NULL;
+        std::string fileName = CCFileUtils::sharedFileUtils()->getWritablePath()+GRID_ELEMENT_FILE_NAME;
         if (CCFileUtils::sharedFileUtils()->isFileExist(fileName)) {
             dict = CCDictionary::createWithContentsOfFile(fileName.c_str());
         }

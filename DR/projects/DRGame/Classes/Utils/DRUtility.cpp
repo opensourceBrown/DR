@@ -88,3 +88,11 @@ CCDictionary* DRUtility::loadDictFromEncFile(char* fileName)
     
 	return dict;
 }
+
+CCString* DRUtility::getCCStringWithInt(int intValue)
+{
+    CCString *strObjID = new CCString();
+    strObjID->autorelease();
+    strObjID->initWithFormat("%d", intValue);
+    return strObjID;
+}

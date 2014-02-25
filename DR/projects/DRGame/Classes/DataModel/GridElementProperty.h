@@ -30,6 +30,8 @@ public:
         mType=kElementType_Coin;
         mID=0;
     }
+    
+    void saveToDictionary(CCDictionary *dict);   //save to the Dictionary parse in
 };
 
 

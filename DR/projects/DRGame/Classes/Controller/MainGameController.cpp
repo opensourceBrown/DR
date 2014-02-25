@@ -5,7 +5,7 @@
 #include "MainGameScene.h"
 #include "MainGameGridLayer.h"
 #include "GridCell.h"
-
+#include "DataMangager.h"
 
 MainGameController::MainGameController():
     mGridCellContainer(NULL),
@@ -97,14 +97,43 @@ bool MainGameController::generateGridCell(unsigned int rIndex,unsigned int vInde
     bool tSuc=false;
     
     do {
+        CCDictionary *rDict = DataManager::sharedInstance()->getGridElements();
+        
         GridElementProperty *blockProperty = new GridElementProperty();
         blockProperty->init();
+        if (rDict->count() > 0) {
+            std::stringstream sStream;
+            sStream<<rIndex<<"_"<<vIndex;
+            CCDictionary *currentDic = (CCDictionary *)rDict->objectForKey(sStream.str());
+            if (currentDic) {
+                //read plist Data
+                CCString *strRIndex = (CCString *)currentDic->objectForKey("rIndex");
+                blockProperty->mIndex.rIndex= strRIndex->intValue();
+                CCString *strVIndex = (CCString *)currentDic->objectForKey("vIndex");
+                blockProperty->mIndex.vIndex=strVIndex->intValue();
+                CCString *strType = (CCString *)currentDic->objectForKey("mType");
+                blockProperty->mType=(ElementType)strType->intValue();
+                CCString *strID = (CCString *)currentDic->objectForKey("mID");
+                blockProperty->mID=strID->intValue();
+            } else {
+                //test
+                blockProperty->mIndex.rIndex=rIndex;
+                blockProperty->mIndex.vIndex=vIndex;
+                blockProperty->mType=kElementType_Sword;
+                blockProperty->mID=11;
+                
+                blockProperty->saveToDictionary(rDict);
+            }
+        } else {
+            //test
+            blockProperty->mIndex.rIndex=rIndex;
+            blockProperty->mIndex.vIndex=vIndex;
+            blockProperty->mType=kElementType_Sword;
+            blockProperty->mID=11;
+            
+            blockProperty->saveToDictionary(rDict);
+        }
         
-        //test
-        blockProperty->mIndex.rIndex=rIndex;
-        blockProperty->mIndex.vIndex=vIndex;
-        blockProperty->mType=kElementType_Sword;
-        blockProperty->mID=11;
         
         //generate cell property according to the configure(rate)
         

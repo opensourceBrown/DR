@@ -2,6 +2,7 @@
 #include "BaseController.h"
 #include "MainGameGridLayer.h"
 #include "DataMangager.h"
+#include "DRUtility.h"
 
 USING_NS_CC;
 
@@ -120,43 +121,23 @@ void testDataMethod(void)
      *  plist read and write
      */
     {
-        CCDictionary *rDict = DataManager::sharedInstance()->getGridElements();
-        
-//        GridElementProperty *mGridPropertyContainer[GRID_ROW][GRID_VOLUME];
-        for(int i=0;i<GRID_ROW;i++){
-			for(int j=0;j<GRID_VOLUME;j++){
-                GridElementProperty *gridEProperty = new GridElementProperty();
-                gridEProperty->autorelease();
-                gridEProperty->init();
-                
-                //test
-                gridEProperty->mIndex.rIndex=i;
-                gridEProperty->mIndex.vIndex=j;
-                gridEProperty->mType=kElementType_Sword;
-                gridEProperty->mID=i*10+j;
-//                mGridPropertyContainer[i][j] = gridEProperty;
-                
-                stringstream strStream;
-                strStream << i << "-" << j;
-                
-                CCDictionary *gridDict = new CCDictionary();
-                gridDict->autorelease();
-                
-                CCString *strObj = new CCString();
-                strObj->autorelease();
-                strObj->initWithFormat("%d", gridEProperty->mType);
-                gridDict->setObject(strObj, "mType");
-                
-                CCString *strObjID = new CCString();
-                strObjID->autorelease();
-                strObjID->initWithFormat("%d", gridEProperty->mType);
-                gridDict->setObject(strObjID, "mID");
-                
-                rDict->setObject(gridDict, strStream.str());
-            }
-        }
-        
-        DataManager::sharedInstance()->saveGridElements();
+//        CCDictionary *rDict = DataManager::sharedInstance()->getGridElements();
+//        for(int i=0;i<GRID_ROW;i++){
+//			for(int j=0;j<GRID_VOLUME;j++){
+//                GridElementProperty *gridEProperty = new GridElementProperty();
+//                gridEProperty->autorelease();
+//                gridEProperty->init();
+//                
+//                //test
+//                gridEProperty->mIndex.rIndex=i;
+//                gridEProperty->mIndex.vIndex=j;
+//                gridEProperty->mType=kElementType_Sword;
+//                gridEProperty->mID=i*10+j;
+//                
+//                gridEProperty->saveToDictionary(rDict); //the Dict value is the property of GridElementProperty
+//            }
+//        }
+//        DataManager::sharedInstance()->saveGridElements();
         
     }
     
