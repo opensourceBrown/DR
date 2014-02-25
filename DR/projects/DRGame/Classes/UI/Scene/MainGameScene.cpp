@@ -138,16 +138,22 @@ void testDataMethod(void)
                 
                 stringstream strStream;
                 strStream << i << "-" << j;
-                rDict->setObject(gridEProperty, strStream.str());
+                
+                CCDictionary *gridDict = new CCDictionary();
+                gridDict->autorelease();
+                
+                CCString *strObj = new CCString();
+                strObj->autorelease();
+                strObj->initWithFormat("%d", gridEProperty->mType);
+                gridDict->setObject(strObj, "mType");
+                
+                CCString *strObjID = new CCString();
+                strObjID->autorelease();
+                strObjID->initWithFormat("%d", gridEProperty->mType);
+                gridDict->setObject(strObjID, "mID");
+                
+                rDict->setObject(gridDict, strStream.str());
             }
-        }
-        
-        CCDictElement *rElement = NULL;
-        CCDICT_FOREACH(rDict, rElement)
-        {
-            string key = rElement->getStrKey();
-            CCString *value = (CCString *)rElement->getObject();
-            cout<<"key="+key + " ------ value=" + value->getCString()<<endl;
         }
         
         DataManager::sharedInstance()->saveGridElements();
@@ -157,53 +163,53 @@ void testDataMethod(void)
     /**
      *  CSV test
      */
-    {
-        CSVParser *csvParser = new CSVParser();
-        csvParser->openFile("testdata.csv");
-        
-        CCArray      *dataArray = CCArray::create();
-        CCArray      *keys = CCArray::create();
-        CCDictionary *dictionary;
-        string strLine = "";
-        for (int i = 0; i < csvParser->getRows(); i++) {
-            for (int j = 0; j < csvParser->getCols(); j++) {
-                CCString *string = CCString::create(csvParser->getData(i, j));
-                if (i == 0) {
-                    keys->addObject(string);
-                } else {
-                    if (j==0) {
-                        dictionary = CCDictionary::create();
-                    }
-                    CCString *strKey = (CCString *)keys->objectAtIndex(j);
-                    dictionary->setObject(string, strKey->getCString());
-                    if (j== csvParser->getCols()-1) {
-                        dataArray->addObject(dictionary);
-                    }
-                }
-            }
-        }
-        
-        CCArray *allKeys = dictionary->allKeys();
-        for (int i = 0; i < allKeys->count(); i++) {
-            CCString *key = (CCString *)allKeys->objectAtIndex(i);
-            cout<<"key=" + string(key->getCString())<<endl;
-        }
-        
-        CCDictionary *dict = NULL;
-        CCObject *object = NULL;
-        CCDictElement *dElement = NULL;
-        CCARRAY_FOREACH(dataArray, object)
-        {
-            dict = (CCDictionary *)object;
-            
-            CCDICT_FOREACH(dict, dElement)
-            {
-                string key = dElement->getStrKey();
-                CCString *value = (CCString *)dElement->getObject();
-                cout<<"key="+key + " ------ value=" + value->getCString()<<endl;
-            }
-        }
-        
-        delete csvParser;
-    }
+//    {
+//        CSVParser *csvParser = new CSVParser();
+//        csvParser->openFile("testdata.csv");
+//        
+//        CCArray      *dataArray = CCArray::create();
+//        CCArray      *keys = CCArray::create();
+//        CCDictionary *dictionary;
+//        string strLine = "";
+//        for (int i = 0; i < csvParser->getRows(); i++) {
+//            for (int j = 0; j < csvParser->getCols(); j++) {
+//                CCString *string = CCString::create(csvParser->getData(i, j));
+//                if (i == 0) {
+//                    keys->addObject(string);
+//                } else {
+//                    if (j==0) {
+//                        dictionary = CCDictionary::create();
+//                    }
+//                    CCString *strKey = (CCString *)keys->objectAtIndex(j);
+//                    dictionary->setObject(string, strKey->getCString());
+//                    if (j== csvParser->getCols()-1) {
+//                        dataArray->addObject(dictionary);
+//                    }
+//                }
+//            }
+//        }
+//        
+//        CCArray *allKeys = dictionary->allKeys();
+//        for (int i = 0; i < allKeys->count(); i++) {
+//            CCString *key = (CCString *)allKeys->objectAtIndex(i);
+//            cout<<"key=" + string(key->getCString())<<endl;
+//        }
+//        
+//        CCDictionary *dict = NULL;
+//        CCObject *object = NULL;
+//        CCDictElement *dElement = NULL;
+//        CCARRAY_FOREACH(dataArray, object)
+//        {
+//            dict = (CCDictionary *)object;
+//            
+//            CCDICT_FOREACH(dict, dElement)
+//            {
+//                string key = dElement->getStrKey();
+//                CCString *value = (CCString *)dElement->getObject();
+//                cout<<"key="+key + " ------ value=" + value->getCString()<<endl;
+//            }
+//        }
+//        
+//        delete csvParser;
+//    }
 }
