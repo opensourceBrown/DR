@@ -83,13 +83,12 @@ private:
 	CCArray					*mStageConnectedElements;	//每一回合中已经相连的元素（按顺序存储元素的类型和对应cell的标识，可加可删）
     
     //grid cell container:
-	CCArray					*mGridCellContainer;
-	
-    //grid cell property container
-    CCArray                 *mGridPropertyContainer;
+//	CCArray					*mGridCellContainer;
     
     //current stage property
     GameStageProperty       mStageProperty;
+    
+    CCArray                 *mGridPropertyContainer;
 private:
 
 };

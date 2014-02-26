@@ -8,7 +8,7 @@
 #include "DataMangager.h"
 
 MainGameController::MainGameController():
-    mGridCellContainer(NULL),
+//    mGridCellContainer(NULL),
     mMagicInStage(NULL),
     mStageConnectedElements(NULL)
 {
@@ -17,10 +17,9 @@ MainGameController::MainGameController():
 
 MainGameController::~MainGameController()
 {
-	CC_SAFE_RELEASE(mGridCellContainer);
+//	CC_SAFE_RELEASE(mGridCellContainer);
     CC_SAFE_RELEASE(mMagicInStage);
     CC_SAFE_RELEASE(mStageConnectedElements);
-    CC_SAFE_RELEASE(mGridPropertyContainer);
     CC_SAFE_RELEASE(m_scene);
 }
 
@@ -47,9 +46,9 @@ bool MainGameController::initWith()
         CC_BREAK_IF(!m_scene);
         m_scene->retain();
         
-        mGridCellContainer=CCArray::createWithCapacity(GRID_ROW*GRID_VOLUME);
-        CC_BREAK_IF(!mGridCellContainer);
-        mGridCellContainer->retain();
+//        mGridCellContainer=CCArray::createWithCapacity(GRID_ROW*GRID_VOLUME);
+//        CC_BREAK_IF(!mGridCellContainer);
+//        mGridCellContainer->retain();
         
         mMagicInStage=CCArray::create();
         CC_BREAK_IF(!mMagicInStage);
@@ -182,6 +181,7 @@ bool MainGameController::generateGridCell(unsigned int rIndex,unsigned int vInde
         //generate cell property according to the configure(rate)
         
         mGridPropertyContainer->insertObject(blockProperty, rIndex*GRID_VOLUME+vIndex);
+//        mGridCellContainer->addObject(blockProperty);
         tSuc=true;
     } while (0);
     
@@ -190,12 +190,11 @@ bool MainGameController::generateGridCell(unsigned int rIndex,unsigned int vInde
 
 GridElementProperty* MainGameController::getGridElementProperty(unsigned int rIndex,unsigned int vIndex)
 {
-    GridElementProperty *blockProperty=NULL;
+    GridElementProperty *blockProperty;
     do {
-        CC_BREAK_IF(!mGridPropertyContainer);
         CC_BREAK_IF(rIndex>=GRID_ROW || vIndex>=GRID_VOLUME);
         
-        blockProperty=dynamic_cast<GridElementProperty *>(mGridPropertyContainer->objectAtIndex(rIndex*GRID_ROW+vIndex));
+        blockProperty=(GridElementProperty *)mGridPropertyContainer->objectAtIndex(rIndex*GRID_ROW+vIndex);
     } while (0);
     
     return blockProperty;
