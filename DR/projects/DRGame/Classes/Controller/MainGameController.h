@@ -25,6 +25,12 @@ public:
     
     //insert a cell into the connected array
 	void insertCellIntoConnectedArray(unsigned int rIndex,unsigned int vIndex);
+    
+    //判断相连的元素是否可以消除
+	bool judgeConnectedElementsCanClear();
+    
+	//消除相连元素
+	void clearConnectedElements();
 
 private:
     bool initWith();
@@ -34,9 +40,9 @@ private:
 	
 	//判断本关卡游戏是否结束
 	bool judgeGameIsEnd();
-
-	//判断相连的元素是否可以消除
-	bool judgeConnectedElementsCanClear();
+    
+    //结束当前游戏关卡
+	void endCurrentStage();
 	
 	
     

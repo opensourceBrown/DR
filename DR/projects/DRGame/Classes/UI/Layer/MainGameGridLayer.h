@@ -16,7 +16,7 @@ public:
 
     void addGridCell(unsigned int rIndex,unsigned int vIndex);
     void removeGridCell(unsigned int rIndex,unsigned int vIndex);
-	void updateGridCell(unsigned int uIndex,unsigned int vIndex);
+	void updateGridCell(unsigned int uIndex,unsigned int vIndex,unsigned int pStep);
     
     GridCell *getGridCell(unsigned int rIndex,unsigned int vIndex);
 private:

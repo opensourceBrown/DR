@@ -79,6 +79,11 @@ bool MainGameController::judgeGameIsEnd()
 	return tRet;
 }
 
+void MainGameController::endCurrentStage()
+{
+    
+}
+
 bool MainGameController::judgeConnectedElementsCanClear()
 {
 	bool tRet=false;
@@ -89,6 +94,15 @@ bool MainGameController::judgeConnectedElementsCanClear()
     }while(0);
     
 	return tRet;
+}
+
+void MainGameController::clearConnectedElements()
+{
+	//clear connected elements
+    
+	//每回合结束都判断当前关卡是否结束
+	//judge whether the current stage is end
+    
 }
 
 //生成grid cell
