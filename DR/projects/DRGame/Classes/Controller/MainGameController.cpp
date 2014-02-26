@@ -150,7 +150,7 @@ bool MainGameController::generateGridCell(unsigned int rIndex,unsigned int vInde
         
         //generate cell property according to the configure(rate)
         
-        mGridCellContainer->insertObject(blockProperty, rIndex*GRID_ROW+vIndex);
+        mGridPropertyContainer[rIndex*GRID_ROW+vIndex]=blockProperty;
         tSuc=true;
     } while (0);
     
@@ -163,7 +163,7 @@ GridElementProperty* MainGameController::getGridElementProperty(unsigned int rIn
     do {
         CC_BREAK_IF(rIndex>=GRID_ROW || vIndex>=GRID_VOLUME);
         
-        blockProperty = (GridElementProperty*)mGridCellContainer->objectAtIndex(rIndex*GRID_ROW+vIndex);
+        blockProperty=mGridPropertyContainer[rIndex*GRID_ROW+vIndex];
     } while (0);
     
     return blockProperty;
