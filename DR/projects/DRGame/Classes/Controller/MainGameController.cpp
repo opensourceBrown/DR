@@ -59,7 +59,7 @@ bool MainGameController::initWith()
         CC_BREAK_IF(!mStageConnectedElements);
         mStageConnectedElements->retain();
         
-        mGridPropertyContainer=CCArray::create();
+        mGridPropertyContainer=CCArray::createWithCapacity(GRID_VOLUME*GRID_ROW);
         CC_BREAK_IF(!mGridPropertyContainer);
         mGridPropertyContainer->retain();
         tRet=true;
@@ -68,7 +68,7 @@ bool MainGameController::initWith()
     return tRet;
 }
 
-bool MainGameController::judgeGameIsEnd()
+bool MainGameController::judgeGameStageIsEnd()
 {
     bool tRet=false;
     
@@ -103,11 +103,37 @@ bool MainGameController::judgeConnectedElementsCanClear()
 
 void MainGameController::clearConnectedElements()
 {
-	//clear connected elements
+    do {
+        MainGameGridLayer *gridLayer = ((MainGameScene *)m_scene)->getGridLayer();
+        CC_BREAK_IF(!gridLayer);
+        
+        CC_BREAK_IF(!mStageConnectedElements);
+        for (int i=0; i<mStageConnectedElements->count(); i++) {
+            GridElementProperty *block=dynamic_cast<GridElementProperty *>(mStageConnectedElements->objectAtIndex(i));
+            CC_BREAK_IF(!block);
+            
+            //clear connected elements from mGridPropertyContainer
+            mGridPropertyContainer->removeObject(block);
+            
+            //clear cell that removed from  mGridPropertyContainer on MainGameGridLayer
+            gridLayer->removeGridCell(block->mIndex.rIndex, block->mIndex.vIndex);
+            
+            //generate new GridElementProperty to fill the blank grid cell
+            CC_BREAK_IF(!this->generateGridCell(block->mIndex.rIndex, block->mIndex.vIndex));
+            gridLayer->addGridCell(block->mIndex.rIndex, block->mIndex.vIndex);
+        }
+        
+        //update MainGameGridLayer to show new cell
+        gridLayer->updateGrid();
+    } while (0);
+        
+    mStageConnectedElements->removeAllObjects();
     
 	//ÿ�غϽ������жϵ�ǰ�ؿ��Ƿ����
 	//judge whether the current stage is end
-    
+    if (this->judgeGameStageIsEnd()) {
+        this->endCurrentStage();
+    }
 }
 
 bool MainGameController::generateGridCell(unsigned int rIndex,unsigned int vIndex)
@@ -155,7 +181,7 @@ bool MainGameController::generateGridCell(unsigned int rIndex,unsigned int vInde
         
         //generate cell property according to the configure(rate)
         
-        mGridPropertyContainer->addObject(blockProperty);
+        mGridPropertyContainer->insertObject(blockProperty, rIndex*GRID_VOLUME+vIndex);
         tSuc=true;
     } while (0);
     
@@ -176,11 +202,11 @@ GridElementProperty* MainGameController::getGridElementProperty(unsigned int rIn
 }
 	
 //∏¸–¬grid cell£∫Œª÷√∫ÕÀ˜“˝
-void MainGameController::updateGridCell(unsigned int rIndex,unsigned int vIndex)
-{
-    
-}
-	
+//void MainGameController::updateGridCell(unsigned int rIndex,unsigned int vIndex)
+//{
+//    
+//}
+
 //≈–∂œª¨∂Øπ˝≥Ã÷–µƒ‘™Àÿ «∑Òø…“‘œ‡¡¨
 bool MainGameController::judgeElementsCanConnected(unsigned int rIndex,unsigned int vIndex)
 {
@@ -314,10 +340,10 @@ void MainGameController::removeCellFromConnectedArray()
 //}
 
 //remove a cell from the cell container(clear a cell from the screen for connecting)
-void MainGameController::removeCellFromGridContainer(unsigned int pIndex)
-{
-    
-}
+//void MainGameController::removeCellFromGridContainer(unsigned int pIndex)
+//{
+//    
+//}
 
 void MainGameController::playSelctedSoundEffect(ElementType pType)
 {

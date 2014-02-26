@@ -175,12 +175,19 @@ void MainGameGridLayer::addGridCellToLayer(GridElementProperty *gProperty)
     m_GridCellArray->addObject(item);
 }
 
-void MainGameGridLayer::updateGridCell(unsigned int uIndex,unsigned int vIndex,unsigned int pStep)
+void MainGameGridLayer::updateGrid()
 {
     do{
-        
+        CC_BREAK_IF(!m_GridCellArray);
     }while(0);
 }
+
+//void MainGameGridLayer::updateGridCell(unsigned int uIndex,unsigned int vIndex,unsigned int pStep)
+//{
+//    do{
+//        
+//    }while(0);
+//}
 
 void MainGameGridLayer::addGridCell(unsigned int rIndex,unsigned int vIndex)
 {
@@ -192,6 +199,7 @@ void MainGameGridLayer::addGridCell(unsigned int rIndex,unsigned int vIndex)
 void MainGameGridLayer::removeGridCell(unsigned int rIndex,unsigned int vIndex)
 {
     do{
+        CC_BREAK_IF(!m_GridCellArray);
         
     }while(0);
 }

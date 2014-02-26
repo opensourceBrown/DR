@@ -37,10 +37,10 @@ private:
     bool initWith();
 	
 	//更新grid cell：位置和索引
-	void updateGridCell(unsigned int rIndex,unsigned int vIndex);
+	//void updateGridCell(unsigned int rIndex,unsigned int vIndex);
 	
 	//判断本关卡游戏是否结束
-	bool judgeGameIsEnd();
+	bool judgeGameStageIsEnd();
     
     //结束当前游戏关卡
 	void endCurrentStage();
@@ -54,7 +54,7 @@ private:
 	//void insertCellIntoGridContainer(unsigned int pIndex);
     
 	//remove a cell from the cell container(clear a cell from the screen for connecting)
-	void removeCellFromGridContainer(unsigned int pIndex);
+	//void removeCellFromGridContainer(unsigned int pIndex);
     
     //play sound effect
     void playSelctedSoundEffect(ElementType pType);             //when grid cell clicked or selected
