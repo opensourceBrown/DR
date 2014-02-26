@@ -20,18 +20,32 @@ public:
     GridElementProperty();
     ~GridElementProperty();
     
-    GIRDCELL_INDEX          mIndex;             //索引
-    ElementType             mType;              //cell对应的类型：怪、盾、、、、、
-    unsigned int            mID;                //怪id
+    GIRDCELL_INDEX          mIndex;
+    ElementType             mType;              //monster,sword,shield,Potion and so on
+    unsigned int            mID;                //boss id, 0 is normal
+    BustyProperty           mMonsterProperty;
     
     void init(){
         mIndex.rIndex=0;
         mIndex.vIndex=0;
         mType=kElementType_Coin;
         mID=0;
+        
+        mMonsterProperty.mType = kBustyType_Common;
+        mMonsterProperty.mSkillType = kBossBustyType_Chaotic;
+        mMonsterProperty.mID = 0;
+        mMonsterProperty.mName = "name";
+        mMonsterProperty.mDescription = "Description";
+        mMonsterProperty.mDefence = 0;
+        mMonsterProperty.mLife = 0;
+        mMonsterProperty.mMaxLife = 0;
+        mMonsterProperty.mDamage = 0;
     }
     
-    void saveToDictionary(CCDictionary *dict);   //save to the Dictionary parse in
+    void generateGridElementDataByCSV();
+    void saveToDictionary(CCDictionary *dict);   //save to the Dictionary which parses in
+    
+    bool canbeDestroyed();      //when monster`s life>0, can not be destroyed
 };
 
 

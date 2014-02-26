@@ -32,60 +32,13 @@ typedef enum{
 //暂时我先用自己定义的,稍后我们可以过一下这块
 //定义界面元素结构体
 typedef struct{
-	int     attack;        //剑攻击力
-    int     monsterAttack; //怪物总攻击力
-    int     defence;       //当前防御力
-    int     maxdefence;    //最大防御力
-    int     life;          //生命值
-    int     maxLife;       //最大生命值
+    int     monsterAttack;
+    int     defence;
+    int     life;
+    int     maxLife;
     
-    int     roundNumber;   //回合数
-    int     score;         //得分
-} GameLayerElement;
-
-//消除元素对应的结构体
-typedef struct {
-    ElementType elementType;    //游戏消除元素类型
-    int         attackPower;    //attack of monster
-    int         defencePower;   //defence of monster
     BustyType   bustyType;      //monster type(boss or common)
-} BlockData;
-
-static inline GameLayerElement GameLayerElementMake(
-                                                    int attack,
-                                                    int monsterAttack,
-                                                    int defence,
-                                                    int maxdefence,
-                                                    int life,
-                                                    int maxlife,
-                                                    int roundNumber,
-                                                    int score
-                                                    ) {
-    GameLayerElement gameLayerElement;
-    gameLayerElement.attack = attack;
-    gameLayerElement.monsterAttack = monsterAttack;
-    gameLayerElement.defence = defence;
-    gameLayerElement.maxdefence = maxdefence;
-    gameLayerElement.life = life;
-    gameLayerElement.maxLife = maxlife;
-    gameLayerElement.roundNumber = roundNumber;
-    gameLayerElement.score = score;
-    return gameLayerElement;
-}
-
-static inline BlockData BlockDataMake(
-                                      ElementType elementType,
-                                      int   attackPower,
-                                      int   defencePower,
-                                      BustyType bustyType
-                                      ) {
-    BlockData   blockData;
-    blockData.elementType = elementType;
-    blockData.attackPower = attackPower;
-    blockData.defencePower = defencePower;
-    blockData.bustyType = bustyType;
-    return blockData;
-}
+} MonsterProperty;
 
 //定义boss怪的类型
 typedef enum{
@@ -195,11 +148,12 @@ typedef struct{
 	BustyType               mType;              
 	BossBustyType			mSkillType;
 	unsigned int			mID;
-	char					mName[GENERAL_CHAR_LENGTH];
-	char					mDescription[GENERAL_CHAR_LENGTH];
+	const char*				mName;
+	const char*				mDescription;
 	unsigned int			mDefence;
+    unsigned int            mLife;
+    unsigned int            mMaxLife;
 	unsigned int			mDamage;
-	unsigned int			mPotion;
 }BustyProperty;
 
 //定义关卡结构

@@ -27,9 +27,14 @@ private:
     
 public:
     static DataManager *sharedInstance(void);
+    
+    //read and save GridElementProperty
     GridElementProperty *getGridElementProperty(unsigned int rIndex,unsigned int vIndex);
     CCDictionary * getGridElements(void);
     bool saveGridElements(void);
+    
+    //
+    
 };
 
 #endif /* defined(__DRGame__DataMangager__) */
