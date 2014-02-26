@@ -20,6 +20,7 @@ MainGameController::~MainGameController()
 	CC_SAFE_RELEASE(mGridCellContainer);
     CC_SAFE_RELEASE(mMagicInStage);
     CC_SAFE_RELEASE(mStageConnectedElements);
+    CC_SAFE_RELEASE(mGridPropertyContainer);
     CC_SAFE_RELEASE(m_scene);
 }
 
@@ -57,6 +58,10 @@ bool MainGameController::initWith()
         mStageConnectedElements=CCArray::create();
         CC_BREAK_IF(!mStageConnectedElements);
         mStageConnectedElements->retain();
+        
+        mGridPropertyContainer=CCArray::create();
+        CC_BREAK_IF(!mGridPropertyContainer);
+        mGridPropertyContainer->retain();
         tRet=true;
     } while (0);
     
@@ -150,7 +155,7 @@ bool MainGameController::generateGridCell(unsigned int rIndex,unsigned int vInde
         
         //generate cell property according to the configure(rate)
         
-        mGridPropertyContainer[rIndex*GRID_ROW+vIndex]=blockProperty;
+        mGridPropertyContainer->addObject(blockProperty);
         tSuc=true;
     } while (0);
     
@@ -159,11 +164,12 @@ bool MainGameController::generateGridCell(unsigned int rIndex,unsigned int vInde
 
 GridElementProperty* MainGameController::getGridElementProperty(unsigned int rIndex,unsigned int vIndex)
 {
-    GridElementProperty *blockProperty;
+    GridElementProperty *blockProperty=NULL;
     do {
+        CC_BREAK_IF(!mGridPropertyContainer);
         CC_BREAK_IF(rIndex>=GRID_ROW || vIndex>=GRID_VOLUME);
         
-        blockProperty=mGridPropertyContainer[rIndex*GRID_ROW+vIndex];
+        blockProperty=dynamic_cast<GridElementProperty *>(mGridPropertyContainer->objectAtIndex(rIndex*GRID_ROW+vIndex));
     } while (0);
     
     return blockProperty;

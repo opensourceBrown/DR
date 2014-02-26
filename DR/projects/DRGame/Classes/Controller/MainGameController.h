@@ -86,7 +86,7 @@ private:
 	CCArray					*mGridCellContainer;
 	
     //grid cell property container
-    GridElementProperty     *mGridPropertyContainer[GRID_ROW*GRID_VOLUME];
+    CCArray                 *mGridPropertyContainer;
     
     //current stage property
     GameStageProperty       mStageProperty;
