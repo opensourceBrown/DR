@@ -40,6 +40,12 @@ typedef struct{
     BustyType   bustyType;      //monster type(boss or common)
 } MonsterProperty;
 
+//game status
+typedef struct {
+    int numberOfRound;
+//    int 
+} GameStatusType;
+
 //定义boss怪的类型
 typedef enum{
     kBossBustyType_Chaotic=0,
