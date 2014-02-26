@@ -3,6 +3,7 @@
 
 #include "BaseLayer.h"
 #include "GeneralDataModel.h"
+#include "GridElementProperty.h"
 
 class GridCell;
 class MainGameGridLayer : public BaseLayer
@@ -21,6 +22,7 @@ public:
     GridCell *getGridCell(unsigned int rIndex,unsigned int vIndex);
 private:
     void constructUI();
+    void addGridCellToLayer(GridElementProperty *gProperty);
     
 	void moveGridCellAnimation(unsigned int rIndex,unsigned int vIndex);				//ÏÂÒÆcell¶¯»­
     bool rectContainPoint(CCRect pRect,CCPoint pPoint);

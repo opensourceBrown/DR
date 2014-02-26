@@ -14,12 +14,17 @@
 #include "cocos2d.h"
 
 using namespace std;
+using namespace cocos2d;
 
 class DRUtility : cocos2d::CCObject
 {
 public:
     static string getFileByName(string pFileName);
     static bool saveFile(char *pContent, string pFileName);
+    
+    static CCDictionary* loadDictFromEncFile(char* fileName);
+    static CCString* getCCStringWithInt(int intValue);
+    
 private:
     
     
