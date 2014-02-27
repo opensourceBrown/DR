@@ -17,12 +17,13 @@ public:
 
     void addGridCell(unsigned int rIndex,unsigned int vIndex);
     void removeGridCell(unsigned int rIndex,unsigned int vIndex);
-	void updateGridCell(unsigned int uIndex,unsigned int vIndex);
+    void updateGrid();
     
     GridCell *getGridCell(unsigned int rIndex,unsigned int vIndex);
 private:
     void constructUI();
     void addGridCellToLayer(GridElementProperty *gProperty);
+//    void updateGridCell(unsigned int uIndex,unsigned int vIndex,unsigned int pStep);
     
 	void moveGridCellAnimation(unsigned int rIndex,unsigned int vIndex);				//ÏÂÒÆcell¶¯»­
     bool rectContainPoint(CCRect pRect,CCPoint pPoint);

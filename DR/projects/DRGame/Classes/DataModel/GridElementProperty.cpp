@@ -19,6 +19,11 @@ GridElementProperty::~GridElementProperty()
     
 }
 
+void GridElementProperty::generateGridElementDataByCSV()
+{
+    
+}
+
 void GridElementProperty::saveToDictionary(CCDictionary *dict)
 {
     stringstream strStream;
@@ -32,4 +37,9 @@ void GridElementProperty::saveToDictionary(CCDictionary *dict)
     gridDict->setObject(DRUtility::getCCStringWithInt(mIndex.vIndex), "vIndex");
     dict->setObject(gridDict, strStream.str());
     gridDict->autorelease();
+}
+
+bool GridElementProperty::canbeDestroyed()
+{
+    return mMonsterProperty.mLife <= 0;
 }

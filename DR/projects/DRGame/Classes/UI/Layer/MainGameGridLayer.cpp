@@ -45,8 +45,8 @@ void MainGameGridLayer::onExit()
 bool MainGameGridLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
     CCPoint location=pTouch->getLocation();
-    CCLog("screen size:(%f,%f)",WIN_SIZE.width,WIN_SIZE.height);
-    CCLog("touch location:(%f,%f)",location.x,location.y);
+    //CCLog("screen size:(%f,%f)",WIN_SIZE.width,WIN_SIZE.height);
+    //CCLog("touch location:(%f,%f)",location.x,location.y);
     do{
         
         CC_BREAK_IF(!m_delegate);
@@ -55,14 +55,14 @@ bool MainGameGridLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
         for(int i=0;i<m_GridCellArray->count();i++){
 			GridCell *cell=dynamic_cast<GridCell *>(m_GridCellArray->objectAtIndex(i));
 			CC_BREAK_IF(!cell);
-            CCLog("cell rect:(%f,%f,%f,%f)",cell->getPosition().x-m_containerLayer->getContentSize().width/GRID_VOLUME,cell->getPosition().y+cell->getContentSize().height/2,cell->getContentSize().width,cell->getContentSize().height);
+            //CCLog("cell rect:(%f,%f,%f,%f)",cell->getPosition().x-m_containerLayer->getContentSize().width/GRID_VOLUME,cell->getPosition().y+cell->getContentSize().height/2,cell->getContentSize().width,cell->getContentSize().height);
 			if(rectContainPoint(CCRectMake(cell->getPosition().x-m_containerLayer->getContentSize().width/GRID_VOLUME, cell->getPosition().y+cell->getContentSize().height/2, cell->getContentSize().width, cell->getContentSize().height),location))
 			{
                 GridElementProperty *blockProperty=cell->getCellProperty();
-                CCLog("------------------------------");
+                //CCLog("------------------------------");
                 //notify controller to insert the cell into connected array if the cell can be connected
                 if (((MainGameController *)m_delegate)->judgeElementsCanConnected(blockProperty->mIndex.rIndex,blockProperty->mIndex.vIndex)) {
-                    CCLog("+++++++++++++++++++++++++++++++");
+                    //CCLog("+++++++++++++++++++++++++++++++");
                     ((MainGameController *)m_delegate)->insertCellIntoConnectedArray(blockProperty->mIndex.rIndex,blockProperty->mIndex.vIndex);
                 }
                 break;
@@ -76,12 +76,37 @@ bool MainGameGridLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 
 void MainGameGridLayer::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
 {
-
+    CCPoint location=pTouch->getLocation();
+    do{
+        
+        CC_BREAK_IF(!m_delegate);
+        CC_BREAK_IF(!m_GridCellArray);
+        
+        for(int i=0;i<m_GridCellArray->count();i++){
+			GridCell *cell=dynamic_cast<GridCell *>(m_GridCellArray->objectAtIndex(i));
+			CC_BREAK_IF(!cell);
+			if(rectContainPoint(CCRectMake(cell->getPosition().x-m_containerLayer->getContentSize().width/GRID_VOLUME, cell->getPosition().y+cell->getContentSize().height/2, cell->getContentSize().width, cell->getContentSize().height),location))
+			{
+                GridElementProperty *blockProperty=cell->getCellProperty();
+                //notify controller to insert the cell into connected array if the cell can be connected
+                if (((MainGameController *)m_delegate)->judgeElementsCanConnected(blockProperty->mIndex.rIndex,blockProperty->mIndex.vIndex)) {
+                    ((MainGameController *)m_delegate)->insertCellIntoConnectedArray(blockProperty->mIndex.rIndex,blockProperty->mIndex.vIndex);
+                }
+                break;
+			}
+		}
+    }while(0);
 }
 
 void MainGameGridLayer::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 {
-
+    do{
+        CC_BREAK_IF(!m_delegate);
+        
+        if (((MainGameController *)m_delegate)->judgeConnectedElementsCanClear()) {
+            ((MainGameController *)m_delegate)->clearConnectedElements();
+        }
+    }while(0);
 }
 
 void MainGameGridLayer::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
@@ -150,24 +175,40 @@ void MainGameGridLayer::addGridCellToLayer(GridElementProperty *gProperty)
     m_GridCellArray->addObject(item);
 }
 
-void MainGameGridLayer::updateGridCell(unsigned int uIndex,unsigned int vIndex)
+void MainGameGridLayer::updateGrid()
 {
-    
+    do{
+        CC_BREAK_IF(!m_GridCellArray);
+    }while(0);
 }
+
+//void MainGameGridLayer::updateGridCell(unsigned int uIndex,unsigned int vIndex,unsigned int pStep)
+//{
+//    do{
+//        
+//    }while(0);
+//}
 
 void MainGameGridLayer::addGridCell(unsigned int rIndex,unsigned int vIndex)
 {
-    
+    do{
+        
+    }while(0);
 }
 
 void MainGameGridLayer::removeGridCell(unsigned int rIndex,unsigned int vIndex)
 {
-    
+    do{
+        CC_BREAK_IF(!m_GridCellArray);
+        
+    }while(0);
 }
 
 void MainGameGridLayer::moveGridCellAnimation(unsigned int rIndex,unsigned int vIndex)
 {
-
+    do{
+        
+    }while(0);
 }
 
 bool MainGameGridLayer::rectContainPoint(CCRect pRect,CCPoint pPoint)

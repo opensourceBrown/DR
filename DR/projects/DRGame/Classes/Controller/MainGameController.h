@@ -26,18 +26,24 @@ public:
     
     //insert a cell into the connected array
 	void insertCellIntoConnectedArray(unsigned int rIndex,unsigned int vIndex);
+    
+    //判断相连的元素是否可以消除
+	bool judgeConnectedElementsCanClear();
+    
+	//消除相连元素
+	void clearConnectedElements();
 
 private:
     bool initWith();
 	
 	//更新grid cell：位置和索引
-	void updateGridCell(unsigned int rIndex,unsigned int vIndex);
+	//void updateGridCell(unsigned int rIndex,unsigned int vIndex);
 	
 	//判断本关卡游戏是否结束
-	bool judgeGameIsEnd();
-
-	//判断相连的元素是否可以消除
-	bool judgeConnectedElementsCanClear();
+	bool judgeGameStageIsEnd();
+    
+    //结束当前游戏关卡
+	void endCurrentStage();
 	
 	
     
@@ -48,7 +54,7 @@ private:
 	//void insertCellIntoGridContainer(unsigned int pIndex);
     
 	//remove a cell from the cell container(clear a cell from the screen for connecting)
-	void removeCellFromGridContainer(unsigned int pIndex);
+	//void removeCellFromGridContainer(unsigned int pIndex);
     
     //play sound effect
     void playSelctedSoundEffect(ElementType pType);             //when grid cell clicked or selected
@@ -77,13 +83,12 @@ private:
 	CCArray					*mStageConnectedElements;	//每一回合中已经相连的元素（按顺序存储元素的类型和对应cell的标识，可加可删）
     
     //grid cell container:
-	CCArray					*mGridCellContainer;
-	
-    //grid cell property container
-    GridElementProperty     *mGridPropertyContainer[GRID_ROW*GRID_VOLUME];
+//	CCArray					*mGridCellContainer;
     
     //current stage property
     GameStageProperty       mStageProperty;
+    
+    CCArray                 *mGridPropertyContainer;
 private:
 
 };
