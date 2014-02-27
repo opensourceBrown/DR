@@ -1,5 +1,5 @@
 /****************************************************************************
-//Õ®”√ ˝æ›ƒ£–Õ¿‡
+//√ï¬Æ‚Äù‚àö¬†Àù√¶‚Ä∫∆í¬£‚Äì√ï¬ø‚Ä°
 ****************************************************************************/
 #include "MainGameController.h"
 #include "MainGameScene.h"
@@ -128,7 +128,7 @@ void MainGameController::clearConnectedElements()
         
     mStageConnectedElements->removeAllObjects();
     
-	//ÿ�غϽ������жϵ�ǰ�ؿ��Ƿ����
+	//√øªÿ∫œΩ· ¯∂º≈–∂œµ±«∞πÿø® «∑ÒΩ· ¯
 	//judge whether the current stage is end
     if (this->judgeGameStageIsEnd()) {
         this->endCurrentStage();
@@ -144,9 +144,13 @@ bool MainGameController::generateGridCell(unsigned int rIndex,unsigned int vInde
         
         GridElementProperty *blockProperty = new GridElementProperty();
         blockProperty->init();
+        blockProperty->autorelease();
+
         if (rDict->count() > 0) {
+            
             std::stringstream sStream;
             sStream<<rIndex<<"_"<<vIndex;
+            
             CCDictionary *currentDic = (CCDictionary *)rDict->objectForKey(sStream.str());
             if (currentDic) {
                 //read plist Data
@@ -177,7 +181,6 @@ bool MainGameController::generateGridCell(unsigned int rIndex,unsigned int vInde
             blockProperty->saveToDictionary(rDict);
         }
         
-        
         //generate cell property according to the configure(rate)
         
         mGridPropertyContainer->insertObject(blockProperty, rIndex*GRID_VOLUME+vIndex);
@@ -200,13 +203,13 @@ GridElementProperty* MainGameController::getGridElementProperty(unsigned int rIn
     return blockProperty;
 }
 	
-//∏¸–¬grid cell£∫Œª÷√∫ÕÀ˜“˝
+//‚àè¬∏‚Äì¬¨grid cell¬£‚à´≈í¬™√∑‚àö‚à´√ï√ÄÀú‚ÄúÀù
 //void MainGameController::updateGridCell(unsigned int rIndex,unsigned int vIndex)
 //{
 //    
 //}
 
-//≈–∂œª¨∂Øπ˝≥Ã÷–µƒ‘™Àÿ «∑Òø…“‘œ‡¡¨
+//‚âà‚Äì‚àÇ≈ì¬™¬®‚àÇ√òœÄÀù‚â•√É√∑‚Äì¬µ∆í‚Äò‚Ñ¢√Ä√ø¬†¬´‚àë√í√∏‚Ä¶‚Äú‚Äò≈ì‚Ä°¬°¬®
 bool MainGameController::judgeElementsCanConnected(unsigned int rIndex,unsigned int vIndex)
 {
     bool tRet=false;

@@ -23,7 +23,7 @@ private:
     DataManager(void);
     ~DataManager(void);
     
-    CCDictionary *_savedDict;
+    CCDictionary *_savedDict = NULL;
     
 public:
     static DataManager *sharedInstance(void);

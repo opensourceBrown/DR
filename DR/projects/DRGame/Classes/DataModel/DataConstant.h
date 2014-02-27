@@ -40,12 +40,6 @@ typedef struct{
     BustyType   bustyType;      //monster type(boss or common)
 } MonsterProperty;
 
-//game status
-typedef struct {
-    int numberOfRound;
-//    int 
-} GameStatusType;
-
 //定义boss怪的类型
 typedef enum{
     kBossBustyType_Chaotic=0,
@@ -151,7 +145,7 @@ typedef struct{
 
 //定义怪结构
 typedef struct{
-	BustyType               mType;              
+	BustyType               mType;                  //boss or normal
 	BossBustyType			mSkillType;
 	unsigned int			mID;
 	const char*				mName;
@@ -181,19 +175,5 @@ typedef struct{
 	unsigned int            rIndex;			//––À˜“˝£∫∆ º÷µŒ™1             //行索引
 	unsigned int            vIndex;			//¡–À˜“˝£∫∆ º÷µŒ™1             //列索引
 }GIRDCELL_INDEX;
-
-//grid cell data struct
-//typedef struct{
-//	GIRDCELL_INDEX          mIndex;             //索引
-//	ElementType             mType;              //cell对应的类型：怪、盾、、、、、
-//	unsigned int            mID;                //怪id
-//    
-//    void init(){
-//        mIndex.rIndex=0;
-//        mIndex.vIndex=0;
-//        mType=kElementType_Coin;
-//        mID=0;
-//    }
-//}GridElementProperty;
 
 #endif

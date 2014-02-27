@@ -172,6 +172,7 @@
 		302F91EA18B471DF0091D479 /* DataMangager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 302F91E818B471DF0091D479 /* DataMangager.cpp */; };
 		3032AF9C18B7240800327858 /* CSVParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3032AF9A18B7240800327858 /* CSVParser.cpp */; };
 		3033529718B9B23E009D9E29 /* barrierdata.csv in Resources */ = {isa = PBXBuildFile; fileRef = 3033529618B9B23E009D9E29 /* barrierdata.csv */; };
+		305B73AA18BF1119003F0617 /* GameStatusType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 305B73A818BF1119003F0617 /* GameStatusType.cpp */; };
 		305B87AA18B5E57400EEEAB6 /* DRUtility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 305B87A818B5E57400EEEAB6 /* DRUtility.cpp */; };
 		305B87AB18B5F1EA00EEEAB6 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 305ACA5918B1CB5300A38B3D /* libwebsockets.a */; };
 		30AF56CB18B5F2A400C9DB6B /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30AF56CA18B5F2A400C9DB6B /* libcurl.a */; };
@@ -613,6 +614,8 @@
 		3033529618B9B23E009D9E29 /* barrierdata.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = barrierdata.csv; sourceTree = "<group>"; };
 		305ACA5918B1CB5300A38B3D /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libwebsockets.a; sourceTree = "<group>"; };
 		305ACA5B18B1CD8200A38B3D /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcurl.a; sourceTree = "<group>"; };
+		305B73A818BF1119003F0617 /* GameStatusType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameStatusType.cpp; sourceTree = "<group>"; };
+		305B73A918BF1119003F0617 /* GameStatusType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameStatusType.h; sourceTree = "<group>"; };
 		305B87A818B5E57400EEEAB6 /* DRUtility.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DRUtility.cpp; sourceTree = "<group>"; };
 		305B87A918B5E57400EEEAB6 /* DRUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DRUtility.h; sourceTree = "<group>"; };
 		30AF56CA18B5F2A400C9DB6B /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
@@ -1800,6 +1803,8 @@
 				9CD09CD418AAFB4600882D50 /* GeneralDataModel.h */,
 				30218CB818BAEFAD0027A5E2 /* GridElementProperty.cpp */,
 				30218CB918BAEFAD0027A5E2 /* GridElementProperty.h */,
+				305B73A818BF1119003F0617 /* GameStatusType.cpp */,
+				305B73A918BF1119003F0617 /* GameStatusType.h */,
 			);
 			name = DataModel;
 			path = ../Classes/DataModel;
@@ -2119,6 +2124,7 @@
 				375BD5121868454E0024609E /* CCActionNode.cpp in Sources */,
 				1A8F3B79175E05DA00049216 /* extension.cpp in Sources */,
 				1A8F3B7A175E05DA00049216 /* Json.cpp in Sources */,
+				305B73AA18BF1119003F0617 /* GameStatusType.cpp in Sources */,
 				1A8F3B7B175E05DA00049216 /* RegionAttachment.cpp in Sources */,
 				1A8F3B7C175E05DA00049216 /* Skeleton.cpp in Sources */,
 				1A8F3B7D175E05DA00049216 /* SkeletonData.cpp in Sources */,
