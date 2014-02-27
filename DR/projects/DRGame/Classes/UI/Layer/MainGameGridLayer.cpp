@@ -165,6 +165,7 @@ void MainGameGridLayer::addGridCellToLayer(GridElementProperty *gProperty)
     GridCell *item=GridCell::createWithFrameName(typeStr->getCString());
     item->setCellProperty(gProperty);
     item->setAnchorPoint(ccp(0.5,0.5));
+    item->setTag(gProperty->mIndex.rIndex*GRID_VOLUME+gProperty->mIndex.vIndex+1);
     item->setContentSize(CCSizeMake(m_containerLayer->getContentSize().width/GRID_VOLUME, m_containerLayer->getContentSize().height/GRID_ROW));
     
     int row = gProperty->mIndex.rIndex;
@@ -175,10 +176,20 @@ void MainGameGridLayer::addGridCellToLayer(GridElementProperty *gProperty)
     m_GridCellArray->addObject(item);
 }
 
+//update the grid layer:add the new cell to the grid layer and trigger the move action
 void MainGameGridLayer::updateGrid()
 {
     do{
         CC_BREAK_IF(!m_GridCellArray);
+        
+        //update the cell to special position
+        for (int i=0; i<m_GridCellArray->count(); i++) {
+            GridCell *cell = dynamic_cast<GridCell *>(m_GridCellArray->objectAtIndex(i));
+            CC_BREAK_IF(!cell);
+            GridElementProperty *blockProperty=cell->getCellProperty();
+            CC_BREAK_IF(!blockProperty);
+            this->moveGridCellAnimation(blockProperty->mIndex.rIndex, blockProperty->mIndex.vIndex);
+        }
     }while(0);
 }
 
@@ -192,7 +203,45 @@ void MainGameGridLayer::updateGrid()
 void MainGameGridLayer::addGridCell(unsigned int rIndex,unsigned int vIndex)
 {
     do{
+        CC_BREAK_IF(!m_GridCellArray);
         
+        //judge whether the cell is cleared
+        GridCell *cell = dynamic_cast<GridCell *>(m_containerLayer->getChildByTag(rIndex*GRID_VOLUME+vIndex));
+        CC_BREAK_IF(cell);
+        
+        GridElementProperty *blockProperty=((MainGameController *)m_delegate)->getGridElementProperty(rIndex, vIndex);
+        CC_BREAK_IF(!blockProperty);
+        
+        CCString *typeStr=NULL;
+        switch (blockProperty->mType) {
+            case kElementType_Monster:
+            {
+                //select monster image according to the type
+                typeStr=CCString::create("Grid_cell_monster.png");              //暂时写成固定
+            }
+                break;
+            case kElementType_Sword:
+                typeStr=CCString::create("Grid_cell_sword.png");
+                break;
+            case kElementType_Bow:
+                typeStr=CCString::create("Grid_cell_sword.png");                //暂时都写成剑
+                break;
+            case kElementType_Coin:
+                typeStr=CCString::create("Grid_cell_coin.png");
+                break;
+            case kElementType_Potion:
+                typeStr=CCString::create("Grid_cell_potion.png");
+                break;
+            case kElementType_Shield:
+                typeStr=CCString::create("Grid_cell_shield.png");
+                break;
+        }
+        GridCell *item=GridCell::createWithFrameName(typeStr->getCString());
+        item->setCellProperty(blockProperty);
+        item->setAnchorPoint(ccp(0.5,0.5));
+        item->setTag(blockProperty->mIndex.rIndex*GRID_VOLUME+blockProperty->mIndex.vIndex+1);
+        item->setContentSize(CCSizeMake(m_containerLayer->getContentSize().width/GRID_VOLUME, m_containerLayer->getContentSize().height/GRID_ROW));
+        m_GridCellArray->addObject(item);
     }while(0);
 }
 
@@ -201,12 +250,26 @@ void MainGameGridLayer::removeGridCell(unsigned int rIndex,unsigned int vIndex)
     do{
         CC_BREAK_IF(!m_GridCellArray);
         
+        m_GridCellArray->removeObjectAtIndex(rIndex*GRID_VOLUME+vIndex);
+        
+        GridCell *cell=dynamic_cast<GridCell *>(m_containerLayer->getChildByTag(rIndex*GRID_VOLUME+vIndex));
+        CC_BREAK_IF(!cell);
+        
+        //remove action
+        cell->removeFromParentAndCleanup(true);
     }while(0);
 }
 
+//move action
 void MainGameGridLayer::moveGridCellAnimation(unsigned int rIndex,unsigned int vIndex)
 {
     do{
+        CC_BREAK_IF(!m_GridCellArray);
+        
+        GridCell *cell=dynamic_cast<GridCell *>(m_GridCellArray->objectAtIndex(rIndex*GRID_VOLUME+vIndex));
+        CC_BREAK_IF(!cell);
+        
+        //move action
         
     }while(0);
 }
