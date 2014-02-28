@@ -24,7 +24,7 @@ public:
     
     static CCDictionary* loadDictFromEncFile(char* fileName);
     static CCString* getCCStringWithInt(int intValue);
-    
+    static CCArray *readCSVFileWithName(const char* fileName);
 private:
     
     

@@ -30,6 +30,8 @@ private:
     CCArray             *_barrierConfigures;
     CCArray             *_bossConfigures;
     
+    void    readDataFromCSV();
+    
 public:
     static DataManager *sharedInstance(void);
     
@@ -41,7 +43,8 @@ public:
     //Game Global status
     inline GameStatusType      *gameStatus() { return _gameStatus; };
     inline CCArray             *barrierConfigures() { return _barrierConfigures; };
-    CCArray                    *bossConfigures();
+    CCArray                    *bossConfigures()    { return _bossConfigures; };
+    
 };
 
 #endif /* defined(__DRGame__DataMangager__) */

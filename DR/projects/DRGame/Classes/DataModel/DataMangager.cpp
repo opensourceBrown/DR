@@ -8,6 +8,8 @@
 
 #include "DataMangager.h"
 #include "XMLParser.h"
+#include "DRUtility.h"
+#include "BossFileConfigure.h"
 
 #define GRID_ELEMENT_FILE_NAME  "gElementFileName.plist"
 
@@ -29,6 +31,14 @@ DataManager::DataManager()
     _gameStatus->mFlag = -1;
     _gameStatus->mLife = 0;
     _gameStatus->mMaxLife = 0;
+    
+    _barrierConfigures = CCArray::create();
+    _barrierConfigures->retain();
+    
+    _bossConfigures = CCArray::create();
+    _bossConfigures->retain();
+    
+    readDataFromCSV();
 }
 
 DataManager::~DataManager()
@@ -39,6 +49,47 @@ DataManager::~DataManager()
     }
     
     delete _gameStatus;
+    _barrierConfigures->release();
+    _bossConfigures->release();
+}
+
+void DataManager::readDataFromCSV()
+{
+    //barrierData
+    CCArray *barrierData = DRUtility::readCSVFileWithName("barrierData.csv");
+    
+    CCDictionary *dict = NULL;
+    CCObject *object = NULL;
+    CCARRAY_FOREACH(barrierData, object)
+    {
+        dict = (CCDictionary *)object;
+        
+        BarrierFileConfigure *bConfigures = new BarrierFileConfigure();
+        bConfigures->autorelease();
+        bConfigures->mBarrierId = ((CCString *)dict->objectForKey("barrierid"))->intValue();
+        bConfigures->mA = ((CCString *)dict->objectForKey("A"))->intValue();
+        bConfigures->mB = ((CCString *)dict->objectForKey("B"))->intValue();
+        bConfigures->mC = ((CCString *)dict->objectForKey("C"))->intValue();
+        _barrierConfigures->addObject(bConfigures);
+    }
+    
+    //bossData
+    CCArray *bossData = DRUtility::readCSVFileWithName("bossData.csv");
+    CCARRAY_FOREACH(bossData, object)
+    {
+        dict = (CCDictionary *)object;
+        
+        BossFileConfigure *bossConfigures = new BossFileConfigure();
+        bossConfigures->autorelease();
+        bossConfigures->mBossId = ((CCString *)dict->objectForKey("bossid"))->intValue();
+        bossConfigures->mD = ((CCString *)dict->objectForKey("D"))->intValue();
+        bossConfigures->mE = ((CCString *)dict->objectForKey("E"))->intValue();
+        bossConfigures->mF = ((CCString *)dict->objectForKey("F"))->intValue();
+        bossConfigures->mG = ((CCString *)dict->objectForKey("G"))->intValue();
+        bossConfigures->mH = ((CCString *)dict->objectForKey("H"))->intValue();
+        bossConfigures->mI = ((CCString *)dict->objectForKey("I"))->intValue();
+        _bossConfigures->addObject(bossConfigures);
+    }
 }
 
 GridElementProperty* DataManager::getGridElementProperty(unsigned int rIndex,unsigned int vIndex)

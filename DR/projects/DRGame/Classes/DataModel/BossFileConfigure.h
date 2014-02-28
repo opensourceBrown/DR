@@ -17,7 +17,8 @@ USING_NS_CC;
 
 class BossFileConfigure : public CCObject
 {
-    unsigned int mBoosId;
+public:
+    unsigned int mBossId;
     float       mBossRate;
     float       mD;
     float       mE;

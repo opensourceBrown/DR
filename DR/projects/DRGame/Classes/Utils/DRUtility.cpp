@@ -8,6 +8,7 @@
 
 #include "DRUtility.h"
 #include "XMLParser.h"
+#include "CSVParser.h"
 
 using namespace cocos2d;
 
@@ -95,4 +96,58 @@ CCString* DRUtility::getCCStringWithInt(int intValue)
     strObjID->autorelease();
     strObjID->initWithFormat("%d", intValue);
     return strObjID;
+}
+
+CCArray * DRUtility::readCSVFileWithName(const char *fileName)
+{
+    cout<<fileName;
+    CSVParser *csvParser = new CSVParser();
+    csvParser->openFile(fileName);
+    
+    CCArray      *dataArray = CCArray::create();
+    CCArray      *keys = CCArray::create();
+    CCDictionary *dictionary;
+    string strLine = "";
+    
+    for (int i = 0; i < csvParser->getCols(); i++) {
+        for (int j = 0; j < csvParser->getRows(); j++) {
+            CCString *string = CCString::create(csvParser->getData(j, i));
+            if (i == 0) {
+                keys->addObject(string);
+            } else {
+                if (i==1) {
+                    dictionary = CCDictionary::create();
+                }
+                CCString *strKey = (CCString *)keys->objectAtIndex(j);
+                dictionary->setObject(string, strKey->getCString());
+                if (i== csvParser->getCols()-1) {
+                    dataArray->addObject(dictionary);
+                }
+            }
+        }
+    }
+
+    CCArray *allKeys = dictionary->allKeys();
+    for (int i = 0; i < allKeys->count(); i++) {
+        CCString *key = (CCString *)allKeys->objectAtIndex(i);
+        cout<<"key=" + string(key->getCString())<<endl;
+    }
+
+    CCDictionary *dict = NULL;
+    CCObject *object = NULL;
+    CCDictElement *dElement = NULL;
+    CCARRAY_FOREACH(dataArray, object)
+    {
+        dict = (CCDictionary *)object;
+
+        CCDICT_FOREACH(dict, dElement)
+        {
+            string key = dElement->getStrKey();
+            CCString *value = (CCString *)dElement->getObject();
+            cout<<"key="+key + " ------ value=" + value->getCString()<<endl;
+        }
+    }
+    delete csvParser;
+    
+    return dataArray;
 }

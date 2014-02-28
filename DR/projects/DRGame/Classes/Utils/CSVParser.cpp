@@ -79,9 +79,11 @@ int CSVParser::advquoted( const string& s, string& fld, int i)
 }
 
 //解析 CVS 文件
-bool CSVParser::openFile( string fileName )
+bool CSVParser::openFile( const char* fileName )
 {
-    string pathKey = CCFileUtils::sharedFileUtils()->getWritablePath()+fileName;
+    string pathKey = CCFileUtils::sharedFileUtils()->fullPathForFilename(fileName);
+    
+    
     unsigned char* pBuffer = NULL;
     unsigned long bufferSize = 0;
     pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pathKey.c_str(), "r", &bufferSize);

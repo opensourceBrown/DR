@@ -171,14 +171,14 @@
 		30218CBA18BAEFAD0027A5E2 /* GridElementProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30218CB818BAEFAD0027A5E2 /* GridElementProperty.cpp */; };
 		302F91EA18B471DF0091D479 /* DataMangager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 302F91E818B471DF0091D479 /* DataMangager.cpp */; };
 		3032AF9C18B7240800327858 /* CSVParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3032AF9A18B7240800327858 /* CSVParser.cpp */; };
-		3033529718B9B23E009D9E29 /* barrierdata.csv in Resources */ = {isa = PBXBuildFile; fileRef = 3033529618B9B23E009D9E29 /* barrierdata.csv */; };
+		3033529718B9B23E009D9E29 /* barrierData.csv in Resources */ = {isa = PBXBuildFile; fileRef = 3033529618B9B23E009D9E29 /* barrierData.csv */; };
 		305B73AA18BF1119003F0617 /* GameStatusType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 305B73A818BF1119003F0617 /* GameStatusType.cpp */; };
 		305B87AA18B5E57400EEEAB6 /* DRUtility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 305B87A818B5E57400EEEAB6 /* DRUtility.cpp */; };
 		305B87AB18B5F1EA00EEEAB6 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 305ACA5918B1CB5300A38B3D /* libwebsockets.a */; };
 		3069B49618C07E7200237305 /* BarrierFileConfigure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3069B49418C07E7200237305 /* BarrierFileConfigure.cpp */; };
 		3069B49918C07E8100237305 /* BossFileConfigure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3069B49718C07E8100237305 /* BossFileConfigure.cpp */; };
 		30AF56CB18B5F2A400C9DB6B /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30AF56CA18B5F2A400C9DB6B /* libcurl.a */; };
-		30FC9F2018BD901A000FE654 /* bossdata.csv in Resources */ = {isa = PBXBuildFile; fileRef = 30FC9F1F18BD901A000FE654 /* bossdata.csv */; };
+		30FC9F2018BD901A000FE654 /* bossData.csv in Resources */ = {isa = PBXBuildFile; fileRef = 30FC9F1F18BD901A000FE654 /* bossData.csv */; };
 		375BD4C31868411B0024609E /* ObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD4BB1868411B0024609E /* ObjectFactory.cpp */; };
 		375BD4C41868411B0024609E /* TriggerBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD4BD1868411B0024609E /* TriggerBase.cpp */; };
 		375BD4C51868411B0024609E /* TriggerMng.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD4BF1868411B0024609E /* TriggerMng.cpp */; };
@@ -613,7 +613,7 @@
 		302F91E918B471DF0091D479 /* DataMangager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataMangager.h; sourceTree = "<group>"; };
 		3032AF9A18B7240800327858 /* CSVParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSVParser.cpp; sourceTree = "<group>"; };
 		3032AF9B18B7240800327858 /* CSVParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSVParser.h; sourceTree = "<group>"; };
-		3033529618B9B23E009D9E29 /* barrierdata.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = barrierdata.csv; sourceTree = "<group>"; };
+		3033529618B9B23E009D9E29 /* barrierData.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = barrierData.csv; sourceTree = "<group>"; };
 		305ACA5918B1CB5300A38B3D /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libwebsockets.a; sourceTree = "<group>"; };
 		305ACA5B18B1CD8200A38B3D /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcurl.a; sourceTree = "<group>"; };
 		305B73A818BF1119003F0617 /* GameStatusType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameStatusType.cpp; sourceTree = "<group>"; };
@@ -626,7 +626,7 @@
 		3069B49818C07E8100237305 /* BossFileConfigure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BossFileConfigure.h; sourceTree = "<group>"; };
 		30AF56CA18B5F2A400C9DB6B /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		30DFE5F718B49A1A005F89C2 /* DataConstant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataConstant.h; sourceTree = "<group>"; };
-		30FC9F1F18BD901A000FE654 /* bossdata.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bossdata.csv; sourceTree = "<group>"; };
+		30FC9F1F18BD901A000FE654 /* bossData.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bossData.csv; sourceTree = "<group>"; };
 		373B911F18788FB000198F86 /* CCComBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCComBase.h; sourceTree = "<group>"; };
 		375BD4BB1868411B0024609E /* ObjectFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectFactory.cpp; sourceTree = "<group>"; };
 		375BD4BC1868411B0024609E /* ObjectFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectFactory.h; sourceTree = "<group>"; };
@@ -1779,8 +1779,8 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				3033529618B9B23E009D9E29 /* barrierdata.csv */,
-				30FC9F1F18BD901A000FE654 /* bossdata.csv */,
+				3033529618B9B23E009D9E29 /* barrierData.csv */,
+				30FC9F1F18BD901A000FE654 /* bossData.csv */,
 				9C6C1EC718B8904D00678A2A /* MainGame.plist */,
 				9C6C1EC818B8904D00678A2A /* MainGame.png */,
 				1AFAF8B916D35E4900DB1158 /* CloseNormal.png */,
@@ -1969,13 +1969,13 @@
 				D4EF94A015BD2D9800D803EB /* Icon-144.png in Resources */,
 				D41A0AD1160F154A004552AE /* Default-568h@2x.png in Resources */,
 				D446FD6E16102124000ADA7B /* Default@2x.png in Resources */,
-				30FC9F2018BD901A000FE654 /* bossdata.csv in Resources */,
+				30FC9F2018BD901A000FE654 /* bossData.csv in Resources */,
 				15A3D9961682F7F9002FB0C5 /* CMakeLists.txt in Resources */,
 				1AFAF8BC16D35E4900DB1158 /* CloseNormal.png in Resources */,
 				1AFAF8BD16D35E4900DB1158 /* CloseSelected.png in Resources */,
 				1AFAF8BE16D35E4900DB1158 /* HelloWorld.png in Resources */,
 				9C6C1EC918B8904D00678A2A /* MainGame.plist in Resources */,
-				3033529718B9B23E009D9E29 /* barrierdata.csv in Resources */,
+				3033529718B9B23E009D9E29 /* barrierData.csv in Resources */,
 				9C6C1ECA18B8904D00678A2A /* MainGame.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
