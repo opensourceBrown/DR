@@ -14,6 +14,7 @@
 #include "DataConstant.h"
 #include "GridElementProperty.h"
 #include "GameStatusType.h"
+#include "BarrierFileConfigure.h"
 
 USING_NS_CC;
 
@@ -26,6 +27,8 @@ private:
     
     CCDictionary *_savedDict = NULL;
     GameStatusType      *_gameStatus;
+    CCArray             *_barrierConfigures;
+    CCArray             *_bossConfigures;
     
 public:
     static DataManager *sharedInstance(void);
@@ -37,7 +40,8 @@ public:
     
     //Game Global status
     inline GameStatusType      *gameStatus() { return _gameStatus; };
-    
+    inline CCArray             *barrierConfigures() { return _barrierConfigures; };
+    CCArray                    *bossConfigures();
 };
 
 #endif /* defined(__DRGame__DataMangager__) */
