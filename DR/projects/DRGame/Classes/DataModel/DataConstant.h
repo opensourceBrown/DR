@@ -176,4 +176,22 @@ typedef struct{
 	unsigned int            vIndex;			//¡–À˜“˝£∫∆ º÷µŒ™1             //列索引
 }GIRDCELL_INDEX;
 
+typedef struct {
+    unsigned int mBarrierId;
+    float        mA;
+    float        mB;
+    float        mC;
+} BarrierFileConfigure;
+
+typedef struct {
+    unsigned int mBoosId;
+    float       mBossRate;
+    float       mD;
+    float       mE;
+    float       mF;
+    float       mG;
+    float       mH;
+    float       mI;
+} BossFileConfigure;
+
 #endif

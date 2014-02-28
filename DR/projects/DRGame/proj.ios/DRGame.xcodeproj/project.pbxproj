@@ -175,6 +175,8 @@
 		305B73AA18BF1119003F0617 /* GameStatusType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 305B73A818BF1119003F0617 /* GameStatusType.cpp */; };
 		305B87AA18B5E57400EEEAB6 /* DRUtility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 305B87A818B5E57400EEEAB6 /* DRUtility.cpp */; };
 		305B87AB18B5F1EA00EEEAB6 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 305ACA5918B1CB5300A38B3D /* libwebsockets.a */; };
+		3069B49618C07E7200237305 /* BarrierFileConfigure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3069B49418C07E7200237305 /* BarrierFileConfigure.cpp */; };
+		3069B49918C07E8100237305 /* BossFileConfigure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3069B49718C07E8100237305 /* BossFileConfigure.cpp */; };
 		30AF56CB18B5F2A400C9DB6B /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30AF56CA18B5F2A400C9DB6B /* libcurl.a */; };
 		30FC9F2018BD901A000FE654 /* bossdata.csv in Resources */ = {isa = PBXBuildFile; fileRef = 30FC9F1F18BD901A000FE654 /* bossdata.csv */; };
 		375BD4C31868411B0024609E /* ObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD4BB1868411B0024609E /* ObjectFactory.cpp */; };
@@ -618,6 +620,10 @@
 		305B73A918BF1119003F0617 /* GameStatusType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameStatusType.h; sourceTree = "<group>"; };
 		305B87A818B5E57400EEEAB6 /* DRUtility.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DRUtility.cpp; sourceTree = "<group>"; };
 		305B87A918B5E57400EEEAB6 /* DRUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DRUtility.h; sourceTree = "<group>"; };
+		3069B49418C07E7200237305 /* BarrierFileConfigure.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BarrierFileConfigure.cpp; sourceTree = "<group>"; };
+		3069B49518C07E7200237305 /* BarrierFileConfigure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BarrierFileConfigure.h; sourceTree = "<group>"; };
+		3069B49718C07E8100237305 /* BossFileConfigure.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BossFileConfigure.cpp; sourceTree = "<group>"; };
+		3069B49818C07E8100237305 /* BossFileConfigure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BossFileConfigure.h; sourceTree = "<group>"; };
 		30AF56CA18B5F2A400C9DB6B /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		30DFE5F718B49A1A005F89C2 /* DataConstant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataConstant.h; sourceTree = "<group>"; };
 		30FC9F1F18BD901A000FE654 /* bossdata.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bossdata.csv; sourceTree = "<group>"; };
@@ -1450,6 +1456,17 @@
 			path = include/lib;
 			sourceTree = "<group>";
 		};
+		3069B49318C07E4B00237305 /* FileConfigureModel */ = {
+			isa = PBXGroup;
+			children = (
+				3069B49418C07E7200237305 /* BarrierFileConfigure.cpp */,
+				3069B49518C07E7200237305 /* BarrierFileConfigure.h */,
+				3069B49718C07E8100237305 /* BossFileConfigure.cpp */,
+				3069B49818C07E8100237305 /* BossFileConfigure.h */,
+			);
+			name = FileConfigureModel;
+			sourceTree = "<group>";
+		};
 		375BD4BA1868411B0024609E /* Trigger */ = {
 			isa = PBXGroup;
 			children = (
@@ -1796,6 +1813,7 @@
 		9CD09CD218AAFB4600882D50 /* DataModel */ = {
 			isa = PBXGroup;
 			children = (
+				3069B49318C07E4B00237305 /* FileConfigureModel */,
 				30DFE5F718B49A1A005F89C2 /* DataConstant.h */,
 				302F91E818B471DF0091D479 /* DataMangager.cpp */,
 				302F91E918B471DF0091D479 /* DataMangager.h */,
@@ -2101,6 +2119,7 @@
 				375BD5131868454E0024609E /* CCActionObject.cpp in Sources */,
 				15A3DA5F1682F826002FB0C5 /* CCPhysicsSprite.cpp in Sources */,
 				15A3DAEB1682F8A6002FB0C5 /* CDAudioManager.m in Sources */,
+				3069B49618C07E7200237305 /* BarrierFileConfigure.cpp in Sources */,
 				15A3DAEC1682F8A6002FB0C5 /* CDOpenALSupport.m in Sources */,
 				15A3DAED1682F8A6002FB0C5 /* CocosDenshion.m in Sources */,
 				15A3DAEE1682F8A6002FB0C5 /* SimpleAudioEngine.mm in Sources */,
@@ -2159,6 +2178,7 @@
 				379BB9AD17F03F3700829B88 /* CCComAttribute.cpp in Sources */,
 				379BB9AE17F03F3700829B88 /* CCComAudio.cpp in Sources */,
 				379BB9AF17F03F3700829B88 /* CCComController.cpp in Sources */,
+				3069B49918C07E8100237305 /* BossFileConfigure.cpp in Sources */,
 				379BB9B017F03F3700829B88 /* CCComRender.cpp in Sources */,
 				379BB9B117F03F3700829B88 /* CCInputDelegate.cpp in Sources */,
 				379BB9B317F03F3700829B88 /* UIWidget.cpp in Sources */,

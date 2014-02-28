@@ -18,7 +18,7 @@ class GameStatusType:public CCObject
 {
 public:
     int mNumberOfRound;          //回合数
-    int mFlag;                   //to ju
+    int mFlag;                   //to calculate param
     int mLife;                   //rest of life
     int mMaxLife;                //Max life
 };

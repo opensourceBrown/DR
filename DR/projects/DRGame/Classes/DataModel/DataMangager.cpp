@@ -18,12 +18,17 @@ DataManager * DataManager::sharedInstance(void)
     if (__sharedInstane == NULL) {
         __sharedInstane = new DataManager();
     }
+    
     return __sharedInstane;
 }
 
 DataManager::DataManager()
 {
-    
+    _gameStatus = new GameStatusType();
+    _gameStatus->mNumberOfRound = 0;
+    _gameStatus->mFlag = -1;
+    _gameStatus->mLife = 0;
+    _gameStatus->mMaxLife = 0;
 }
 
 DataManager::~DataManager()
@@ -32,6 +37,8 @@ DataManager::~DataManager()
         _savedDict->release();
         _savedDict = NULL;
     }
+    
+    delete _gameStatus;
 }
 
 GridElementProperty* DataManager::getGridElementProperty(unsigned int rIndex,unsigned int vIndex)

@@ -13,6 +13,7 @@
 #include "cocos2d.h"
 #include "DataConstant.h"
 #include "GridElementProperty.h"
+#include "GameStatusType.h"
 
 USING_NS_CC;
 
@@ -24,6 +25,7 @@ private:
     ~DataManager(void);
     
     CCDictionary *_savedDict = NULL;
+    GameStatusType      *_gameStatus;
     
 public:
     static DataManager *sharedInstance(void);
@@ -33,7 +35,8 @@ public:
     CCDictionary * getGridElements(void);
     bool saveGridElements(void);
     
-    //
+    //Game Global status
+    inline GameStatusType      *gameStatus() { return _gameStatus; };
     
 };
 

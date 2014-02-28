@@ -46,6 +46,9 @@ public:
     void saveToDictionary(CCDictionary *dict);   //save to the Dictionary which parses in
     
     bool canbeDestroyed();      //when monster`s life>0, can not be destroyed
+    
+private:
+
 };
 
 
