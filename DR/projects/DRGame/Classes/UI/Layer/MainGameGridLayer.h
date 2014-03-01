@@ -11,6 +11,8 @@ class MainGameGridLayer : public BaseLayer
 public:
 	MainGameGridLayer();
 	virtual ~MainGameGridLayer();
+    
+    static MainGameGridLayer *create();
 
     virtual void onEnter();
 	virtual void onExit();
@@ -23,8 +25,8 @@ public:
 private:
     void constructUI();
     void addGridCellToLayer(GridElementProperty *gProperty);
-//    void updateGridCell(unsigned int uIndex,unsigned int vIndex,unsigned int pStep);
     
+    void removeGridCellCompleteCallback(CCObject *pSender);
 	void moveGridCellAnimation(unsigned int rIndex,unsigned int vIndex);				//ÏÂÒÆcell¶¯»­
     bool rectContainPoint(CCRect pRect,CCPoint pPoint);
 
@@ -37,6 +39,7 @@ private:
 	CCLayerColor			*m_containerLayer;
 	CCArray					*m_GridCellArray;
 
+    GridCell                *m_currentSelCell;
 };
 
 #endif

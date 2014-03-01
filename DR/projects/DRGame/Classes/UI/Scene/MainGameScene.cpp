@@ -26,7 +26,7 @@ MainGameScene *MainGameScene::create(BaseController *pDelegate)
     MainGameScene *scene=new MainGameScene();
     do {
         CC_BREAK_IF(!scene || !(scene->initWith(pDelegate)));
-        scene->autorelease();
+        //scene->autorelease();
         return scene;
     } while (0);
     
@@ -53,9 +53,10 @@ bool MainGameScene::initWith(BaseController *pDelegate)
 void MainGameScene::constructUI()
 {
     do{
-        m_gridLayer=new MainGameGridLayer();
+        m_gridLayer=MainGameGridLayer::create();
 		CC_BREAK_IF(!m_gridLayer);
-		m_gridLayer->initWithDelegate(m_delegate);
+        m_gridLayer->retain();
+		m_gridLayer->setDelegate(m_delegate);
 		addChild(m_gridLayer);
         
         /*
@@ -102,11 +103,7 @@ void MainGameScene::constructUI()
 MainGameGridLayer *MainGameScene::getGridLayer()
 {
     LOG_TRACE
-    do{
-        CC_BREAK_IF(m_gridLayer);
-        CCLog("m_gridLayer=null");
-        return NULL;
-    }while(0);
+    CCAssert(m_gridLayer, "m_gridLayer is null");
     
     return m_gridLayer;
 }

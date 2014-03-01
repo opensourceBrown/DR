@@ -8,7 +8,6 @@
 #include "DataMangager.h"
 
 MainGameController::MainGameController():
-//    mGridCellContainer(NULL),
     mMagicInStage(NULL),
     mStageConnectedElements(NULL)
 {
@@ -17,7 +16,6 @@ MainGameController::MainGameController():
 
 MainGameController::~MainGameController()
 {
-//	CC_SAFE_RELEASE(mGridCellContainer);
     CC_SAFE_RELEASE(mMagicInStage);
     CC_SAFE_RELEASE(mStageConnectedElements);
     CC_SAFE_RELEASE(m_scene);
@@ -28,7 +26,7 @@ MainGameController *MainGameController::create()
     MainGameController *controller=new MainGameController();
     do {
         CC_BREAK_IF(!controller || !(controller->initWith()));
-        controller->autorelease();
+        //controller->autorelease();
         return controller;
     } while (0);
     
@@ -42,14 +40,6 @@ bool MainGameController::initWith()
     bool tRet=false;
     do {
         //TO:DO initialization
-        m_scene=MainGameScene::create(this);
-        CC_BREAK_IF(!m_scene);
-        m_scene->retain();
-        
-//        mGridCellContainer=CCArray::createWithCapacity(GRID_ROW*GRID_VOLUME);
-//        CC_BREAK_IF(!mGridCellContainer);
-//        mGridCellContainer->retain();
-        
         mMagicInStage=CCArray::create();
         CC_BREAK_IF(!mMagicInStage);
         mMagicInStage->retain();
@@ -61,6 +51,11 @@ bool MainGameController::initWith()
         mGridPropertyContainer=CCArray::createWithCapacity(GRID_VOLUME*GRID_ROW);
         CC_BREAK_IF(!mGridPropertyContainer);
         mGridPropertyContainer->retain();
+        
+        m_scene=MainGameScene::create(this);
+        CC_BREAK_IF(!m_scene);
+        m_scene->retain();
+        
         tRet=true;
     } while (0);
     
@@ -85,7 +80,10 @@ bool MainGameController::judgeGameStageIsEnd()
 
 void MainGameController::endCurrentStage()
 {
-    
+    //end game stage:save game status data
+    do{
+        
+    }while(0);
 }
 
 bool MainGameController::judgeConnectedElementsCanClear()
@@ -100,46 +98,94 @@ bool MainGameController::judgeConnectedElementsCanClear()
 	return tRet;
 }
 
+void MainGameController::resetStageConnectedElements()
+{
+    do {
+        CC_BREAK_IF(!mStageConnectedElements);
+        
+        mStageConnectedElements->removeAllObjects();
+    } while (0);
+}
+
 void MainGameController::clearConnectedElements()
 {
+//    CCLog("clear connected count:%d",mStageConnectedElements->count());
     do {
         MainGameGridLayer *gridLayer = ((MainGameScene *)m_scene)->getGridLayer();
         CC_BREAK_IF(!gridLayer);
         
         CC_BREAK_IF(!mStageConnectedElements);
+        
+        //for test
         for (int i=0; i<mStageConnectedElements->count(); i++) {
-            GridElementProperty *block=dynamic_cast<GridElementProperty *>(mStageConnectedElements->objectAtIndex(i));
+            GridCell *cell=dynamic_cast<GridCell *>(mStageConnectedElements->objectAtIndex(i));
+            CC_BREAK_IF(!cell);
+            
+            GridElementProperty *block=cell->getCellProperty();
+            CC_BREAK_IF(!block);
+            CCLog("remove cell(%d,%d)",block->mIndex.rIndex, block->mIndex.vIndex);
+        }
+        
+        //clear connected elements from mGridPropertyContainer
+        for (int i=0; i<mStageConnectedElements->count(); i++) {
+            GridCell *cell=dynamic_cast<GridCell *>(mStageConnectedElements->objectAtIndex(i));
+            CC_BREAK_IF(!cell);
+            
+            GridElementProperty *block=cell->getCellProperty();
             CC_BREAK_IF(!block);
             
-            //clear connected elements from mGridPropertyContainer
-            mGridPropertyContainer->removeObjectAtIndex(block->mIndex.rIndex*GRID_VOLUME+block->mIndex.vIndex);
-
-			//clear cell that removed from  mGridPropertyContainer on MainGameGridLayer
-            gridLayer->removeGridCell(block->mIndex.rIndex, block->mIndex.vIndex);
-
-			//update the cell property vIndex above the removed cell row(the cell not in the connected array)
-			for(int j=block->mIndex.rIndex-1;j>=0;j--){
-				GridElementProperty *item=dynamic_cast<GridElementProperty *>(mGridPropertyContainer->objectAtIndex(j*GRID_VOLUME+block->mIndex.vIndex));
-				CC_BREAK_IF(!item);
-
-				//if the item not in the mStageConnectedElements update the item:rIndex+1
-				bool isContain=false;
-				for(int k=0;k<mStageConnectedElements->count();k++){
-					GridElementProperty *tItem=dynamic_cast<GridElementProperty *>(mStageConnectedElements->objectAtIndex(k));
-					CC_BREAK_IF(!tItem);
-					if(tItem->mIndex.rIndex==item->mIndex.rIndex && tItem->mIndex.vIndex==item->mIndex.vIndex){
-						isContain=true;
-					}
-				}
-				if(!isContain){
-					//update the vIndex of item property
-					item->mIndex.rIndex++;
-				}
-			}
+            for (int j=0; j<mGridPropertyContainer->count(); j++) {
+                GridElementProperty *item=dynamic_cast<GridElementProperty *>(mStageConnectedElements->objectAtIndex(j));
+                CC_BREAK_IF(!item);
+                if (item->mIndex.rIndex==block->mIndex.rIndex && item->mIndex.vIndex==block->mIndex.vIndex) {
+                    mGridPropertyContainer->removeObject(item);
+                    break;
+                }
+            }
+        }
+        
+        //clear cell that removed from  mGridPropertyContainer on MainGameGridLayer
+        for (int i=0; i<mStageConnectedElements->count(); i++) {
+            GridCell *cell=dynamic_cast<GridCell *>(mStageConnectedElements->objectAtIndex(i));
+            CC_BREAK_IF(!cell);
             
-            //generate new GridElementProperty to fill the blank grid cell
-            CC_BREAK_IF(!this->generateGridCell(0, block->mIndex.vIndex));
-            gridLayer->addGridCell(block->mIndex.rIndex, block->mIndex.vIndex);
+            GridElementProperty *block=cell->getCellProperty();
+            CC_BREAK_IF(!block);
+            gridLayer->removeGridCell(block->mIndex.rIndex, block->mIndex.vIndex);
+        }
+        
+        //update the cell property vIndex above the removed cell row(the cell not in the connected array)
+        for (int i=0; i<mStageConnectedElements->count(); i++) {
+            GridCell *cell=dynamic_cast<GridCell *>(mStageConnectedElements->objectAtIndex(i));
+            CC_BREAK_IF(!cell);
+            
+            GridElementProperty *block=cell->getCellProperty();
+            CC_BREAK_IF(!block);
+            for(int j=mStageConnectedElements->indexOfObject(cell);j>=0;j--){
+				GridElementProperty *item=dynamic_cast<GridElementProperty *>(mGridPropertyContainer->objectAtIndex(j));
+				CC_BREAK_IF(!item);
+                
+                if (item->mIndex.vIndex==block->mIndex.vIndex && block->mIndex.rIndex-item->mIndex.rIndex) {
+                    bool isSel=false;
+                    for (int k=0; k<mStageConnectedElements->count(); k++) {
+                        GridCell *cellItem=dynamic_cast<GridCell *>(mStageConnectedElements->objectAtIndex(i));
+                        CC_BREAK_IF(!cellItem);
+                        
+                        GridElementProperty *blockItem=cellItem->getCellProperty();
+                        CC_BREAK_IF(!blockItem);
+                        if (blockItem->mIndex.rIndex==item->mIndex.rIndex && blockItem->mIndex.vIndex==item->mIndex.vIndex) {
+                            isSel=true;
+                            break;
+                        }
+                    }
+                    if (isSel) {
+                        CCLog("pre index:(%d,%d)",item->mIndex.rIndex,item->mIndex.vIndex);
+                        item->mIndex.rIndex++;
+                        CCLog("cur index:(%d,%d)",item->mIndex.rIndex,item->mIndex.vIndex);
+                    }
+                }
+			}
+            gridLayer->addGridCell(0, block->mIndex.vIndex);
         }
         
         //update MainGameGridLayer to show new cell
@@ -164,7 +210,6 @@ bool MainGameController::generateGridCell(unsigned int rIndex,unsigned int vInde
         
         GridElementProperty *blockProperty = new GridElementProperty();
         blockProperty->init();
-        blockProperty->autorelease();
 
         if (rDict->count() > 0) {
             
@@ -200,11 +245,7 @@ bool MainGameController::generateGridCell(unsigned int rIndex,unsigned int vInde
             
             blockProperty->saveToDictionary(rDict);
         }
-        
-        //generate cell property according to the configure(rate)
-        
         mGridPropertyContainer->insertObject(blockProperty, rIndex*GRID_VOLUME+vIndex);
-//        mGridCellContainer->addObject(blockProperty);
         tSuc=true;
     } while (0);
     
@@ -223,16 +264,9 @@ GridElementProperty* MainGameController::getGridElementProperty(unsigned int rIn
     return blockProperty;
 }
 	
-//‚àè¬∏‚Äì¬¨grid cell¬£‚à´≈í¬™√∑‚àö‚à´√ï√ÄÀú‚ÄúÀù
-//void MainGameController::updateGridCell(unsigned int rIndex,unsigned int vIndex)
-//{
-//    
-//}
-
-//‚âà‚Äì‚àÇ≈ì¬™¬®‚àÇ√òœÄÀù‚â•√É√∑‚Äì¬µ∆í‚Äò‚Ñ¢√Ä√ø¬†¬´‚àë√í√∏‚Ä¶‚Äú‚Äò≈ì‚Ä°¬°¬®
-bool MainGameController::judgeElementsCanConnected(unsigned int rIndex,unsigned int vIndex)
+void MainGameController::processGridCellSelected(unsigned int rIndex,unsigned int vIndex)
 {
-    bool tRet=false;
+    LOG_TRACE
     
     do{
         CC_BREAK_IF(!mStageConnectedElements);
@@ -245,15 +279,8 @@ bool MainGameController::judgeElementsCanConnected(unsigned int rIndex,unsigned 
         
         GridElementProperty *blockProperty=cell->getCellProperty();
         
-        if (mStageConnectedElements->count()<=0) {
-            //activate the first selected effect
-            
-        }
-        
-        
         if (mStageConnectedElements->count()==0) {
             insertCellIntoConnectedArray(blockProperty->mIndex.rIndex, blockProperty->mIndex.vIndex);
-            tRet=true;
             break;
         }else{
             GridCell *preCell=dynamic_cast<GridCell *>(mStageConnectedElements->lastObject()) ;
@@ -271,14 +298,12 @@ bool MainGameController::judgeElementsCanConnected(unsigned int rIndex,unsigned 
                         if (abs(preBlockProperty->mIndex.rIndex-blockProperty->mIndex.rIndex)<=2 && abs(preBlockProperty->mIndex.vIndex-blockProperty->mIndex.vIndex)<=2) {
                             
                             insertCellIntoConnectedArray(blockProperty->mIndex.rIndex, blockProperty->mIndex.vIndex);
-                            tRet=true;
                             break;
                         }
                     }else{
                         if (abs(preBlockProperty->mIndex.rIndex-blockProperty->mIndex.rIndex)<=1 && abs(preBlockProperty->mIndex.vIndex-blockProperty->mIndex.vIndex)<=1) {
                             
                             insertCellIntoConnectedArray(blockProperty->mIndex.rIndex, blockProperty->mIndex.vIndex);
-                            tRet=true;
                             break;
                         }
                     }
@@ -290,14 +315,12 @@ bool MainGameController::judgeElementsCanConnected(unsigned int rIndex,unsigned 
                             if (abs(preBlockProperty->mIndex.rIndex-blockProperty->mIndex.rIndex)<=2 && abs(preBlockProperty->mIndex.vIndex-blockProperty->mIndex.vIndex)<=2) {
                                 
                                 insertCellIntoConnectedArray(blockProperty->mIndex.rIndex, blockProperty->mIndex.vIndex);
-                                tRet=true;
                                 break;
                             }
                         }else{
                             if (abs(preBlockProperty->mIndex.rIndex-blockProperty->mIndex.rIndex)<=1 && abs(preBlockProperty->mIndex.vIndex-blockProperty->mIndex.vIndex)<=1) {
                                 
                                 insertCellIntoConnectedArray(blockProperty->mIndex.rIndex, blockProperty->mIndex.vIndex);
-                                tRet=true;
                                 break;
                             }
                         }
@@ -308,8 +331,6 @@ bool MainGameController::judgeElementsCanConnected(unsigned int rIndex,unsigned 
         }
         
     }while(0);
-    
-    return tRet;
 }
 
 //insert a cell into the connected array
@@ -353,19 +374,6 @@ void MainGameController::removeCellFromConnectedArray()
         playSelctedSoundEffect(blockProperty->mType);
     }while(0);
 }
-
-//insert a cell into the cell container
-//void MainGameController::insertCellIntoGridContainer(unsigned int pIndex)
-//{
-//    //judge whether the cell has been in connected array
-//    
-//}
-
-//remove a cell from the cell container(clear a cell from the screen for connecting)
-//void MainGameController::removeCellFromGridContainer(unsigned int pIndex)
-//{
-//    
-//}
 
 void MainGameController::playSelctedSoundEffect(ElementType pType)
 {
@@ -411,7 +419,7 @@ bool MainGameController::judgeGridCellCanInserted(unsigned int rIndex,unsigned i
             }
         }
     } while (0);
-    
+    //CCLog("tRet:%d",tRet);
     return tRet;
 }
 

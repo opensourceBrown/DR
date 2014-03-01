@@ -22,13 +22,16 @@ public:
     GridElementProperty *getGridElementProperty(unsigned int rIndex,unsigned int vIndex);
     
     //判断滑动过程中的元素是否可以相连
-	bool judgeElementsCanConnected(unsigned int rIndex,unsigned int vIndex);
+    void processGridCellSelected(unsigned int rIndex,unsigned int vIndex);
     
     //insert a cell into the connected array
 	void insertCellIntoConnectedArray(unsigned int rIndex,unsigned int vIndex);
     
     //判断相连的元素是否可以消除
 	bool judgeConnectedElementsCanClear();
+    
+    //reset mStageConnectedElements:remove all children
+    void resetStageConnectedElements();
     
 	//消除相连元素
 	void clearConnectedElements();
@@ -49,12 +52,6 @@ private:
     
 	//remove a cell from the connected array
 	void removeCellFromConnectedArray();
-    
-	//insert a cell into the cell container:
-	//void insertCellIntoGridContainer(unsigned int pIndex);
-    
-	//remove a cell from the cell container(clear a cell from the screen for connecting)
-	//void removeCellFromGridContainer(unsigned int pIndex);
     
     //play sound effect
     void playSelctedSoundEffect(ElementType pType);             //when grid cell clicked or selected

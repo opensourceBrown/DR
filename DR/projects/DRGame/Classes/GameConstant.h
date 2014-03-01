@@ -3,7 +3,8 @@
 
 
 //for trace
-#define LOG_TRACE CCLog("%s_%s_%d",__FILE__, __FUNCTION__, __LINE__);
+//#define LOG_TRACE CCLog("%s_%s_%d",__FILE__, __FUNCTION__, __LINE__);
+#define LOG_TRACE ;
 
 //定义游戏常量
 #define GENERAL_CHAR_LENGTH			128						//通用字符数组长度
