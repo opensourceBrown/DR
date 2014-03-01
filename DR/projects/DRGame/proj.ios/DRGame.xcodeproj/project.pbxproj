@@ -168,10 +168,10 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		300CC5BD18BACEA6009E1EC8 /* XMLParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 300CC5BB18BACEA6009E1EC8 /* XMLParser.cpp */; };
+		300CFE5018C289FF001379FB /* barrierData.csv in Resources */ = {isa = PBXBuildFile; fileRef = 300CFE4F18C289FF001379FB /* barrierData.csv */; };
 		30218CBA18BAEFAD0027A5E2 /* GridElementProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30218CB818BAEFAD0027A5E2 /* GridElementProperty.cpp */; };
 		302F91EA18B471DF0091D479 /* DataMangager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 302F91E818B471DF0091D479 /* DataMangager.cpp */; };
 		3032AF9C18B7240800327858 /* CSVParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3032AF9A18B7240800327858 /* CSVParser.cpp */; };
-		3033529718B9B23E009D9E29 /* barrierData.csv in Resources */ = {isa = PBXBuildFile; fileRef = 3033529618B9B23E009D9E29 /* barrierData.csv */; };
 		305B73AA18BF1119003F0617 /* GameStatusType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 305B73A818BF1119003F0617 /* GameStatusType.cpp */; };
 		305B87AA18B5E57400EEEAB6 /* DRUtility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 305B87A818B5E57400EEEAB6 /* DRUtility.cpp */; };
 		305B87AB18B5F1EA00EEEAB6 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 305ACA5918B1CB5300A38B3D /* libwebsockets.a */; };
@@ -606,6 +606,7 @@
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		300CC5BB18BACEA6009E1EC8 /* XMLParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XMLParser.cpp; sourceTree = "<group>"; };
 		300CC5BC18BACEA6009E1EC8 /* XMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLParser.h; sourceTree = "<group>"; };
+		300CFE4F18C289FF001379FB /* barrierData.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = barrierData.csv; sourceTree = "<group>"; };
 		30218CB818BAEFAD0027A5E2 /* GridElementProperty.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GridElementProperty.cpp; sourceTree = "<group>"; };
 		30218CB918BAEFAD0027A5E2 /* GridElementProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridElementProperty.h; sourceTree = "<group>"; };
 		302BEAEB18B4800000B59235 /* BaseScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseScene.h; sourceTree = "<group>"; };
@@ -613,7 +614,6 @@
 		302F91E918B471DF0091D479 /* DataMangager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataMangager.h; sourceTree = "<group>"; };
 		3032AF9A18B7240800327858 /* CSVParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSVParser.cpp; sourceTree = "<group>"; };
 		3032AF9B18B7240800327858 /* CSVParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSVParser.h; sourceTree = "<group>"; };
-		3033529618B9B23E009D9E29 /* barrierData.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = barrierData.csv; sourceTree = "<group>"; };
 		305ACA5918B1CB5300A38B3D /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libwebsockets.a; sourceTree = "<group>"; };
 		305ACA5B18B1CD8200A38B3D /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcurl.a; sourceTree = "<group>"; };
 		305B73A818BF1119003F0617 /* GameStatusType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameStatusType.cpp; sourceTree = "<group>"; };
@@ -1779,7 +1779,7 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				3033529618B9B23E009D9E29 /* barrierData.csv */,
+				300CFE4F18C289FF001379FB /* barrierData.csv */,
 				30FC9F1F18BD901A000FE654 /* bossData.csv */,
 				9C6C1EC718B8904D00678A2A /* MainGame.plist */,
 				9C6C1EC818B8904D00678A2A /* MainGame.png */,
@@ -1962,6 +1962,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				300CFE5018C289FF001379FB /* barrierData.csv in Resources */,
 				7855E0E1153FEF240059DD9A /* Default.png in Resources */,
 				D4EF949A15BD2D8B00D803EB /* Icon-57.png in Resources */,
 				D4EF949C15BD2D8E00D803EB /* Icon-114.png in Resources */,
@@ -1975,7 +1976,6 @@
 				1AFAF8BD16D35E4900DB1158 /* CloseSelected.png in Resources */,
 				1AFAF8BE16D35E4900DB1158 /* HelloWorld.png in Resources */,
 				9C6C1EC918B8904D00678A2A /* MainGame.plist in Resources */,
-				3033529718B9B23E009D9E29 /* barrierData.csv in Resources */,
 				9C6C1ECA18B8904D00678A2A /* MainGame.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

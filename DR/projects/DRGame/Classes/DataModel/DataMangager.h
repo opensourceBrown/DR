@@ -45,6 +45,7 @@ public:
     inline CCArray             *barrierConfigures() { return _barrierConfigures; };
     CCArray                    *bossConfigures()    { return _bossConfigures; };
     
+    BarrierFileConfigure       *currentBarrierConfigure();
 };
 
 #endif /* defined(__DRGame__DataMangager__) */
