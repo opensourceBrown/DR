@@ -112,13 +112,33 @@ void MainGameController::clearConnectedElements()
             CC_BREAK_IF(!block);
             
             //clear connected elements from mGridPropertyContainer
-            mGridPropertyContainer->removeObject(block);
-            
-            //clear cell that removed from  mGridPropertyContainer on MainGameGridLayer
+            mGridPropertyContainer->removeObjectAtIndex(block->mIndex.rIndex*GRID_VOLUME+block->mIndex.vIndex);
+
+			//clear cell that removed from  mGridPropertyContainer on MainGameGridLayer
             gridLayer->removeGridCell(block->mIndex.rIndex, block->mIndex.vIndex);
+
+			//update the cell property vIndex above the removed cell row(the cell not in the connected array)
+			for(int j=block->mIndex.rIndex-1;j>=0;j--){
+				GridElementProperty *item=dynamic_cast<GridElementProperty *>(mGridPropertyContainer->objectAtIndex(j*GRID_VOLUME+block->mIndex.vIndex));
+				CC_BREAK_IF(!item);
+
+				//if the item not in the mStageConnectedElements update the item:rIndex+1
+				bool isContain=false;
+				for(int k=0;k<mStageConnectedElements->count();k++){
+					GridElementProperty *tItem=dynamic_cast<GridElementProperty *>(mStageConnectedElements->objectAtIndex(k));
+					CC_BREAK_IF(!tItem);
+					if(tItem->mIndex.rIndex==item->mIndex.rIndex && tItem->mIndex.vIndex==item->mIndex.vIndex){
+						isContain=true;
+					}
+				}
+				if(!isContain){
+					//update the vIndex of item property
+					item->mIndex.rIndex++;
+				}
+			}
             
             //generate new GridElementProperty to fill the blank grid cell
-            CC_BREAK_IF(!this->generateGridCell(block->mIndex.rIndex, block->mIndex.vIndex));
+            CC_BREAK_IF(!this->generateGridCell(0, block->mIndex.vIndex));
             gridLayer->addGridCell(block->mIndex.rIndex, block->mIndex.vIndex);
         }
         

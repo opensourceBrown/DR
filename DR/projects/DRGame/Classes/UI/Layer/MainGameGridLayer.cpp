@@ -241,7 +241,12 @@ void MainGameGridLayer::addGridCell(unsigned int rIndex,unsigned int vIndex)
         item->setAnchorPoint(ccp(0.5,0.5));
         item->setTag(blockProperty->mIndex.rIndex*GRID_VOLUME+blockProperty->mIndex.vIndex+1);
         item->setContentSize(CCSizeMake(m_containerLayer->getContentSize().width/GRID_VOLUME, m_containerLayer->getContentSize().height/GRID_ROW));
-        m_GridCellArray->addObject(item);
+
+		int row = gProperty->mIndex.rIndex;
+		int col = gProperty->mIndex.vIndex;
+		item->setPosition(ccp((col+1)*m_containerLayer->getContentSize().width/GRID_VOLUME,m_containerLayer->getContentSize().height+row*m_containerLayer->getContentSize().height/GRID_ROW));
+		m_containerLayer->addChild(item);
+        m_GridCellArray->addinsertObjectObject(item,rIndex*GRID_VOLUME+vIndex);
     }while(0);
 }
 
