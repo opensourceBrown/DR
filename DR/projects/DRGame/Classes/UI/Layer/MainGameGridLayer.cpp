@@ -120,7 +120,7 @@ void MainGameGridLayer::addGridCellToLayer(GridElementProperty *gProperty)
 //update the grid layer:add the new cell to the grid layer and trigger the move action
 void MainGameGridLayer::updateGrid()
 {
-    scheduleOnce(schedule_selector(MainGameGridLayer::refreshGrid), 0.2);
+    scheduleOnce(schedule_selector(MainGameGridLayer::refreshGrid), 0.5);
 }
 
 void MainGameGridLayer::refreshGrid(float pDelta)
