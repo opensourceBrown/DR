@@ -1,6 +1,7 @@
 #include "GridCell.h"
 
-GridCell::GridCell()
+GridCell::GridCell():
+    m_status(false)
 {
     m_property = new GridElementProperty();
 }

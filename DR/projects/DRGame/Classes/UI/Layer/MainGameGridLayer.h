@@ -18,6 +18,7 @@ public:
 	virtual void onExit();
 
     void addGridCell(unsigned int rIndex,unsigned int vIndex);
+    void exchangeGridCell(unsigned int rIndex,unsigned int vIndex);
     void removeGridCell(unsigned int rIndex,unsigned int vIndex);
     void updateGrid();
     
@@ -25,6 +26,7 @@ public:
 private:
     void constructUI();
     void addGridCellToLayer(GridElementProperty *gProperty);
+    void refreshGrid(float pDelta);
     
     void removeGridCellCompleteCallback(CCObject *pSender);
 	void moveGridCellAnimation(unsigned int rIndex,unsigned int vIndex);				//ÏÂÒÆcell¶¯»­

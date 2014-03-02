@@ -31,6 +31,8 @@ public:
         mType=kElementType_Coin;
         mID=0;
         
+        m_status=false;
+        
         mMonsterProperty.mType = kBustyType_Common;
         mMonsterProperty.mSkillType = kBossBustyType_Chaotic;
         mMonsterProperty.mID = 0;
@@ -47,10 +49,16 @@ public:
     
     bool canbeDestroyed();      //when monster`s life>0, can not be destroyed
     
+    void setStatus(bool pStatus){m_status=pStatus;}
+    bool getStatus(){return m_status;}
+    
 private:
     void configureNormalElementProperty();  //element except boss
     void configureNormalMonsterProperty();  //normal monster
     void configureBossProperty();           //boss
+    
+private:
+    bool m_status;                          //true:cleared    false:uncleared
 };
 
 

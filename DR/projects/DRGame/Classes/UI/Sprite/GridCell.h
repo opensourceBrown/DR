@@ -23,6 +23,9 @@ public:
 //    void setCellElementType(ElementType pType=kElementType_Medicine);
     void setCellProperty(GridElementProperty *pElement);
     GridElementProperty *getCellProperty(){return m_property;}
+    
+    void setStatus(bool pStatus){m_status=pStatus;}
+    bool getStatus(){return m_status;}
 
 private:
     bool initWith(const char *pszFileName);
@@ -32,6 +35,8 @@ private:
 //	GIRDCELL_INDEX		m_preIndex;				//¡¨Ω”…œ“ª∏ˆcellµƒÀ˜“˝£∫ƒ¨»œŒ™£®0£¨0£©
     
     GridElementProperty *m_property;             //cell对应的结构属性
+    
+    bool                m_status;                   //true:added    false:unadded
 
 };
 

@@ -107,19 +107,23 @@ void MainGameGridLayer::addGridCellToLayer(GridElementProperty *gProperty)
     GridCell *item=GridCell::createWithFrameName(typeStr->getCString());
     item->setCellProperty(gProperty);
     item->setAnchorPoint(ccp(0.5,0.5));
-    item->setTag(gProperty->mIndex.rIndex*GRID_VOLUME+gProperty->mIndex.vIndex+1);
     item->setContentSize(CCSizeMake(m_containerLayer->getContentSize().width/GRID_VOLUME, m_containerLayer->getContentSize().height/GRID_ROW));
     
     int row = gProperty->mIndex.rIndex;
     int col = gProperty->mIndex.vIndex;
     item->setPosition(ccp((col+1)*m_containerLayer->getContentSize().width/GRID_VOLUME,m_containerLayer->getContentSize().height-row*m_containerLayer->getContentSize().height/GRID_ROW));
+    item->setStatus(true);
     m_containerLayer->addChild(item);
-    
     m_GridCellArray->addObject(item);
 }
 
 //update the grid layer:add the new cell to the grid layer and trigger the move action
 void MainGameGridLayer::updateGrid()
+{
+    scheduleOnce(schedule_selector(MainGameGridLayer::refreshGrid), 0.2);
+}
+
+void MainGameGridLayer::refreshGrid(float pDelta)
 {
     do{
         CC_BREAK_IF(!m_GridCellArray);
@@ -128,6 +132,7 @@ void MainGameGridLayer::updateGrid()
         for (int i=0; i<m_GridCellArray->count(); i++) {
             GridCell *cell = dynamic_cast<GridCell *>(m_GridCellArray->objectAtIndex(i));
             CC_BREAK_IF(!cell);
+            cell->setStatus(true);
             GridElementProperty *blockProperty=cell->getCellProperty();
             CC_BREAK_IF(!blockProperty);
             this->moveGridCellAnimation(blockProperty->mIndex.rIndex, blockProperty->mIndex.vIndex);
@@ -139,10 +144,6 @@ void MainGameGridLayer::addGridCell(unsigned int rIndex,unsigned int vIndex)
 {
     do{
         CC_BREAK_IF(!m_GridCellArray);
-        
-        //judge whether the cell is cleared
-        GridCell *cell = dynamic_cast<GridCell *>(m_containerLayer->getChildByTag(rIndex*GRID_VOLUME+vIndex));
-        CC_BREAK_IF(cell);
         
         GridElementProperty *blockProperty=((MainGameController *)m_delegate)->getGridElementProperty(rIndex, vIndex);
         CC_BREAK_IF(!blockProperty);
@@ -174,16 +175,45 @@ void MainGameGridLayer::addGridCell(unsigned int rIndex,unsigned int vIndex)
         GridCell *item=GridCell::createWithFrameName(typeStr->getCString());
         item->setCellProperty(blockProperty);
         item->setAnchorPoint(ccp(0.5,0.5));
-        item->setTag(blockProperty->mIndex.rIndex*GRID_VOLUME+blockProperty->mIndex.vIndex+1);
         item->setContentSize(CCSizeMake(m_containerLayer->getContentSize().width/GRID_VOLUME, m_containerLayer->getContentSize().height/GRID_ROW));
 
 		int row = blockProperty->mIndex.rIndex;
 		int col = blockProperty->mIndex.vIndex;
-		item->setPosition(ccp((col+1)*m_containerLayer->getContentSize().width/GRID_VOLUME,m_containerLayer->getContentSize().height+row*m_containerLayer->getContentSize().height/GRID_ROW));
-		m_containerLayer->addChild(item);
+        
+        int step=0;
+        for (int i=0; i<GRID_ROW; i++) {
+            GridCell *cell = dynamic_cast<GridCell *>(m_GridCellArray->objectAtIndex(i*GRID_VOLUME+vIndex));
+            CC_BREAK_IF(!cell);
+            if (false==cell->getStatus()) {
+                step++;
+            }
+        }
+        item->setPosition(ccp((col+1)*m_containerLayer->getContentSize().width/GRID_VOLUME,m_containerLayer->getContentSize().height+m_containerLayer->getContentSize().height/GRID_ROW));
+        m_containerLayer->addChild(item);
         m_GridCellArray->replaceObjectAtIndex(rIndex*GRID_VOLUME+vIndex, item);
-        CCLog("new cell index:(%d,%d)",rIndex,vIndex);
+        
+//        CCLog("new cell index:(%d,%d)",row,col);
     }while(0);
+}
+
+void MainGameGridLayer::exchangeGridCell(unsigned int rIndex,unsigned int vIndex)
+{
+//    CCLog("cell exchange index(%d,%d)",rIndex,vIndex);
+    do {
+        CC_BREAK_IF(!m_GridCellArray || !(m_GridCellArray->objectAtIndex(rIndex)) || !(m_GridCellArray->objectAtIndex(vIndex)));
+        GridCell *rCell=dynamic_cast<GridCell *>(m_GridCellArray->objectAtIndex(rIndex));
+        GridCell *sCell=dynamic_cast<GridCell *>(m_GridCellArray->objectAtIndex(vIndex));
+        //update the cell property index
+        GridElementProperty *rBlockProperty=rCell->getCellProperty();
+        GridElementProperty *sBlockProperty=sCell->getCellProperty();
+//        CCLog("pre index:(%d,%d),(%d,%d)",rBlockProperty->mIndex.rIndex,rBlockProperty->mIndex.vIndex,sBlockProperty->mIndex.rIndex,sBlockProperty->mIndex.vIndex);
+        int tRIndex=rBlockProperty->mIndex.rIndex;
+        rBlockProperty->mIndex.rIndex=sBlockProperty->mIndex.rIndex;
+        sBlockProperty->mIndex.rIndex=tRIndex;
+//        CCLog("ex index:(%d,%d),(%d,%d)",rBlockProperty->mIndex.rIndex,rBlockProperty->mIndex.vIndex,sBlockProperty->mIndex.rIndex,sBlockProperty->mIndex.vIndex);
+        
+        m_GridCellArray->exchangeObject(rCell, sCell);
+    } while (0);
 }
 
 void MainGameGridLayer::removeGridCell(unsigned int rIndex,unsigned int vIndex)
@@ -204,7 +234,6 @@ void MainGameGridLayer::removeGridCell(unsigned int rIndex,unsigned int vIndex)
         }
         CC_BREAK_IF(!cell);
         cell->runAction(CCSequence::create(CCBlink::create(0.5, 2),CCCallFuncN::create(this,callfuncN_selector(MainGameGridLayer::removeGridCellCompleteCallback)),NULL));
-//        m_GridCellArray->removeObjectAtIndex(rIndex*GRID_VOLUME+vIndex);
     }while(0);
 }
 
@@ -271,7 +300,6 @@ bool MainGameGridLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 			if(rectContainPoint(CCRectMake(cell->getPosition().x-m_containerLayer->getContentSize().width/GRID_VOLUME, cell->getPosition().y+cell->getContentSize().height/2, cell->getContentSize().width, cell->getContentSize().height),location))
 			{
                 m_currentSelCell=cell;
-//                cell->runAction(CCRepeatForever::create(CCBlink::create(0.5, 2)));
                 GridElementProperty *blockProperty=cell->getCellProperty();
                 
                 //notify controller to insert the cell into connected array if the cell can be connected
@@ -301,7 +329,6 @@ void MainGameGridLayer::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
                 if (m_currentSelCell==cell) {
                     break;
                 }
-//                cell->runAction(CCRepeatForever::create(CCBlink::create(0.5, 2)));
                 m_currentSelCell=cell;
                 GridElementProperty *blockProperty=cell->getCellProperty();
                 

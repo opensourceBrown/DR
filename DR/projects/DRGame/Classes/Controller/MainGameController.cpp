@@ -116,35 +116,21 @@ void MainGameController::clearConnectedElements()
         
         CC_BREAK_IF(!mStageConnectedElements);
         
-        //for test
+        //set grid element property status
         for (int i=0; i<mStageConnectedElements->count(); i++) {
             GridCell *cell=dynamic_cast<GridCell *>(mStageConnectedElements->objectAtIndex(i));
             CC_BREAK_IF(!cell);
             
             GridElementProperty *block=cell->getCellProperty();
             CC_BREAK_IF(!block);
-            CCLog("remove cell(%d,%d)",block->mIndex.rIndex, block->mIndex.vIndex);
+            block->setStatus(true);
+            
+            GridElementProperty *item=dynamic_cast<GridElementProperty *>(mGridPropertyContainer->objectAtIndex(block->mIndex.rIndex*GRID_VOLUME+block->mIndex.vIndex));
+            CC_BREAK_IF(!item);
+            item->setStatus(true);
         }
         
-        //clear connected elements from mGridPropertyContainer
-        for (int i=0; i<mStageConnectedElements->count(); i++) {
-            GridCell *cell=dynamic_cast<GridCell *>(mStageConnectedElements->objectAtIndex(i));
-            CC_BREAK_IF(!cell);
-            
-            GridElementProperty *block=cell->getCellProperty();
-            CC_BREAK_IF(!block);
-            
-            for (int j=0; j<mGridPropertyContainer->count(); j++) {
-                GridElementProperty *item=dynamic_cast<GridElementProperty *>(mStageConnectedElements->objectAtIndex(j));
-                CC_BREAK_IF(!item);
-                if (item->mIndex.rIndex==block->mIndex.rIndex && item->mIndex.vIndex==block->mIndex.vIndex) {
-                    mGridPropertyContainer->removeObject(item);
-                    break;
-                }
-            }
-        }
-        
-        //clear cell that removed from  mGridPropertyContainer on MainGameGridLayer
+        //clear cells on MainGameGridLayer
         for (int i=0; i<mStageConnectedElements->count(); i++) {
             GridCell *cell=dynamic_cast<GridCell *>(mStageConnectedElements->objectAtIndex(i));
             CC_BREAK_IF(!cell);
@@ -154,38 +140,46 @@ void MainGameController::clearConnectedElements()
             gridLayer->removeGridCell(block->mIndex.rIndex, block->mIndex.vIndex);
         }
         
-        //update the cell property vIndex above the removed cell row(the cell not in the connected array)
-        for (int i=0; i<mStageConnectedElements->count(); i++) {
-            GridCell *cell=dynamic_cast<GridCell *>(mStageConnectedElements->objectAtIndex(i));
-            CC_BREAK_IF(!cell);
-            
-            GridElementProperty *block=cell->getCellProperty();
-            CC_BREAK_IF(!block);
-            for(int j=mStageConnectedElements->indexOfObject(cell);j>=0;j--){
-				GridElementProperty *item=dynamic_cast<GridElementProperty *>(mGridPropertyContainer->objectAtIndex(j));
-				CC_BREAK_IF(!item);
-                
-                if (item->mIndex.vIndex==block->mIndex.vIndex && block->mIndex.rIndex-item->mIndex.rIndex) {
-                    bool isSel=false;
-                    for (int k=0; k<mStageConnectedElements->count(); k++) {
-                        GridCell *cellItem=dynamic_cast<GridCell *>(mStageConnectedElements->objectAtIndex(i));
-                        CC_BREAK_IF(!cellItem);
-                        
-                        GridElementProperty *blockItem=cellItem->getCellProperty();
-                        CC_BREAK_IF(!blockItem);
-                        if (blockItem->mIndex.rIndex==item->mIndex.rIndex && blockItem->mIndex.vIndex==item->mIndex.vIndex) {
-                            isSel=true;
+        //update property data in mGridPropertyContainer:bubble sort
+        for (int i=0; i<GRID_VOLUME; i++) {
+            for (int j=GRID_ROW-1; j>=0; j--) {
+                GridElementProperty *item=dynamic_cast<GridElementProperty *>(mGridPropertyContainer->objectAtIndex(j*GRID_VOLUME+i));
+                CC_BREAK_IF(!item);
+                if (item->getStatus()) {
+                    //exchange with the above nearest property that is not cleared
+                    for (int k=j-1; k>=0; k--) {
+                        GridElementProperty *block=dynamic_cast<GridElementProperty *>(mGridPropertyContainer->objectAtIndex(k*GRID_VOLUME+i));
+                        CC_BREAK_IF(!block);
+                        if (false==block->getStatus()) {
+//                            CCLog("block(%d,%d),item(%d,%d)",block->mIndex.rIndex,block->mIndex.vIndex,item->mIndex.rIndex,item->mIndex.vIndex);
+                            //update the vIndex after exchange the two elements
+                            int tIndex=item->mIndex.rIndex;
+                            item->mIndex.rIndex=block->mIndex.rIndex;
+                            block->mIndex.rIndex=tIndex;
+                            mGridPropertyContainer->exchangeObject(block, item);
+                            
+                            //notify the grid layer to exchange cell in m_GridCellArray
+                            gridLayer->exchangeGridCell(k*GRID_VOLUME+i, j*GRID_VOLUME+i);
                             break;
                         }
                     }
-                    if (isSel) {
-                        CCLog("pre index:(%d,%d)",item->mIndex.rIndex,item->mIndex.vIndex);
-                        item->mIndex.rIndex++;
-                        CCLog("cur index:(%d,%d)",item->mIndex.rIndex,item->mIndex.vIndex);
-                    }
                 }
-			}
-            gridLayer->addGridCell(0, block->mIndex.vIndex);
+            }
+            
+            //generate new property replace the clear elements up to down
+            for (int j=0; j<GRID_ROW; j++) {
+                GridElementProperty *item=dynamic_cast<GridElementProperty *>(mGridPropertyContainer->objectAtIndex(j*GRID_VOLUME+i));
+                CC_BREAK_IF(!item);
+                if (item->getStatus()) {
+                    generateGridCell(item->mIndex.rIndex, item->mIndex.vIndex);
+                    
+                    //notify grid layer to generate new cell to replace the cleard cell
+                    gridLayer->addGridCell(item->mIndex.rIndex, item->mIndex.vIndex);
+                }else{
+                    break;
+                }
+//                CCLog("11111111(%d,%d)-------item status:%d",item->mIndex.rIndex,item->mIndex.vIndex,item->getStatus());
+            }
         }
         
         //update MainGameGridLayer to show new cell
@@ -245,7 +239,15 @@ bool MainGameController::generateGridCell(unsigned int rIndex,unsigned int vInde
             
             blockProperty->saveToDictionary(rDict);
         }
-        mGridPropertyContainer->insertObject(blockProperty, rIndex*GRID_VOLUME+vIndex);
+        
+        if (rIndex*GRID_VOLUME+vIndex<mGridPropertyContainer->count() && mGridPropertyContainer->objectAtIndex(rIndex*GRID_VOLUME+vIndex)) {
+            //replace
+            mGridPropertyContainer->replaceObjectAtIndex(rIndex*GRID_VOLUME+vIndex, blockProperty);
+        }else{
+            //add
+            mGridPropertyContainer->insertObject(blockProperty, rIndex*GRID_VOLUME+vIndex);
+        }
+        
         tSuc=true;
     } while (0);
     
