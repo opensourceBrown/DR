@@ -48,7 +48,9 @@ public:
     bool canbeDestroyed();      //when monster`s life>0, can not be destroyed
     
 private:
-
+    void configureNormalElementProperty();  //element except boss
+    void configureNormalMonsterProperty();  //normal monster
+    void configureBossProperty();           //boss
 };
 
 

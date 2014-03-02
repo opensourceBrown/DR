@@ -19,6 +19,9 @@ typedef enum{
     kElementType_Coin,						//金币
     kElementType_Potion,					//血瓶
     kElementType_Shield,					//盾
+    
+    
+    kElementType_End,                       //结束标示，用于取得枚举个数
 }ElementType;
 
 //定义怪物的类型
@@ -42,7 +45,8 @@ typedef struct{
 
 //定义boss怪的类型
 typedef enum{
-    kBossBustyType_Chaotic=0,
+    kBossBustyType_None=0,
+    kBossBustyType_Chaotic,
     kBossBustyType_Poisonous,
     kBossBustyType_Healer,
     kBossBustyType_Spiky,

@@ -29,6 +29,7 @@ DataManager::DataManager()
     _gameStatus = new GameStatusType();
     _gameStatus->mNumberOfRound = 0;
     _gameStatus->mFlag = -1;
+    _gameStatus->mBarrierId = 1;
     _gameStatus->mLife = 0;
     _gameStatus->mMaxLife = 0;
     
@@ -38,7 +39,7 @@ DataManager::DataManager()
     _bossConfigures = CCArray::create();
     _bossConfigures->retain();
     
-    readDataFromCSV();
+    this->readDataFromCSV();
 }
 
 DataManager::~DataManager()
@@ -55,6 +56,7 @@ DataManager::~DataManager()
 
 void DataManager::readDataFromCSV()
 {
+    
     //barrierData
     CCArray *barrierData = DRUtility::readCSVFileWithName("barrierData.csv");
     
@@ -125,4 +127,20 @@ bool DataManager::saveGridElements(void)
         isSuccess = _savedDict->writeToFile(fileName.c_str());
     }
     return isSuccess;
+}
+
+BarrierFileConfigure * DataManager::currentBarrierConfigure()
+{
+    int barrierId = _gameStatus->mBarrierId;
+    
+    BarrierFileConfigure *bfConfigure = NULL;
+    CCObject *object = NULL;
+    CCARRAY_FOREACH(_barrierConfigures, object)
+    {
+        bfConfigure = (BarrierFileConfigure *)object;
+        if (barrierId == bfConfigure->mBarrierId) {
+            return bfConfigure;
+        }
+    }
+    return NULL;
 }

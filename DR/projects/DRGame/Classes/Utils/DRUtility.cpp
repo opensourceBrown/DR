@@ -127,27 +127,38 @@ CCArray * DRUtility::readCSVFileWithName(const char *fileName)
         }
     }
 
-    CCArray *allKeys = dictionary->allKeys();
-    for (int i = 0; i < allKeys->count(); i++) {
-        CCString *key = (CCString *)allKeys->objectAtIndex(i);
-        cout<<"key=" + string(key->getCString())<<endl;
-    }
-
-    CCDictionary *dict = NULL;
-    CCObject *object = NULL;
-    CCDictElement *dElement = NULL;
-    CCARRAY_FOREACH(dataArray, object)
-    {
-        dict = (CCDictionary *)object;
-
-        CCDICT_FOREACH(dict, dElement)
-        {
-            string key = dElement->getStrKey();
-            CCString *value = (CCString *)dElement->getObject();
-            cout<<"key="+key + " ------ value=" + value->getCString()<<endl;
-        }
-    }
+//    CCArray *allKeys = dictionary->allKeys();
+//    for (int i = 0; i < allKeys->count(); i++) {
+//        CCString *key = (CCString *)allKeys->objectAtIndex(i);
+//        cout<<"key=" + string(key->getCString())<<endl;
+//    }
+//
+//    CCDictionary *dict = NULL;
+//    CCObject *object = NULL;
+//    CCDictElement *dElement = NULL;
+//    CCARRAY_FOREACH(dataArray, object)
+//    {
+//        dict = (CCDictionary *)object;
+//
+//        CCDICT_FOREACH(dict, dElement)
+//        {
+//            string key = dElement->getStrKey();
+//            CCString *value = (CCString *)dElement->getObject();
+//            cout<<"key="+key + " ------ value=" + value->getCString()<<endl;
+//        }
+//    }
     delete csvParser;
     
     return dataArray;
+}
+
+int DRUtility::randn(int n)
+{
+    int max = RAND_MAX - RAND_MAX % n;
+    int x;
+    do
+    {
+        x = rand();
+    }while ( x >= max );
+    return x % n;
 }
