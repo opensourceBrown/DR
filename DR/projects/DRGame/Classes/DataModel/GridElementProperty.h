@@ -11,6 +11,7 @@
 
 #include "cocos2d.h"
 #include "DataConstant.h"
+#include "BossFileConfigure.h"
 
 USING_NS_CC;
 
@@ -56,6 +57,7 @@ private:
     void configureNormalElementProperty();  //element except boss
     void configureNormalMonsterProperty();  //normal monster
     void configureBossProperty();           //boss
+    BossFileConfigure *getRandomBoss();   //get the boss according to rate;
     
 private:
     bool m_status;                          //true:cleared    false:uncleared

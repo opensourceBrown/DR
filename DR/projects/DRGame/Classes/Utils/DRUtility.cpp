@@ -162,3 +162,9 @@ int DRUtility::randn(int n)
     }while ( x >= max );
     return x % n;
 }
+
+float DRUtility::randFraction()
+{
+    float fNumber = (float)DRUtility::randn(1000+1)/(float)1000;
+    return fNumber;
+}

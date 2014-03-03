@@ -154,10 +154,10 @@ typedef struct{
 	unsigned int			mID;
 	const char*				mName;
 	const char*				mDescription;
-	unsigned int			mDefence;
-    unsigned int            mLife;
-    unsigned int            mMaxLife;
-	unsigned int			mDamage;
+    float                   mDefence;
+    float                   mLife;
+    float                   mMaxLife;
+    float                   mDamage;
 }BustyProperty;
 
 //定义关卡结构

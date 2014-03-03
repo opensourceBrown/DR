@@ -10,6 +10,7 @@
 #include "DRUtility.h"
 #include "CSVParser.h"
 #include "DataMangager.h"
+#include "BossFileConfigure.h"
 
 GridElementProperty::GridElementProperty()
 {
@@ -27,16 +28,13 @@ void GridElementProperty::generateGridElementDataByCSV()
     int flag = gameStatus->mFlag;
     if (flag == -1) {
         //not boss
-        
         BarrierFileConfigure *currentBConfigure = DataManager::sharedInstance()->currentBarrierConfigure();
         int mA = currentBConfigure->mA;
         int mB = currentBConfigure->mB;
         DataManager::sharedInstance()->gameStatus()->mFlag = mA - mB * gameStatus->mNumberOfRound;
-        
         this->configureNormalElementProperty();
     } else if (flag == 0) {
         //boss
-        
         BarrierFileConfigure *currentBConfigure = DataManager::sharedInstance()->currentBarrierConfigure();
         int mA = currentBConfigure->mA;
         int mB = currentBConfigure->mB;
@@ -49,7 +47,6 @@ void GridElementProperty::generateGridElementDataByCSV()
         DataManager::sharedInstance()->gameStatus()->mFlag -= 1;
         this->configureNormalElementProperty();
     }
-    
 }
 
 
@@ -101,15 +98,48 @@ void GridElementProperty::configureNormalMonsterProperty()
 
 void GridElementProperty::configureBossProperty()
 {
+    GameStatusType *gameStatus = DataManager::sharedInstance()->gameStatus();
+    
+    BossFileConfigure *bossCongifgure = this->getRandomBoss();
     mMonsterProperty.mType = kBustyType_Boss;
     mMonsterProperty.mSkillType = kBossBustyType_Chaotic;
-    mMonsterProperty.mID = 0;
+    mMonsterProperty.mID = bossCongifgure->mBossId;
     mMonsterProperty.mName = "boss";
     mMonsterProperty.mDescription = "This is a boss Monster";
-    mMonsterProperty.mDefence = 2;
-    mMonsterProperty.mLife = 3;
-    mMonsterProperty.mMaxLife = 3;
-    mMonsterProperty.mDamage = 2;
+    mMonsterProperty.mDefence = bossCongifgure->mF + bossCongifgure->mG*(float)gameStatus->mNumberOfRound;      //defence = f + g * round
+    mMonsterProperty.mMaxLife = bossCongifgure->mD + bossCongifgure->mE*(float)gameStatus->mNumberOfRound;      //life = d + e * round
+    mMonsterProperty.mLife = mMonsterProperty.mMaxLife;
+    mMonsterProperty.mDamage = bossCongifgure->mH + bossCongifgure->mI*(float)gameStatus->mNumberOfRound;      //damage = H + I * round
 }
 
+BossFileConfigure * GridElementProperty::getRandomBoss()
+{
+    CCArray *bossConfigures = DataManager::sharedInstance()->bossConfigures();
+    
+    int bCongfiguresCount = bossConfigures->count();
+    float bossRates[bCongfiguresCount];
+    
+    BossFileConfigure *bossConfigure = NULL;
+    CCObject *object = NULL;
+    
+    float randomFloat = DRUtility::randFraction();
+    cout<<randomFloat<<endl;
+    
+    float previousBossRate = 0.0f;
+    int i = 0;
+    CCARRAY_FOREACH(bossConfigures, object)
+    {
+        bossConfigure = (BossFileConfigure *)object;
+        
+        bossRates[i] = previousBossRate + bossConfigure->mBossRate;
+        if (randomFloat < bossRates[i]) {
+            
+            return bossConfigure;
+        }
+        
+        previousBossRate = bossRates[i];
+        i++;
+    }
+    return NULL;
+}
 

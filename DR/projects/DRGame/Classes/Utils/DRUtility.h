@@ -26,7 +26,8 @@ public:
     static CCString* getCCStringWithInt(int intValue);
     static CCArray *readCSVFileWithName(const char* fileName);
     
-    static int randn(int n);            //generate [0,n-1] uniform distribution random number
+    static int randn(int n);            //generate [0,n-1] uniform distribution random int number
+    static float randFraction();        //generate [0,1] float number 
 private:
     
     
