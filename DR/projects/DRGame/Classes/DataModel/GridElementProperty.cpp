@@ -77,7 +77,7 @@ void GridElementProperty::configureNormalElementProperty()
     this->mID = 0;
     
     //TODO:Element生成概率先写成平均随机的，若有需求，在此改动
-    this->mType = (ElementType)DRUtility::randn(kElementType_End-1-1);
+    this->mType = (ElementType)DRUtility::randn(kElementType_End-1);
     
     this->configureNormalMonsterProperty();
 }
@@ -100,16 +100,17 @@ void GridElementProperty::configureBossProperty()
 {
     GameStatusType *gameStatus = DataManager::sharedInstance()->gameStatus();
     
-    BossFileConfigure *bossCongifgure = this->getRandomBoss();
+    BossFileConfigure *bossConfigure = this->getRandomBoss();
+    cout<<"bossConfigure = "<< bossConfigure<<endl;
     mMonsterProperty.mType = kBustyType_Boss;
     mMonsterProperty.mSkillType = kBossBustyType_Chaotic;
-    mMonsterProperty.mID = bossCongifgure->mBossId;
+    mMonsterProperty.mID = bossConfigure->mBossId;
     mMonsterProperty.mName = "boss";
     mMonsterProperty.mDescription = "This is a boss Monster";
-    mMonsterProperty.mDefence = bossCongifgure->mF + bossCongifgure->mG*(float)gameStatus->mNumberOfRound;      //defence = f + g * round
-    mMonsterProperty.mMaxLife = bossCongifgure->mD + bossCongifgure->mE*(float)gameStatus->mNumberOfRound;      //life = d + e * round
+    mMonsterProperty.mDefence = bossConfigure->mF + bossConfigure->mG*(float)gameStatus->mNumberOfRound;      //defence = f + g * round
+    mMonsterProperty.mMaxLife = bossConfigure->mD + bossConfigure->mE*(float)gameStatus->mNumberOfRound;      //life = d + e * round
     mMonsterProperty.mLife = mMonsterProperty.mMaxLife;
-    mMonsterProperty.mDamage = bossCongifgure->mH + bossCongifgure->mI*(float)gameStatus->mNumberOfRound;      //damage = H + I * round
+    mMonsterProperty.mDamage = bossConfigure->mH + bossConfigure->mI*(float)gameStatus->mNumberOfRound;      //damage = H + I * round
 }
 
 BossFileConfigure * GridElementProperty::getRandomBoss()
@@ -133,7 +134,6 @@ BossFileConfigure * GridElementProperty::getRandomBoss()
         
         bossRates[i] = previousBossRate + bossConfigure->mBossRate;
         if (randomFloat < bossRates[i]) {
-            
             return bossConfigure;
         }
         

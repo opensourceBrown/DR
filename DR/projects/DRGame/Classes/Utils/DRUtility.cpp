@@ -110,17 +110,18 @@ CCArray * DRUtility::readCSVFileWithName(const char *fileName)
     string strLine = "";
     
     for (int i = 0; i < csvParser->getCols(); i++) {
+        
         for (int j = 0; j < csvParser->getRows(); j++) {
             CCString *string = CCString::create(csvParser->getData(j, i));
             if (i == 0) {
                 keys->addObject(string);
             } else {
-                if (i==1) {
+                if (j==0) {
                     dictionary = CCDictionary::create();
                 }
                 CCString *strKey = (CCString *)keys->objectAtIndex(j);
                 dictionary->setObject(string, strKey->getCString());
-                if (i== csvParser->getCols()-1) {
+                if (j== csvParser->getRows()-1) {
                     dataArray->addObject(dictionary);
                 }
             }
@@ -158,13 +159,18 @@ int DRUtility::randn(int n)
     int x;
     do
     {
-        x = rand();
+        x = arc4random();
+        x = abs(x);
+        cout<<"x = "<<x<<endl;
     }while ( x >= max );
+    cout<<"x % n = "<<x % n<<endl;
     return x % n;
 }
 
 float DRUtility::randFraction()
 {
-    float fNumber = (float)DRUtility::randn(1000+1)/(float)1000;
+    int rand1000FloatNumber = DRUtility::randn(1000+1);
+    cout<<rand1000FloatNumber<<endl;
+    float fNumber = (float)rand1000FloatNumber/(float)1000;
     return fNumber;
 }

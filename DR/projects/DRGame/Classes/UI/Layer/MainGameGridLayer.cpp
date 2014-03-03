@@ -103,6 +103,8 @@ void MainGameGridLayer::addGridCellToLayer(GridElementProperty *gProperty)
         case kElementType_Shield:
             typeStr=CCString::create("Grid_cell_shield.png");
             break;
+        default:
+            break;
     }
     GridCell *item=GridCell::createWithFrameName(typeStr->getCString());
     item->setCellProperty(gProperty);

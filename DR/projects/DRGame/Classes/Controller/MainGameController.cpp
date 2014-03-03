@@ -225,8 +225,7 @@ bool MainGameController::generateGridCell(unsigned int rIndex,unsigned int vInde
                 //test
                 blockProperty->mIndex.rIndex=rIndex;
                 blockProperty->mIndex.vIndex=vIndex;
-                blockProperty->mType=kElementType_Sword;
-                blockProperty->mID=11;
+                blockProperty->generateGridElementDataByCSV();
                 
                 blockProperty->saveToDictionary(rDict);
             }
@@ -234,8 +233,7 @@ bool MainGameController::generateGridCell(unsigned int rIndex,unsigned int vInde
             //test
             blockProperty->mIndex.rIndex=rIndex;
             blockProperty->mIndex.vIndex=vIndex;
-            blockProperty->mType=kElementType_Sword;
-            blockProperty->mID=11;
+            blockProperty->generateGridElementDataByCSV();
             
             blockProperty->saveToDictionary(rDict);
         }

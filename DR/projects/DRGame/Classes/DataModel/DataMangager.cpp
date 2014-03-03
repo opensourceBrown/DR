@@ -69,9 +69,9 @@ void DataManager::readDataFromCSV()
         BarrierFileConfigure *bConfigures = new BarrierFileConfigure();
         bConfigures->autorelease();
         bConfigures->mBarrierId = ((CCString *)dict->objectForKey("barrierid"))->intValue();
-        bConfigures->mA = ((CCString *)dict->objectForKey("A"))->intValue();
-        bConfigures->mB = ((CCString *)dict->objectForKey("B"))->intValue();
-        bConfigures->mC = ((CCString *)dict->objectForKey("C"))->intValue();
+        bConfigures->mA = ((CCString *)dict->objectForKey("A"))->floatValue();
+        bConfigures->mB = ((CCString *)dict->objectForKey("B"))->floatValue();
+        bConfigures->mC = ((CCString *)dict->objectForKey("C"))->floatValue();
         _barrierConfigures->addObject(bConfigures);
     }
     
@@ -84,13 +84,15 @@ void DataManager::readDataFromCSV()
         BossFileConfigure *bossConfigures = new BossFileConfigure();
         bossConfigures->autorelease();
         bossConfigures->mBossId = ((CCString *)dict->objectForKey("bossid"))->intValue();
-        bossConfigures->mD = ((CCString *)dict->objectForKey("D"))->intValue();
-        bossConfigures->mE = ((CCString *)dict->objectForKey("E"))->intValue();
-        bossConfigures->mF = ((CCString *)dict->objectForKey("F"))->intValue();
-        bossConfigures->mG = ((CCString *)dict->objectForKey("G"))->intValue();
-        bossConfigures->mH = ((CCString *)dict->objectForKey("H"))->intValue();
-        bossConfigures->mI = ((CCString *)dict->objectForKey("I"))->intValue();
+        bossConfigures->mD = ((CCString *)dict->objectForKey("D"))->floatValue();
+        bossConfigures->mE = ((CCString *)dict->objectForKey("E"))->floatValue();
+        bossConfigures->mF = ((CCString *)dict->objectForKey("F"))->floatValue();
+        bossConfigures->mG = ((CCString *)dict->objectForKey("G"))->floatValue();
+        bossConfigures->mH = ((CCString *)dict->objectForKey("H"))->floatValue();
+        bossConfigures->mI = ((CCString *)dict->objectForKey("I"))->floatValue();
+        bossConfigures->mBossRate = ((CCString *)dict->objectForKey("bossRate"))->floatValue();
         _bossConfigures->addObject(bossConfigures);
+        
     }
 }
 
@@ -132,12 +134,14 @@ bool DataManager::saveGridElements(void)
 BarrierFileConfigure * DataManager::currentBarrierConfigure()
 {
     int barrierId = _gameStatus->mBarrierId;
+    cout<<barrierId<<endl;
     
     BarrierFileConfigure *bfConfigure = NULL;
     CCObject *object = NULL;
     CCARRAY_FOREACH(_barrierConfigures, object)
     {
         bfConfigure = (BarrierFileConfigure *)object;
+        cout<<bfConfigure->mBarrierId<<endl;
         if (barrierId == bfConfigure->mBarrierId) {
             return bfConfigure;
         }
