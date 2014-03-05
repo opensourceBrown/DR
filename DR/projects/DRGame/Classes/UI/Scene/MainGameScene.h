@@ -5,6 +5,8 @@
 #include "BaseScene.h"
 
 class MainGameGridLayer;
+class MainGameStatusBar;
+class MainGameToolBar;
 class BaseController;
 class BaseScene;
 class MainGameController;
@@ -17,8 +19,8 @@ public:
     static MainGameScene *create(BaseController *pDelegate);
     
     MainGameGridLayer *getGridLayer();
-    CCLayer *getStatusLayer(){return m_statusBar;}
-    CCLayer *getToolBar(){return m_toolBar;}
+    MainGameStatusBar *getStatusLayer(){return m_statusBar;}
+    MainGameToolBar   *getToolBar(){return m_toolBar;}
     
     
     
@@ -29,8 +31,8 @@ private:
 private:
     
     MainGameGridLayer   *m_gridLayer;
-    CCLayer             *m_statusBar;
-    CCLayer             *m_toolBar;
+    MainGameStatusBar   *m_statusBar;
+    MainGameToolBar     *m_toolBar;
     
 };
 

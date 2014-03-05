@@ -238,6 +238,8 @@
 		379BB9D417F03F3700829B88 /* SceneReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 379BB99317F03F3700829B88 /* SceneReader.cpp */; };
 		46513EB1187BFBA200B5ABE1 /* UITouchGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46513EAF187BFBA200B5ABE1 /* UITouchGroup.cpp */; };
 		7855E0E1153FEF240059DD9A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 7855E0DF153FEF240059DD9A /* Default.png */; };
+		9C02290718C739DD004302EF /* MainGameStatusBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C02290318C739DD004302EF /* MainGameStatusBar.cpp */; };
+		9C02290818C739DD004302EF /* MainGameToolBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C02290518C739DD004302EF /* MainGameToolBar.cpp */; };
 		9C6C1EC918B8904D00678A2A /* MainGame.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9C6C1EC718B8904D00678A2A /* MainGame.plist */; };
 		9C6C1ECA18B8904D00678A2A /* MainGame.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C6C1EC818B8904D00678A2A /* MainGame.png */; };
 		9CD09CD018AAFB3D00882D50 /* BaseController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CD09CCC18AAFB3D00882D50 /* BaseController.cpp */; };
@@ -759,6 +761,10 @@
 		46513EAF187BFBA200B5ABE1 /* UITouchGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITouchGroup.cpp; sourceTree = "<group>"; };
 		46513EB0187BFBA200B5ABE1 /* UITouchGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITouchGroup.h; sourceTree = "<group>"; };
 		7855E0DF153FEF240059DD9A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
+		9C02290318C739DD004302EF /* MainGameStatusBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainGameStatusBar.cpp; sourceTree = "<group>"; };
+		9C02290418C739DD004302EF /* MainGameStatusBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainGameStatusBar.h; sourceTree = "<group>"; };
+		9C02290518C739DD004302EF /* MainGameToolBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainGameToolBar.cpp; sourceTree = "<group>"; };
+		9C02290618C739DD004302EF /* MainGameToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainGameToolBar.h; sourceTree = "<group>"; };
 		9C6C1EC718B8904D00678A2A /* MainGame.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MainGame.plist; sourceTree = "<group>"; };
 		9C6C1EC818B8904D00678A2A /* MainGame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MainGame.png; sourceTree = "<group>"; };
 		9CD09CCA18AAFB3200882D50 /* GameConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameConstant.h; path = ../Classes/GameConstant.h; sourceTree = "<group>"; };
@@ -1862,6 +1868,10 @@
 		9CD09CDC18AAFB5000882D50 /* Layer */ = {
 			isa = PBXGroup;
 			children = (
+				9C02290318C739DD004302EF /* MainGameStatusBar.cpp */,
+				9C02290418C739DD004302EF /* MainGameStatusBar.h */,
+				9C02290518C739DD004302EF /* MainGameToolBar.cpp */,
+				9C02290618C739DD004302EF /* MainGameToolBar.h */,
 				9CD09CDD18AAFB5000882D50 /* MainGameGridLayer.cpp */,
 				9CD09CDE18AAFB5000882D50 /* MainGameGridLayer.h */,
 			);
@@ -2221,6 +2231,8 @@
 				9CD09CE718AAFB5000882D50 /* MainGameGridLayer.cpp in Sources */,
 				9CD09CE818AAFB5000882D50 /* MainGameScene.cpp in Sources */,
 				9CD09CE918AAFB5000882D50 /* GridCell.cpp in Sources */,
+				9C02290718C739DD004302EF /* MainGameStatusBar.cpp in Sources */,
+				9C02290818C739DD004302EF /* MainGameToolBar.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

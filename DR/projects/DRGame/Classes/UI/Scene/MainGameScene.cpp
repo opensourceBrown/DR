@@ -3,6 +3,8 @@
 #include "MainGameGridLayer.h"
 #include "DataMangager.h"
 #include "DRUtility.h"
+#include "MainGameStatusBar.h"
+#include "MainGameToolBar.h"
 
 USING_NS_CC;
 
@@ -19,6 +21,8 @@ MainGameScene::MainGameScene():
 MainGameScene::~MainGameScene()
 {
     CC_SAFE_DELETE(m_gridLayer);
+    CC_SAFE_DELETE(m_statusBar);
+    CC_SAFE_DELETE(m_toolBar);
 }
 
 MainGameScene *MainGameScene::create(BaseController *pDelegate)
@@ -59,15 +63,20 @@ void MainGameScene::constructUI()
 		m_gridLayer->setDelegate(m_delegate);
 		addChild(m_gridLayer);
         
-        /*
-		m_statusBar=CCLayer::create();
+        
+		m_statusBar=MainGameStatusBar::create();
 		CC_BREAK_IF(!m_statusBar);
+        m_statusBar->retain();
+		m_statusBar->setDelegate(m_delegate);
 		addChild(m_statusBar);
 
-		m_toolBar=CCLayer::create();
+		m_toolBar=MainGameToolBar::create();
 		CC_BREAK_IF(!m_toolBar);
+        m_toolBar->retain();
+		m_toolBar->setDelegate(m_delegate);
 		addChild(m_toolBar);
-
+         
+        /*
 		CCLayerColor *statusInfoContainer=CCLayerColor::create(ccc4(256, 0, 0, 256));
         statusInfoContainer->setContentSize(CCSizeMake(WIN_SIZE.width, 80.0));
 		statusInfoContainer->setPosition(CCPointZero);
