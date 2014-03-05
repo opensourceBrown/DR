@@ -55,6 +55,7 @@ public:
     
 private:
     void configureNormalElementProperty();  //element except boss
+    ElementType getRandomElementType();     
     void configureNormalMonsterProperty();  //normal monster
     void configureBossProperty();           //boss
     BossFileConfigure *getRandomBoss();   //get the boss according to rate;

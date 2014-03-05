@@ -30,13 +30,14 @@ private:
     CCArray             *_barrierConfigures;
     CCArray             *_bossConfigures;
     
+    BarrierFileConfigure *_currentBarrierConfigure;
+    
     void    readDataFromCSV();
     
 public:
     static DataManager *sharedInstance(void);
     
     //read and save GridElementProperty
-    GridElementProperty *getGridElementProperty(unsigned int rIndex,unsigned int vIndex);
     CCDictionary * getGridElements(void);
     bool saveGridElements(void);
     

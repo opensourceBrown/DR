@@ -21,6 +21,12 @@ public:
     float        mA;
     float        mB;
     float        mC;
+    float        mMonsterRate;
+    float        mCoinRate;
+    float        mPotionRate;
+    float        mSheildRate;
+    float        mSwordRate;
+    float        mBowRate;
 };
 
 #endif /* defined(__DRGame__BarrierFileConfigure__) */

@@ -33,6 +33,8 @@ DataManager::DataManager()
     _gameStatus->mLife = 0;
     _gameStatus->mMaxLife = 0;
     
+    _currentBarrierConfigure = NULL;
+    
     _barrierConfigures = CCArray::create();
     _barrierConfigures->retain();
     
@@ -72,6 +74,12 @@ void DataManager::readDataFromCSV()
         bConfigures->mA = ((CCString *)dict->objectForKey("A"))->floatValue();
         bConfigures->mB = ((CCString *)dict->objectForKey("B"))->floatValue();
         bConfigures->mC = ((CCString *)dict->objectForKey("C"))->floatValue();
+        bConfigures->mBowRate = ((CCString *)dict->objectForKey("bowRate"))->floatValue();
+        bConfigures->mSwordRate = ((CCString *)dict->objectForKey("swordRate"))->floatValue();
+        bConfigures->mMonsterRate = ((CCString *)dict->objectForKey("monsterRate"))->floatValue();
+        bConfigures->mSheildRate = ((CCString *)dict->objectForKey("sheildRate"))->floatValue();
+        bConfigures->mPotionRate = ((CCString *)dict->objectForKey("potionRate"))->floatValue();
+        bConfigures->mCoinRate = ((CCString *)dict->objectForKey("coinRate"))->floatValue();
         _barrierConfigures->addObject(bConfigures);
     }
     
@@ -94,12 +102,6 @@ void DataManager::readDataFromCSV()
         _bossConfigures->addObject(bossConfigures);
         
     }
-}
-
-GridElementProperty* DataManager::getGridElementProperty(unsigned int rIndex,unsigned int vIndex)
-{
-    
-    return NULL;
 }
 
 CCDictionary * DataManager::getGridElements(void)
@@ -131,20 +133,21 @@ bool DataManager::saveGridElements(void)
     return isSuccess;
 }
 
+//此处会频繁地调用，故设置成全局属性，若关卡id改变，则需要将_currentBarrierConfigure设置为NULL
 BarrierFileConfigure * DataManager::currentBarrierConfigure()
 {
-    int barrierId = _gameStatus->mBarrierId;
-    cout<<barrierId<<endl;
-    
-    BarrierFileConfigure *bfConfigure = NULL;
-    CCObject *object = NULL;
-    CCARRAY_FOREACH(_barrierConfigures, object)
-    {
-        bfConfigure = (BarrierFileConfigure *)object;
-        cout<<bfConfigure->mBarrierId<<endl;
-        if (barrierId == bfConfigure->mBarrierId) {
-            return bfConfigure;
+    if (_currentBarrierConfigure == NULL) {
+        int barrierId = _gameStatus->mBarrierId;
+        
+        BarrierFileConfigure *bfConfigure = NULL;
+        CCObject *object = NULL;
+        CCARRAY_FOREACH(_barrierConfigures, object)
+        {
+            bfConfigure = (BarrierFileConfigure *)object;
+            if (barrierId == bfConfigure->mBarrierId) {
+                return bfConfigure;
+            }
         }
     }
-    return NULL;
+    return _currentBarrierConfigure;
 }

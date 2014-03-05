@@ -75,13 +75,43 @@ void GridElementProperty::configureNormalElementProperty()
 {
     //confirm the element appear
     this->mID = 0;
+    this->mType = (ElementType)this->getRandomElementType();
     
-    //TODO:Element生成概率先写成平均随机的，若有需求，在此改动
-    this->mType = (ElementType)DRUtility::randn(kElementType_End-1);
-    
-    this->configureNormalMonsterProperty();
+    if (this->mType == kElementType_Monster) {
+        this->configureNormalMonsterProperty();
+    }
 }
 
+//获取根据当前关卡csv概率判断生成NormalElement
+ElementType GridElementProperty::getRandomElementType()
+{
+    BarrierFileConfigure *currentBConfigure = DataManager::sharedInstance()->currentBarrierConfigure();
+    float randomFloat = DRUtility::randFraction();
+    float increasedRate = currentBConfigure->mBowRate;
+    if (randomFloat <= increasedRate) {
+        return kElementType_Bow;
+    }
+    increasedRate += currentBConfigure->mSwordRate;
+    if (randomFloat <= increasedRate) {
+        return kElementType_Sword;
+    }
+    increasedRate += currentBConfigure->mSheildRate;
+    if (randomFloat <= increasedRate) {
+        return kElementType_Shield;
+    }
+    increasedRate += currentBConfigure->mPotionRate;
+    if (randomFloat <= increasedRate) {
+        return kElementType_Potion;
+    }
+    increasedRate += currentBConfigure->mCoinRate;
+    if (randomFloat <= increasedRate) {
+        return kElementType_Coin;
+    }
+    
+    return kElementType_Monster;
+}
+
+//生成普通怪
 void GridElementProperty::configureNormalMonsterProperty()
 {
     //TODO:需要确认普通怪生成逻辑，这里写成固定的
@@ -101,7 +131,6 @@ void GridElementProperty::configureBossProperty()
     GameStatusType *gameStatus = DataManager::sharedInstance()->gameStatus();
     
     BossFileConfigure *bossConfigure = this->getRandomBoss();
-    cout<<"bossConfigure = "<< bossConfigure<<endl;
     mMonsterProperty.mType = kBustyType_Boss;
     mMonsterProperty.mSkillType = kBossBustyType_Chaotic;
     mMonsterProperty.mID = bossConfigure->mBossId;
@@ -113,6 +142,7 @@ void GridElementProperty::configureBossProperty()
     mMonsterProperty.mDamage = bossConfigure->mH + bossConfigure->mI*(float)gameStatus->mNumberOfRound;      //damage = H + I * round
 }
 
+//根据csv文件的概率生成boss配置
 BossFileConfigure * GridElementProperty::getRandomBoss()
 {
     CCArray *bossConfigures = DataManager::sharedInstance()->bossConfigures();
@@ -124,7 +154,6 @@ BossFileConfigure * GridElementProperty::getRandomBoss()
     CCObject *object = NULL;
     
     float randomFloat = DRUtility::randFraction();
-    cout<<randomFloat<<endl;
     
     float previousBossRate = 0.0f;
     int i = 0;

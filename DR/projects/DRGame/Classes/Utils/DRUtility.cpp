@@ -100,7 +100,6 @@ CCString* DRUtility::getCCStringWithInt(int intValue)
 
 CCArray * DRUtility::readCSVFileWithName(const char *fileName)
 {
-    cout<<fileName;
     CSVParser *csvParser = new CSVParser();
     csvParser->openFile(fileName);
     
@@ -161,16 +160,13 @@ int DRUtility::randn(int n)
     {
         x = arc4random();
         x = abs(x);
-        cout<<"x = "<<x<<endl;
     }while ( x >= max );
-    cout<<"x % n = "<<x % n<<endl;
     return x % n;
 }
 
 float DRUtility::randFraction()
 {
     int rand1000FloatNumber = DRUtility::randn(1000+1);
-    cout<<rand1000FloatNumber<<endl;
     float fNumber = (float)rand1000FloatNumber/(float)1000;
     return fNumber;
 }
