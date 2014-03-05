@@ -98,7 +98,11 @@ CCString* DRUtility::getCCStringWithInt(int intValue)
     return strObjID;
 }
 
-CCArray * DRUtility::readCSVFileWithName(const char *fileName)
+/**
+ *
+ *
+ */
+CCArray * DRUtility::readCSVFileWithName(const char *fileName, bool byCol)
 {
     CSVParser *csvParser = new CSVParser();
     csvParser->openFile(fileName);
@@ -108,19 +112,33 @@ CCArray * DRUtility::readCSVFileWithName(const char *fileName)
     CCDictionary *dictionary;
     string strLine = "";
     
-    for (int i = 0; i < csvParser->getCols(); i++) {
+    int totalI = 0;
+    int totalJ = 0;
+    if (byCol) {
+        totalI = csvParser->getCols();
+        totalJ = csvParser->getRows();
+    } else {
+        totalI = csvParser->getRows();
+        totalJ = csvParser->getCols();
+    }
+    for (int i = 0; i < totalI; i++) {
         
-        for (int j = 0; j < csvParser->getRows(); j++) {
-            CCString *string = CCString::create(csvParser->getData(j, i));
+        for (int j = 0; j < totalJ; j++) {
+            CCString *aString = NULL;
+            if (byCol) {
+                aString = CCString::create(csvParser->getData(j, i));
+            } else {
+                aString = CCString::create(csvParser->getData(i, j));
+            }
             if (i == 0) {
-                keys->addObject(string);
+                keys->addObject(aString);
             } else {
                 if (j==0) {
                     dictionary = CCDictionary::create();
                 }
                 CCString *strKey = (CCString *)keys->objectAtIndex(j);
-                dictionary->setObject(string, strKey->getCString());
-                if (j== csvParser->getRows()-1) {
+                dictionary->setObject(aString, strKey->getCString());
+                if (j== totalJ - 1) {
                     dataArray->addObject(dictionary);
                 }
             }

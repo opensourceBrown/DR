@@ -9,7 +9,7 @@
 #include "DataMangager.h"
 #include "XMLParser.h"
 #include "DRUtility.h"
-#include "BossFileConfigure.h"
+#include "WeaponConfigure.h"
 
 #define GRID_ELEMENT_FILE_NAME  "gElementFileName.plist"
 
@@ -41,6 +41,9 @@ DataManager::DataManager()
     _bossConfigures = CCArray::create();
     _bossConfigures->retain();
     
+    _weaponConfigures = CCArray::create();
+    _weaponConfigures->retain();
+    
     this->readDataFromCSV();
 }
 
@@ -54,13 +57,14 @@ DataManager::~DataManager()
     delete _gameStatus;
     _barrierConfigures->release();
     _bossConfigures->release();
+    _weaponConfigures->release();
 }
 
 void DataManager::readDataFromCSV()
 {
     
     //barrierData
-    CCArray *barrierData = DRUtility::readCSVFileWithName("barrierData.csv");
+    CCArray *barrierData = DRUtility::readCSVFileWithName("barrierData.csv", true);
     
     CCDictionary *dict = NULL;
     CCObject *object = NULL;
@@ -84,23 +88,51 @@ void DataManager::readDataFromCSV()
     }
     
     //bossData
-    CCArray *bossData = DRUtility::readCSVFileWithName("bossData.csv");
+    CCArray *bossData = DRUtility::readCSVFileWithName("bossData.csv", true);
     CCARRAY_FOREACH(bossData, object)
     {
         dict = (CCDictionary *)object;
         
-        BossFileConfigure *bossConfigures = new BossFileConfigure();
-        bossConfigures->autorelease();
-        bossConfigures->mBossId = ((CCString *)dict->objectForKey("bossid"))->intValue();
-        bossConfigures->mD = ((CCString *)dict->objectForKey("D"))->floatValue();
-        bossConfigures->mE = ((CCString *)dict->objectForKey("E"))->floatValue();
-        bossConfigures->mF = ((CCString *)dict->objectForKey("F"))->floatValue();
-        bossConfigures->mG = ((CCString *)dict->objectForKey("G"))->floatValue();
-        bossConfigures->mH = ((CCString *)dict->objectForKey("H"))->floatValue();
-        bossConfigures->mI = ((CCString *)dict->objectForKey("I"))->floatValue();
-        bossConfigures->mBossRate = ((CCString *)dict->objectForKey("bossRate"))->floatValue();
-        _bossConfigures->addObject(bossConfigures);
+        BossFileConfigure *bossConfigure = new BossFileConfigure();
+        bossConfigure->autorelease();
+        bossConfigure->mBossId = ((CCString *)dict->objectForKey("bossid"))->intValue();
+        bossConfigure->mD = ((CCString *)dict->objectForKey("D"))->floatValue();
+        bossConfigure->mE = ((CCString *)dict->objectForKey("E"))->floatValue();
+        bossConfigure->mF = ((CCString *)dict->objectForKey("F"))->floatValue();
+        bossConfigure->mG = ((CCString *)dict->objectForKey("G"))->floatValue();
+        bossConfigure->mH = ((CCString *)dict->objectForKey("H"))->floatValue();
+        bossConfigure->mI = ((CCString *)dict->objectForKey("I"))->floatValue();
+        bossConfigure->mBossRate = ((CCString *)dict->objectForKey("bossRate"))->floatValue();
+        _bossConfigures->addObject(bossConfigure);
         
+    }
+    
+    //weaponData
+    CCArray *weaponData = DRUtility::readCSVFileWithName("weaponData.csv", false);
+    cout<<"weaponData#Count = "<<weaponData->count();
+    CCARRAY_FOREACH(weaponData, object)
+    {
+        dict = (CCDictionary *)object;
+        
+        WeaponConfigure *weaponConfigure = new WeaponConfigure();
+        weaponConfigure->autorelease();
+        weaponConfigure->mWeaponNumber = ((CCString *)dict->objectForKey("No"))->intValue();
+        weaponConfigure->mWeaponDamage = ((CCString *)dict->objectForKey("WeaponDamage"))->intValue();
+        weaponConfigure->mName = ((CCString *)dict->objectForKey("Name"))->getCString();
+        weaponConfigure->mLevel = ((CCString *)dict->objectForKey("Lv"))->intValue();
+        weaponConfigure->mDefencePerShield = ((CCString *)dict->objectForKey("DefencePerShield"))->floatValue();
+        weaponConfigure->mMaxSheild = ((CCString *)dict->objectForKey("MaxSheild"))->floatValue();
+        weaponConfigure->mHealthPerPotion = ((CCString *)dict->objectForKey("HealthPerPotion"))->floatValue();
+        weaponConfigure->mBasicDamage = ((CCString *)dict->objectForKey("BasicDamage"))->floatValue();
+        weaponConfigure->mWeaponDamage = ((CCString *)dict->objectForKey("WeaponDamage"))->floatValue();
+        weaponConfigure->mLeech = ((CCString *)dict->objectForKey("Leech"))->floatValue();
+        weaponConfigure->mCriticalDamageRate = ((CCString *)dict->objectForKey("CriticalDamageRate"))->floatValue();
+        weaponConfigure->mCoin = ((CCString *)dict->objectForKey("Coin"))->floatValue();
+        weaponConfigure->mPayCoin = ((CCString *)dict->objectForKey("PayCoin"))->floatValue();
+        weaponConfigure->mExp = ((CCString *)dict->objectForKey("Exp"))->floatValue();
+        weaponConfigure->mLvExp = ((CCString *)dict->objectForKey("LvExp"))->floatValue();
+        weaponConfigure->mLvUpWeapon = ((CCString *)dict->objectForKey("LvUpWeapon"))->floatValue();
+        _weaponConfigures->addObject(weaponConfigure);
     }
 }
 

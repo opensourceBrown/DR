@@ -29,6 +29,7 @@ private:
     GameStatusType      *_gameStatus;
     CCArray             *_barrierConfigures;
     CCArray             *_bossConfigures;
+    CCArray             *_weaponConfigures;
     
     BarrierFileConfigure *_currentBarrierConfigure;
     
@@ -45,6 +46,7 @@ public:
     inline GameStatusType      *gameStatus() { return _gameStatus; };
     inline CCArray             *barrierConfigures() { return _barrierConfigures; };
     CCArray                    *bossConfigures()    { return _bossConfigures; };
+    CCArray                    *weaponConfigures()  { return _weaponConfigures; };
     
     BarrierFileConfigure       *currentBarrierConfigure();
 };
