@@ -17,10 +17,6 @@ public:
     
     static GridCell* createWithFrameName(const char *pszFileName);
 
-//	void setCellIndex(GIRDCELL_INDEX pIndex,GRIDINDEX_TYPE pType=kGRIDINDEX_TYPE_DEFAULT);
-//
-//	GIRDCELL_INDEX getCellIndex(GRIDINDEX_TYPE pType);
-//    void setCellElementType(ElementType pType=kElementType_Medicine);
     void setCellProperty(GridElementProperty *pElement);
     GridElementProperty *getCellProperty(){return m_property;}
     
@@ -29,10 +25,8 @@ public:
 
 private:
     bool initWith(const char *pszFileName);
+    void constructMonsterCellEX();
 private:
-//	GIRDCELL_INDEX		m_index;					//◊‘…ÌµƒÀ˜“˝£∫ƒ¨»œŒ™£®0£¨0£©
-//	GIRDCELL_INDEX		m_nextIndex;				//¡¨Ω”œ¬“ª∏ˆcellµƒÀ˜“˝£∫ƒ¨»œŒ™£®0£¨0£©
-//	GIRDCELL_INDEX		m_preIndex;				//¡¨Ω”…œ“ª∏ˆcellµƒÀ˜“˝£∫ƒ¨»œŒ™£®0£¨0£©
     
     GridElementProperty *m_property;             //cell对应的结构属性
     

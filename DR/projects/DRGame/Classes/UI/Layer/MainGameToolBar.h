@@ -16,6 +16,9 @@ public:
 
 private:
 	void constructUI();
+    
+    void menuItemClicked(CCObject *pSender);
+    void statusItemClicked(CCObject *pSender);
 
 	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
 	virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);

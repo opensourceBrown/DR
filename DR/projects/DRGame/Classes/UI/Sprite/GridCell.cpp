@@ -1,16 +1,18 @@
 #include "GridCell.h"
 
 GridCell::GridCell():
-    m_status(false)
+    m_status(false),
+    m_property(NULL)
 {
-    m_property = new GridElementProperty();
+//    m_property = new GridElementProperty();
 }
 
 GridCell::~GridCell()
 {
-    if (m_property != NULL) {
-        delete m_property;
-    }
+//    if (m_property != NULL) {
+//        delete m_property;
+//    }
+    CC_SAFE_RELEASE_NULL(m_property);
 }
 
 GridCell* GridCell::createWithFrameName(const char *pszFileName)
@@ -44,61 +46,46 @@ bool GridCell::initWith(const char *pszFileName)
 
 void GridCell::setCellProperty(GridElementProperty *pElement)
 {
-    m_property->mID=pElement->mID;
-    m_property->mIndex.rIndex=pElement->mIndex.rIndex;
-    m_property->mIndex.vIndex=pElement->mIndex.vIndex;
-    m_property->mType=pElement->mType;
+//    m_property->mID=pElement->mID;
+//    m_property->mIndex.rIndex=pElement->mIndex.rIndex;
+//    m_property->mIndex.vIndex=pElement->mIndex.vIndex;
+//    m_property->mType=pElement->mType;
+    do {
+        CC_BREAK_IF(!pElement);
+        m_property=pElement;
+        m_property->retain();
+    } while (0);
 }
 
-/*
-void GridCell::setCellIndex(GIRDCELL_INDEX pIndex,GRIDINDEX_TYPE pType)
+void GridCell::constructMonsterCellEX()
 {
-	switch(pType){
-	case kGRIDINDEX_TYPE_DEFAULT:
-		{
-			m_index.rIndex=pIndex.rIndex;
-			m_index.vIndex=pIndex.vIndex;
-		}
-		break;
-	case kGRIDINDEX_TYPE_NEXT:
-		{
-			m_nextIndex.rIndex=pIndex.rIndex;
-			m_nextIndex.vIndex=pIndex.vIndex;
-		}
-		break;
-	case kGRIDINDEX_TYPE_PRE:
-		{
-			m_preIndex.rIndex=pIndex.rIndex;
-			m_preIndex.vIndex=pIndex.vIndex;
-		}
-		break;
-	}
+    do{
+        CC_BREAK_IF(!m_property);
+        CC_BREAK_IF(!m_property->mType==kElementType_Monster);
+        
+        CCString *attachValue=CCString::createWithFormat("%d",(int)m_property->mMonsterProperty.mDamage);
+        CCLabelTTF *tAttackValueTTF = CCLabelTTF::create(attachValue->getCString(),"Marker Felt",14);
+        CC_BREAK_IF(!tAttackValueTTF);
+        tAttackValueTTF->setAnchorPoint(ccp(0.5,0.5));
+        tAttackValueTTF->setColor(ccc3(0,0,255));
+//        tAttackValueTTF->setPosition(ccp(tMonster->getPosition().x,tMonster->getPosition().y-tMonster->getContentSize().height));
+//        this->addChild(tAttackValueTTF);
+        
+        CCString *defenceValue=CCString::createWithFormat("%d",(int)m_property->mMonsterProperty.mDamage);
+        CCLabelTTF *tDefenceValueTTF = CCLabelTTF::create(defenceValue->getCString(),"Marker Felt",14);
+        CC_BREAK_IF(!tDefenceValueTTF);
+        tDefenceValueTTF->setAnchorPoint(ccp(0.5,0.5));
+        tDefenceValueTTF->setColor(ccc3(0,0,255));
+//        tDefenceValueTTF->setPosition(ccp(tMonster->getPosition().x,tMonster->getPosition().y-tMonster->getContentSize().height));
+//        this->addChild(tDefenceValueTTF);
+        
+        CCString *lifeValue=CCString::createWithFormat("%d",(int)m_property->mMonsterProperty.mDamage);
+        CCLabelTTF *tLifeValueTTF = CCLabelTTF::create(lifeValue->getCString(),"Marker Felt",14);
+        CC_BREAK_IF(!tLifeValueTTF);
+        tLifeValueTTF->setAnchorPoint(ccp(0.5,0.5));
+        tLifeValueTTF->setColor(ccc3(0,0,255));
+//        tLifeValueTTF->setPosition(ccp(tMonster->getPosition().x,tMonster->getPosition().y-tMonster->getContentSize().height));
+//        this->addChild(tLifeValueTTF);
+    }while(0);
 }
-
-GIRDCELL_INDEX GridCell::getCellIndex(GRIDINDEX_TYPE pType)
-{
-    switch(pType){
-        case kGRIDINDEX_TYPE_DEFAULT:
-		{
-			return m_index;
-		}
-            break;
-        case kGRIDINDEX_TYPE_NEXT:
-		{
-			return m_nextIndex;
-		}
-            break;
-        case kGRIDINDEX_TYPE_PRE:
-		{
-			return m_preIndex;
-		}
-            break;
-	}
-}
-
-void GridCell::setCellElementType(ElementType pType)
-{
-	m_type=pType;
-}
- */
 
