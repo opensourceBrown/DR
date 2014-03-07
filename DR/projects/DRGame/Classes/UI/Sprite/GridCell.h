@@ -27,7 +27,7 @@ private:
     bool initWith(const char *pszFileName);
     void constructMonsterCellEX();
 private:
-    
+    CCSprite            *m_elementGridImg;
     GridElementProperty *m_property;             //cell对应的结构属性
     
     bool                m_status;                   //true:added    false:unadded

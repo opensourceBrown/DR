@@ -107,10 +107,9 @@ void MainGameGridLayer::addGridCellToLayer(GridElementProperty *gProperty)
             break;
     }
     GridCell *item=GridCell::createWithFrameName(typeStr->getCString());
-    item->setCellProperty(gProperty);
     item->setAnchorPoint(ccp(0.5,0.5));
     item->setContentSize(CCSizeMake(m_containerLayer->getContentSize().width/GRID_VOLUME, m_containerLayer->getContentSize().height/GRID_ROW));
-    
+    item->setCellProperty(gProperty);
     int row = gProperty->mIndex.rIndex;
     int col = gProperty->mIndex.vIndex;
     item->setPosition(ccp((col+1)*m_containerLayer->getContentSize().width/GRID_VOLUME,m_containerLayer->getContentSize().height-row*m_containerLayer->getContentSize().height/GRID_ROW));
@@ -175,10 +174,9 @@ void MainGameGridLayer::addGridCell(unsigned int rIndex,unsigned int vIndex)
                 break;
         }
         GridCell *item=GridCell::createWithFrameName(typeStr->getCString());
-        item->setCellProperty(blockProperty);
         item->setAnchorPoint(ccp(0.5,0.5));
         item->setContentSize(CCSizeMake(m_containerLayer->getContentSize().width/GRID_VOLUME, m_containerLayer->getContentSize().height/GRID_ROW));
-
+        item->setCellProperty(blockProperty);
 		int row = blockProperty->mIndex.rIndex;
 		int col = blockProperty->mIndex.vIndex;
         
