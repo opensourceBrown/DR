@@ -365,10 +365,11 @@ void MainGameController::removeCellFromConnectedArray()
         CC_BREAK_IF(!mStageConnectedElements || mStageConnectedElements->count()==0);
         GridCell *cell=dynamic_cast<GridCell *>(mStageConnectedElements->lastObject());
         GridElementProperty *blockProperty=cell->getCellProperty();
-        mStageConnectedElements->removeLastObject();
         
         //remove the connected line between the two cells
         cleanConnectedLine();
+        
+        mStageConnectedElements->removeLastObject();
         
         //play sound effect
         playSelctedSoundEffect(blockProperty->mType);
@@ -390,15 +391,24 @@ void MainGameController::playClearSoundEffect()
 void MainGameController::addConnectedLine()
 {
     LOG_TRACE
-    
+    do {
+        CC_BREAK_IF(!mStageConnectedElements || mStageConnectedElements->count()<2);
+        MainGameGridLayer *gridLayer = ((MainGameScene *)m_scene)->getGridLayer();
+        CC_BREAK_IF(!gridLayer);
+        GridCell *fCell=dynamic_cast<GridCell *>(mStageConnectedElements->objectAtIndex(mStageConnectedElements->count()-1));
+        GridCell *sCell=dynamic_cast<GridCell *>(mStageConnectedElements->objectAtIndex(mStageConnectedElements->count()-2));
+        gridLayer->addConnectLine(fCell,sCell);
+    } while (0);
 }
 
 void MainGameController::cleanConnectedLine()
 {
     LOG_TRACE
-    do{
-        
-    }while(0);
+    do {
+        MainGameGridLayer *gridLayer = ((MainGameScene *)m_scene)->getGridLayer();
+        CC_BREAK_IF(!gridLayer);
+        gridLayer->clearConnectLine();
+    } while (0);
 }
 
 bool MainGameController::judgeGridCellCanInserted(unsigned int rIndex,unsigned int vIndex)

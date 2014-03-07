@@ -23,6 +23,9 @@ public:
     void updateGrid();
     
     GridCell *getGridCell(unsigned int rIndex,unsigned int vIndex);
+    
+    void addConnectLine(GridCell *fCell,GridCell *sCell);
+    void clearConnectLine();
 private:
     void constructUI();
     void addGridCellToLayer(GridElementProperty *gProperty);
@@ -40,6 +43,7 @@ private:
 private:
 	CCLayerColor			*m_containerLayer;
 	CCArray					*m_GridCellArray;
+    CCArray                 *m_gridCellConnLineArray;
 
     GridCell                *m_currentSelCell;
 };

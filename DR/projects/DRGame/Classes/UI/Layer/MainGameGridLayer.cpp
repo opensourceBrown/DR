@@ -7,12 +7,17 @@
 MainGameGridLayer::MainGameGridLayer():
     m_containerLayer(NULL),
     m_GridCellArray(NULL),
-    m_currentSelCell(NULL)
+    m_currentSelCell(NULL),
+    m_gridCellConnLineArray(NULL)
 {
     do {
         m_GridCellArray=CCArray::createWithCapacity(GRID_ROW*GRID_VOLUME);
         CC_BREAK_IF(!m_GridCellArray);
         m_GridCellArray->retain();
+        
+        m_gridCellConnLineArray=CCArray::create();
+        CC_BREAK_IF(!m_gridCellConnLineArray);
+        m_gridCellConnLineArray->retain();
     } while (0);
     
 }
@@ -22,6 +27,9 @@ MainGameGridLayer::~MainGameGridLayer()
     do{
         CC_BREAK_IF(!m_GridCellArray);
         CC_SAFE_RELEASE(m_GridCellArray);
+        
+        CC_BREAK_IF(!m_gridCellConnLineArray);
+        CC_SAFE_RELEASE(m_gridCellConnLineArray);
     }while(0);
 }
 
@@ -285,6 +293,43 @@ GridCell *MainGameGridLayer::getGridCell(unsigned int rIndex,unsigned int vIndex
     }while(0);
     
     return  cell;
+}
+
+void MainGameGridLayer::addConnectLine(GridCell *fCell,GridCell *sCell)
+{
+    LOG_TRACE
+    do {
+        CC_BREAK_IF(!m_gridCellConnLineArray);
+        CC_BREAK_IF(!fCell);
+        CC_BREAK_IF(!sCell);
+        CCSprite *line=CCSprite::createWithSpriteFrameName("Grid_cell_connect_line.png");
+        CC_BREAK_IF(!line);
+        line->setAnchorPoint(ccp(0,0.5));
+        float tScaleX=m_containerLayer->getContentSize().width/GRID_VOLUME*1.42/line->getContentSize().width;
+        line->setScaleX(tScaleX);
+        line->setPosition(fCell->getPosition());
+        
+        float tRotate=0;
+        //judge the relative postion relationship for the two cells
+        
+        line->setRotation(tRotate);
+        
+//        this->addChild(line);
+        m_gridCellConnLineArray->addObject(line);
+    } while (0);
+}
+
+void MainGameGridLayer::clearConnectLine()
+{
+    do {
+        CC_BREAK_IF(!m_gridCellConnLineArray);
+        if (m_gridCellConnLineArray->count()>0) {
+            CCSprite *line=dynamic_cast<CCSprite *>(m_gridCellConnLineArray->lastObject());
+            CC_BREAK_IF(!line);
+            line->removeFromParentAndCleanup(true);
+            m_gridCellConnLineArray->removeLastObject();
+        }
+    } while (0);
 }
 
 bool MainGameGridLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
