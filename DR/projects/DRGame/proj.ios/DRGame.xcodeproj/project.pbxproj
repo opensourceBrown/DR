@@ -172,6 +172,7 @@
 		30218CBA18BAEFAD0027A5E2 /* GridElementProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 30218CB818BAEFAD0027A5E2 /* GridElementProperty.cpp */; };
 		302F91EA18B471DF0091D479 /* DataMangager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 302F91E818B471DF0091D479 /* DataMangager.cpp */; };
 		3032AF9C18B7240800327858 /* CSVParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3032AF9A18B7240800327858 /* CSVParser.cpp */; };
+		3032B4F818C9AC9B0023E334 /* monsterData.csv in Resources */ = {isa = PBXBuildFile; fileRef = 3032B4F718C9AC9B0023E334 /* monsterData.csv */; };
 		3047533618C6FF62003E1E0F /* WeaponConfigure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3047533418C6FF62003E1E0F /* WeaponConfigure.cpp */; };
 		3047533918C7097A003E1E0F /* weaponData.csv in Resources */ = {isa = PBXBuildFile; fileRef = 3047533818C7097A003E1E0F /* weaponData.csv */; };
 		305B73AA18BF1119003F0617 /* GameStatusType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 305B73A818BF1119003F0617 /* GameStatusType.cpp */; };
@@ -618,6 +619,7 @@
 		302F91E918B471DF0091D479 /* DataMangager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataMangager.h; sourceTree = "<group>"; };
 		3032AF9A18B7240800327858 /* CSVParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSVParser.cpp; sourceTree = "<group>"; };
 		3032AF9B18B7240800327858 /* CSVParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSVParser.h; sourceTree = "<group>"; };
+		3032B4F718C9AC9B0023E334 /* monsterData.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = monsterData.csv; sourceTree = "<group>"; };
 		3047533418C6FF62003E1E0F /* WeaponConfigure.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WeaponConfigure.cpp; sourceTree = "<group>"; };
 		3047533518C6FF62003E1E0F /* WeaponConfigure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeaponConfigure.h; sourceTree = "<group>"; };
 		3047533818C7097A003E1E0F /* weaponData.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = weaponData.csv; sourceTree = "<group>"; };
@@ -1792,6 +1794,7 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3032B4F718C9AC9B0023E334 /* monsterData.csv */,
 				3047533818C7097A003E1E0F /* weaponData.csv */,
 				300CFE4F18C289FF001379FB /* barrierData.csv */,
 				30FC9F1F18BD901A000FE654 /* bossData.csv */,
@@ -1992,6 +1995,7 @@
 				15A3D9961682F7F9002FB0C5 /* CMakeLists.txt in Resources */,
 				1AFAF8BC16D35E4900DB1158 /* CloseNormal.png in Resources */,
 				1AFAF8BD16D35E4900DB1158 /* CloseSelected.png in Resources */,
+				3032B4F818C9AC9B0023E334 /* monsterData.csv in Resources */,
 				3047533918C7097A003E1E0F /* weaponData.csv in Resources */,
 				1AFAF8BE16D35E4900DB1158 /* HelloWorld.png in Resources */,
 				9C6C1EC918B8904D00678A2A /* MainGame.plist in Resources */,
