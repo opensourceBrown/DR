@@ -22,6 +22,9 @@ public:
     
     void setStatus(bool pStatus){m_status=pStatus;}
     bool getStatus(){return m_status;}
+    
+    float getGridNodeWidth(){return m_elementGridImg->getContentSize().width;}
+    float getGridNodeHeight(){return m_elementGridImg->getContentSize().height;}
 
 private:
     bool initWith(const char *pszFileName);

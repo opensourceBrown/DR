@@ -298,29 +298,46 @@ GridCell *MainGameGridLayer::getGridCell(unsigned int rIndex,unsigned int vIndex
 void MainGameGridLayer::addConnectLine(GridCell *fCell,GridCell *sCell)
 {
     LOG_TRACE
+    CCLog("000000");
     do {
         CC_BREAK_IF(!m_gridCellConnLineArray);
         CC_BREAK_IF(!fCell);
         CC_BREAK_IF(!sCell);
+        GridElementProperty *fBlockProperty=fCell->getCellProperty();
+        CC_BREAK_IF(!fBlockProperty);
+        GridElementProperty *sBlockProperty=sCell->getCellProperty();
+        CC_BREAK_IF(!sBlockProperty);
+        
         CCSprite *line=CCSprite::createWithSpriteFrameName("Grid_cell_connect_line.png");
         CC_BREAK_IF(!line);
         line->setAnchorPoint(ccp(0,0.5));
-        float tScaleX=m_containerLayer->getContentSize().width/GRID_VOLUME*1.42/line->getContentSize().width;
+        float tScaleX=1;
+        if (fBlockProperty->mIndex.rIndex==sBlockProperty->mIndex.rIndex || fBlockProperty->mIndex.vIndex==sBlockProperty->mIndex.vIndex) {
+            tScaleX=m_containerLayer->getContentSize().width/GRID_VOLUME/line->getContentSize().width;
+        }else{
+            tScaleX=m_containerLayer->getContentSize().width/GRID_VOLUME*1.42/line->getContentSize().width;
+        }
         line->setScaleX(tScaleX);
-        line->setPosition(fCell->getPosition());
+        line->setPosition(ccp(fCell->getPosition().x-m_containerLayer->getContentSize().width/GRID_VOLUME/2,fCell->getPosition().y+fCell->getGridNodeHeight()));
         
         float tRotate=0;
         //judge the relative postion relationship for the two cells
+        if (fBlockProperty->mIndex.rIndex==sBlockProperty->mIndex.rIndex || fBlockProperty->mIndex.vIndex==sBlockProperty->mIndex.vIndex) {
+            tRotate=(fBlockProperty->mIndex.rIndex==sBlockProperty->mIndex.rIndex)?((sBlockProperty->mIndex.vIndex>fBlockProperty->mIndex.vIndex)?0:-180):(sBlockProperty->mIndex.rIndex>fBlockProperty->mIndex.rIndex?90:-90);
+        }else{
+            tRotate=(sBlockProperty->mIndex.rIndex<fBlockProperty->mIndex.rIndex)?((sBlockProperty->mIndex.vIndex>fBlockProperty->mIndex.vIndex)?-45:-135):((sBlockProperty->mIndex.vIndex>fBlockProperty->mIndex.vIndex)?45:-135);
+        }
         
         line->setRotation(tRotate);
         
-//        this->addChild(line);
+        this->addChild(line);
         m_gridCellConnLineArray->addObject(line);
     } while (0);
 }
 
-void MainGameGridLayer::clearConnectLine()
+void MainGameGridLayer::removeConnectLine()
 {
+    CCLog("22222");
     do {
         CC_BREAK_IF(!m_gridCellConnLineArray);
         if (m_gridCellConnLineArray->count()>0) {
@@ -328,6 +345,22 @@ void MainGameGridLayer::clearConnectLine()
             CC_BREAK_IF(!line);
             line->removeFromParentAndCleanup(true);
             m_gridCellConnLineArray->removeLastObject();
+        }
+    } while (0);
+}
+
+void MainGameGridLayer::clearConnectLine()
+{
+    CCLog("11111");
+    do {
+        CC_BREAK_IF(!m_gridCellConnLineArray);
+        if (m_gridCellConnLineArray->count()>0) {
+            for (int i=0; i<m_gridCellConnLineArray->count(); i++) {
+                CCSprite *line=dynamic_cast<CCSprite *>(m_gridCellConnLineArray->objectAtIndex(i));
+                CC_BREAK_IF(!line);
+                line->removeFromParentAndCleanup(true);
+            }
+            m_gridCellConnLineArray->removeAllObjects();
         }
     } while (0);
 }

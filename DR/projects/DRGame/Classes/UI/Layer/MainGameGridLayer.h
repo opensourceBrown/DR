@@ -25,6 +25,7 @@ public:
     GridCell *getGridCell(unsigned int rIndex,unsigned int vIndex);
     
     void addConnectLine(GridCell *fCell,GridCell *sCell);
+    void removeConnectLine();
     void clearConnectLine();
 private:
     void constructUI();

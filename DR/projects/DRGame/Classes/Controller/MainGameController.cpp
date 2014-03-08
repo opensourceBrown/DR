@@ -104,6 +104,10 @@ void MainGameController::resetStageConnectedElements()
         CC_BREAK_IF(!mStageConnectedElements);
         
         mStageConnectedElements->removeAllObjects();
+        
+        MainGameGridLayer *gridLayer = ((MainGameScene *)m_scene)->getGridLayer();
+        CC_BREAK_IF(!gridLayer);
+        gridLayer->clearConnectLine();
     } while (0);
 }
 
@@ -182,6 +186,7 @@ void MainGameController::clearConnectedElements()
             }
         }
         
+        gridLayer->clearConnectLine();
         //update MainGameGridLayer to show new cell
         gridLayer->updateGrid();
     } while (0);
@@ -395,8 +400,8 @@ void MainGameController::addConnectedLine()
         CC_BREAK_IF(!mStageConnectedElements || mStageConnectedElements->count()<2);
         MainGameGridLayer *gridLayer = ((MainGameScene *)m_scene)->getGridLayer();
         CC_BREAK_IF(!gridLayer);
-        GridCell *fCell=dynamic_cast<GridCell *>(mStageConnectedElements->objectAtIndex(mStageConnectedElements->count()-1));
-        GridCell *sCell=dynamic_cast<GridCell *>(mStageConnectedElements->objectAtIndex(mStageConnectedElements->count()-2));
+        GridCell *fCell=dynamic_cast<GridCell *>(mStageConnectedElements->objectAtIndex(mStageConnectedElements->count()-2));
+        GridCell *sCell=dynamic_cast<GridCell *>(mStageConnectedElements->objectAtIndex(mStageConnectedElements->count()-1));
         gridLayer->addConnectLine(fCell,sCell);
     } while (0);
 }
@@ -407,7 +412,7 @@ void MainGameController::cleanConnectedLine()
     do {
         MainGameGridLayer *gridLayer = ((MainGameScene *)m_scene)->getGridLayer();
         CC_BREAK_IF(!gridLayer);
-        gridLayer->clearConnectLine();
+        gridLayer->removeConnectLine();
     } while (0);
 }
 
