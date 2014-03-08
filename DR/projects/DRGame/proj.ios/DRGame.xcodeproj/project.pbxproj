@@ -180,6 +180,7 @@
 		305B87AB18B5F1EA00EEEAB6 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 305ACA5918B1CB5300A38B3D /* libwebsockets.a */; };
 		3069B49618C07E7200237305 /* BarrierFileConfigure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3069B49418C07E7200237305 /* BarrierFileConfigure.cpp */; };
 		3069B49918C07E8100237305 /* BossFileConfigure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3069B49718C07E8100237305 /* BossFileConfigure.cpp */; };
+		308FED8918CB962F009216BC /* MonsterFileConfigure.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 308FED8718CB962F009216BC /* MonsterFileConfigure.cpp */; };
 		30AF56CB18B5F2A400C9DB6B /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30AF56CA18B5F2A400C9DB6B /* libcurl.a */; };
 		30FC9F2018BD901A000FE654 /* bossData.csv in Resources */ = {isa = PBXBuildFile; fileRef = 30FC9F1F18BD901A000FE654 /* bossData.csv */; };
 		375BD4C31868411B0024609E /* ObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 375BD4BB1868411B0024609E /* ObjectFactory.cpp */; };
@@ -633,6 +634,8 @@
 		3069B49518C07E7200237305 /* BarrierFileConfigure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BarrierFileConfigure.h; sourceTree = "<group>"; };
 		3069B49718C07E8100237305 /* BossFileConfigure.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BossFileConfigure.cpp; sourceTree = "<group>"; };
 		3069B49818C07E8100237305 /* BossFileConfigure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BossFileConfigure.h; sourceTree = "<group>"; };
+		308FED8718CB962F009216BC /* MonsterFileConfigure.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MonsterFileConfigure.cpp; sourceTree = "<group>"; };
+		308FED8818CB962F009216BC /* MonsterFileConfigure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonsterFileConfigure.h; sourceTree = "<group>"; };
 		30AF56CA18B5F2A400C9DB6B /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		30DFE5F718B49A1A005F89C2 /* DataConstant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataConstant.h; sourceTree = "<group>"; };
 		30FC9F1F18BD901A000FE654 /* bossData.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bossData.csv; sourceTree = "<group>"; };
@@ -1478,6 +1481,8 @@
 				3069B49818C07E8100237305 /* BossFileConfigure.h */,
 				3047533418C6FF62003E1E0F /* WeaponConfigure.cpp */,
 				3047533518C6FF62003E1E0F /* WeaponConfigure.h */,
+				308FED8718CB962F009216BC /* MonsterFileConfigure.cpp */,
+				308FED8818CB962F009216BC /* MonsterFileConfigure.h */,
 			);
 			name = FileConfigureModel;
 			sourceTree = "<group>";
@@ -2073,6 +2078,7 @@
 				15A3D9A01682F7F9002FB0C5 /* cpSimpleMotor.c in Sources */,
 				15A3D9A11682F7F9002FB0C5 /* cpSlideJoint.c in Sources */,
 				15A3D9A21682F7F9002FB0C5 /* cpArbiter.c in Sources */,
+				308FED8918CB962F009216BC /* MonsterFileConfigure.cpp in Sources */,
 				15A3D9A31682F7F9002FB0C5 /* cpArray.c in Sources */,
 				15A3D9A41682F7F9002FB0C5 /* cpBB.c in Sources */,
 				15A3D9A51682F7F9002FB0C5 /* cpBBTree.c in Sources */,
