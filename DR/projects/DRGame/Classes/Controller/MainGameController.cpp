@@ -282,7 +282,6 @@ void MainGameController::processGridCellSelected(unsigned int rIndex,unsigned in
         
         GridElementProperty *blockProperty=cell->getCellProperty();
         CC_BREAK_IF(!blockProperty);
-//        CCLog("selected cell type:%d,index(%d,%d)",blockProperty->mType,blockProperty->mIndex.rIndex,blockProperty->mIndex.vIndex);
         
         if (mStageConnectedElements->count()==0) {
             insertCellIntoConnectedArray(blockProperty->mIndex.rIndex, blockProperty->mIndex.vIndex);
@@ -292,7 +291,6 @@ void MainGameController::processGridCellSelected(unsigned int rIndex,unsigned in
             CC_BREAK_IF(!preCell);
             GridElementProperty *preBlockProperty=preCell->getCellProperty();
             CC_BREAK_IF(!preBlockProperty);
-//            CCLog("pre cell type:%d,index(%d,%d)",preBlockProperty->mType,preBlockProperty->mIndex.rIndex,preBlockProperty->mIndex.vIndex);
             
             GridCell *prePreCell=NULL;
             GridElementProperty *prePreBlockProperty=NULL;
@@ -306,7 +304,6 @@ void MainGameController::processGridCellSelected(unsigned int rIndex,unsigned in
             if(prePreBlockProperty && blockProperty->mIndex.vIndex==prePreBlockProperty->mIndex.vIndex && blockProperty->mIndex.rIndex== prePreBlockProperty->mIndex.rIndex){
                 //remove
                 removeCellFromConnectedArray();
-//                CCLog("%s-----remove",__FUNCTION__);
             }else{
                 if (blockProperty->mType == preBlockProperty->mType) {
                     //same type elements
@@ -326,7 +323,7 @@ void MainGameController::processGridCellSelected(unsigned int rIndex,unsigned in
                     }
                 }else{
                     //different type
-                    if (blockProperty->mType==kElementType_Bow || blockProperty->mType==kElementType_Sword || blockProperty->mType==kElementType_Monster) {
+                    if ((blockProperty->mType==kElementType_Bow || blockProperty->mType==kElementType_Sword || blockProperty->mType==kElementType_Monster) && (preBlockProperty->mType==kElementType_Bow || preBlockProperty->mType==kElementType_Sword || preBlockProperty->mType==kElementType_Monster)) {
                         if (preBlockProperty->mType==kElementType_Bow) {
                             //attach distance +1
                             if (abs(preBlockProperty->mIndex.rIndex-blockProperty->mIndex.rIndex)<=2 && abs(preBlockProperty->mIndex.vIndex-blockProperty->mIndex.vIndex)<=2) {

@@ -199,14 +199,11 @@ void MainGameGridLayer::addGridCell(unsigned int rIndex,unsigned int vIndex)
         item->setPosition(ccp((col+1)*m_containerLayer->getContentSize().width/GRID_VOLUME-3.0/2*item->getContentSize().width,m_containerLayer->getContentSize().height+m_containerLayer->getContentSize().height/GRID_ROW-2*item->getContentSize().height));
         m_containerLayer->addChild(item);
         m_GridCellArray->replaceObjectAtIndex(rIndex*GRID_VOLUME+vIndex, item);
-        
-//        CCLog("new cell index:(%d,%d)",row,col);
     }while(0);
 }
 
 void MainGameGridLayer::exchangeGridCell(unsigned int rIndex,unsigned int vIndex)
 {
-//    CCLog("cell exchange index(%d,%d)",rIndex,vIndex);
     do {
         CC_BREAK_IF(!m_GridCellArray || !(m_GridCellArray->objectAtIndex(rIndex)) || !(m_GridCellArray->objectAtIndex(vIndex)));
         GridCell *rCell=dynamic_cast<GridCell *>(m_GridCellArray->objectAtIndex(rIndex));
@@ -214,11 +211,9 @@ void MainGameGridLayer::exchangeGridCell(unsigned int rIndex,unsigned int vIndex
         //update the cell property index
         GridElementProperty *rBlockProperty=rCell->getCellProperty();
         GridElementProperty *sBlockProperty=sCell->getCellProperty();
-//        CCLog("pre index:(%d,%d),(%d,%d)",rBlockProperty->mIndex.rIndex,rBlockProperty->mIndex.vIndex,sBlockProperty->mIndex.rIndex,sBlockProperty->mIndex.vIndex);
         int tRIndex=rBlockProperty->mIndex.rIndex;
         rBlockProperty->mIndex.rIndex=sBlockProperty->mIndex.rIndex;
         sBlockProperty->mIndex.rIndex=tRIndex;
-//        CCLog("ex index:(%d,%d),(%d,%d)",rBlockProperty->mIndex.rIndex,rBlockProperty->mIndex.vIndex,sBlockProperty->mIndex.rIndex,sBlockProperty->mIndex.vIndex);
         
         m_GridCellArray->exchangeObject(rCell, sCell);
     } while (0);
@@ -298,7 +293,6 @@ GridCell *MainGameGridLayer::getGridCell(unsigned int rIndex,unsigned int vIndex
 void MainGameGridLayer::addConnectLine(GridCell *fCell,GridCell *sCell)
 {
     LOG_TRACE
-    CCLog("000000");
     do {
         CC_BREAK_IF(!m_gridCellConnLineArray);
         CC_BREAK_IF(!fCell);
@@ -337,7 +331,6 @@ void MainGameGridLayer::addConnectLine(GridCell *fCell,GridCell *sCell)
 
 void MainGameGridLayer::removeConnectLine()
 {
-    CCLog("22222");
     do {
         CC_BREAK_IF(!m_gridCellConnLineArray);
         if (m_gridCellConnLineArray->count()>0) {
@@ -351,7 +344,6 @@ void MainGameGridLayer::removeConnectLine()
 
 void MainGameGridLayer::clearConnectLine()
 {
-    CCLog("11111");
     do {
         CC_BREAK_IF(!m_gridCellConnLineArray);
         if (m_gridCellConnLineArray->count()>0) {
@@ -376,10 +368,8 @@ bool MainGameGridLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
         for(int i=0;i<m_GridCellArray->count();i++){
 			GridCell *cell=dynamic_cast<GridCell *>(m_GridCellArray->objectAtIndex(i));
 			CC_BREAK_IF(!cell);
-//            CCLog("rect(%f,%f,%f,%f),point(%f,%f)",cell->getPosition().x-cell->getContentSize().width, cell->getPosition().y+m_containerLayer->getContentSize().height/GRID_ROW/2+cell->getContentSize().height, cell->getContentSize().width, cell->getContentSize().height,location.x,location.y);
 			if(rectContainPoint(CCRectMake(cell->getPosition().x-cell->getContentSize().width, cell->getPosition().y+m_containerLayer->getContentSize().height/GRID_ROW/2+cell->getContentSize().height, cell->getContentSize().width, cell->getContentSize().height),location))
 			{
-//                CCLog("------");
                 m_currentSelCell=cell;
                 GridElementProperty *blockProperty=cell->getCellProperty();
                 
