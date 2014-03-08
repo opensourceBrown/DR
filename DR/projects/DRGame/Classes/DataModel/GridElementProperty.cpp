@@ -22,7 +22,7 @@ GridElementProperty::~GridElementProperty()
     
 }
 
-void GridElementProperty::generateGridElementDataByCSV()
+void GridElementProperty::generateGridElementDataByCSV(bool monsterIncluded)
 {
     GameStatusType *gameStatus = DataManager::sharedInstance()->gameStatus();
     int flag = gameStatus->mFlag;
@@ -32,8 +32,8 @@ void GridElementProperty::generateGridElementDataByCSV()
         int mA = currentBConfigure->mA;
         int mB = currentBConfigure->mB;
         DataManager::sharedInstance()->gameStatus()->mFlag = mA - mB * gameStatus->mNumberOfRound;
-        this->configureNormalElementProperty();
-    } else if (flag == 0) {
+        this->configureNormalElementProperty(monsterIncluded);
+    } else if (flag == 0 && !monsterIncluded) {
         //boss
         BarrierFileConfigure *currentBConfigure = DataManager::sharedInstance()->currentBarrierConfigure();
         int mA = currentBConfigure->mA;
@@ -45,10 +45,9 @@ void GridElementProperty::generateGridElementDataByCSV()
         //not boss
         
         DataManager::sharedInstance()->gameStatus()->mFlag -= 1;
-        this->configureNormalElementProperty();
+        this->configureNormalElementProperty(monsterIncluded);
     }
 }
-
 
 void GridElementProperty::saveToDictionary(CCDictionary *dict)
 {
@@ -71,11 +70,18 @@ bool GridElementProperty::canbeDestroyed()
 }
 
 #pragma mark - Private Method
-void GridElementProperty::configureNormalElementProperty()
+void GridElementProperty::configureNormalElementProperty(bool monsterInluced)
 {
     //confirm the element appear
     this->mID = 0;
-    this->mType = (ElementType)this->getRandomElementType();
+    
+    ElementType type = (ElementType)this->getRandomElementType();
+    if (!monsterInluced) {
+        while (type == kElementType_Monster) {
+            type = (ElementType)this->getRandomElementType();
+        }
+    }
+    this->mType = type;
     
     if (this->mType == kElementType_Monster) {
         this->configureNormalMonsterProperty();

@@ -227,18 +227,16 @@ bool MainGameController::generateGridCell(unsigned int rIndex,unsigned int vInde
                 CCString *strID = (CCString *)currentDic->objectForKey("mID");
                 blockProperty->mID=strID->intValue();
             } else {
-                //test
                 blockProperty->mIndex.rIndex=rIndex;
                 blockProperty->mIndex.vIndex=vIndex;
-                blockProperty->generateGridElementDataByCSV();
+                blockProperty->generateGridElementDataByCSV(true);
                 
                 blockProperty->saveToDictionary(rDict);
             }
         } else {
-            //test
             blockProperty->mIndex.rIndex=rIndex;
             blockProperty->mIndex.vIndex=vIndex;
-            blockProperty->generateGridElementDataByCSV();
+            blockProperty->generateGridElementDataByCSV(true);
             
             blockProperty->saveToDictionary(rDict);
         }

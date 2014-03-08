@@ -45,7 +45,7 @@ public:
         mMonsterProperty.mDamage = 0;
     }
     
-    void generateGridElementDataByCSV();
+    void generateGridElementDataByCSV(bool monsterInluced); //参数monsterInluced：是否包含怪
     void saveToDictionary(CCDictionary *dict);   //save to the Dictionary which parses in
     
     bool canbeDestroyed();      //when monster`s life>0, can not be destroyed
@@ -54,7 +54,7 @@ public:
     bool getStatus(){return m_status;}
     
 private:
-    void configureNormalElementProperty();  //element except boss
+    void configureNormalElementProperty(bool monsterInluced);  //element except boss
     ElementType getRandomElementType();     
     void configureNormalMonsterProperty();  //normal monster
     void configureBossProperty();           //boss
