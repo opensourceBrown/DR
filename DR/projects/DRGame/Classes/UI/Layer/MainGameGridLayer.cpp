@@ -116,11 +116,11 @@ void MainGameGridLayer::addGridCellToLayer(GridElementProperty *gProperty)
     }
     GridCell *item=GridCell::createWithFrameName(typeStr->getCString());
     item->setAnchorPoint(ccp(0.5,0.5));
-    item->setContentSize(CCSizeMake(m_containerLayer->getContentSize().width/GRID_VOLUME, m_containerLayer->getContentSize().height/GRID_ROW));
+//    item->setContentSize(CCSizeMake(m_containerLayer->getContentSize().width/GRID_VOLUME, m_containerLayer->getContentSize().height/GRID_ROW));
     item->setCellProperty(gProperty);
     int row = gProperty->mIndex.rIndex;
     int col = gProperty->mIndex.vIndex;
-    item->setPosition(ccp((col+1)*m_containerLayer->getContentSize().width/GRID_VOLUME,m_containerLayer->getContentSize().height-row*m_containerLayer->getContentSize().height/GRID_ROW));
+    item->setPosition(ccp((col+1)*m_containerLayer->getContentSize().width/GRID_VOLUME-3.0/2*item->getContentSize().width,m_containerLayer->getContentSize().height-row*m_containerLayer->getContentSize().height/GRID_ROW-2*item->getContentSize().height));
     item->setStatus(true);
     m_containerLayer->addChild(item);
     m_GridCellArray->addObject(item);
@@ -183,7 +183,7 @@ void MainGameGridLayer::addGridCell(unsigned int rIndex,unsigned int vIndex)
         }
         GridCell *item=GridCell::createWithFrameName(typeStr->getCString());
         item->setAnchorPoint(ccp(0.5,0.5));
-        item->setContentSize(CCSizeMake(m_containerLayer->getContentSize().width/GRID_VOLUME, m_containerLayer->getContentSize().height/GRID_ROW));
+//        item->setContentSize(CCSizeMake(m_containerLayer->getContentSize().width/GRID_VOLUME, m_containerLayer->getContentSize().height/GRID_ROW));
         item->setCellProperty(blockProperty);
 		int row = blockProperty->mIndex.rIndex;
 		int col = blockProperty->mIndex.vIndex;
@@ -196,7 +196,7 @@ void MainGameGridLayer::addGridCell(unsigned int rIndex,unsigned int vIndex)
                 step++;
             }
         }
-        item->setPosition(ccp((col+1)*m_containerLayer->getContentSize().width/GRID_VOLUME,m_containerLayer->getContentSize().height+m_containerLayer->getContentSize().height/GRID_ROW));
+        item->setPosition(ccp((col+1)*m_containerLayer->getContentSize().width/GRID_VOLUME-3.0/2*item->getContentSize().width,m_containerLayer->getContentSize().height+m_containerLayer->getContentSize().height/GRID_ROW-2*item->getContentSize().height));
         m_containerLayer->addChild(item);
         m_GridCellArray->replaceObjectAtIndex(rIndex*GRID_VOLUME+vIndex, item);
         
@@ -267,7 +267,7 @@ void MainGameGridLayer::moveGridCellAnimation(unsigned int rIndex,unsigned int v
         CC_BREAK_IF(!blockProperty);
         
         //move action
-        cell->runAction(CCMoveTo::create(0.2, ccp((blockProperty->mIndex.vIndex+1)*m_containerLayer->getContentSize().width/GRID_VOLUME,m_containerLayer->getContentSize().height-blockProperty->mIndex.rIndex*m_containerLayer->getContentSize().height/GRID_ROW)));
+        cell->runAction(CCMoveTo::create(0.2, ccp((blockProperty->mIndex.vIndex+1)*m_containerLayer->getContentSize().width/GRID_VOLUME-3.0/2*cell->getContentSize().width,m_containerLayer->getContentSize().height-blockProperty->mIndex.rIndex*m_containerLayer->getContentSize().height/GRID_ROW-2*cell->getContentSize().height)));
         
     }while(0);
 }
@@ -318,7 +318,7 @@ void MainGameGridLayer::addConnectLine(GridCell *fCell,GridCell *sCell)
             tScaleX=m_containerLayer->getContentSize().width/GRID_VOLUME*1.42/line->getContentSize().width;
         }
         line->setScaleX(tScaleX);
-        line->setPosition(ccp(fCell->getPosition().x-m_containerLayer->getContentSize().width/GRID_VOLUME/2,fCell->getPosition().y+fCell->getGridNodeHeight()));
+        line->setPosition(ccp(fCell->getPosition().x-fCell->getContentSize().width/2,fCell->getPosition().y+m_containerLayer->getContentSize().height/GRID_ROW/2+fCell->getGridNodeHeight()/2));
         
         float tRotate=0;
         //judge the relative postion relationship for the two cells
@@ -368,6 +368,7 @@ void MainGameGridLayer::clearConnectLine()
 bool MainGameGridLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
     CCPoint location=pTouch->getLocation();
+//    CCLog("grid size(%f,%f)",m_containerLayer->getContentSize().width/GRID_VOLUME,m_containerLayer->getContentSize().height/GRID_ROW);
     do{
         CC_BREAK_IF(!m_delegate);
         CC_BREAK_IF(!m_GridCellArray);
@@ -375,8 +376,10 @@ bool MainGameGridLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
         for(int i=0;i<m_GridCellArray->count();i++){
 			GridCell *cell=dynamic_cast<GridCell *>(m_GridCellArray->objectAtIndex(i));
 			CC_BREAK_IF(!cell);
-			if(rectContainPoint(CCRectMake(cell->getPosition().x-m_containerLayer->getContentSize().width/GRID_VOLUME, cell->getPosition().y+cell->getContentSize().height/2, cell->getContentSize().width, cell->getContentSize().height),location))
+//            CCLog("rect(%f,%f,%f,%f),point(%f,%f)",cell->getPosition().x-cell->getContentSize().width, cell->getPosition().y+m_containerLayer->getContentSize().height/GRID_ROW/2+cell->getContentSize().height, cell->getContentSize().width, cell->getContentSize().height,location.x,location.y);
+			if(rectContainPoint(CCRectMake(cell->getPosition().x-cell->getContentSize().width, cell->getPosition().y+m_containerLayer->getContentSize().height/GRID_ROW/2+cell->getContentSize().height, cell->getContentSize().width, cell->getContentSize().height),location))
 			{
+//                CCLog("------");
                 m_currentSelCell=cell;
                 GridElementProperty *blockProperty=cell->getCellProperty();
                 
@@ -402,7 +405,7 @@ void MainGameGridLayer::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
         for(int i=0;i<m_GridCellArray->count();i++){
 			GridCell *cell=dynamic_cast<GridCell *>(m_GridCellArray->objectAtIndex(i));
 			CC_BREAK_IF(!cell);
-			if(rectContainPoint(CCRectMake(cell->getPosition().x-m_containerLayer->getContentSize().width/GRID_VOLUME, cell->getPosition().y+cell->getContentSize().height/2, cell->getContentSize().width, cell->getContentSize().height),location))
+			if(rectContainPoint(CCRectMake(cell->getPosition().x-cell->getContentSize().width, cell->getPosition().y+m_containerLayer->getContentSize().height/GRID_ROW/2+cell->getContentSize().height, cell->getContentSize().width, cell->getContentSize().height),location))
 			{
                 if (m_currentSelCell==cell) {
                     break;

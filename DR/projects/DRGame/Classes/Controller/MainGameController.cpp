@@ -281,6 +281,8 @@ void MainGameController::processGridCellSelected(unsigned int rIndex,unsigned in
         CC_BREAK_IF(!cell);
         
         GridElementProperty *blockProperty=cell->getCellProperty();
+        CC_BREAK_IF(!blockProperty);
+//        CCLog("selected cell type:%d,index(%d,%d)",blockProperty->mType,blockProperty->mIndex.rIndex,blockProperty->mIndex.vIndex);
         
         if (mStageConnectedElements->count()==0) {
             insertCellIntoConnectedArray(blockProperty->mIndex.rIndex, blockProperty->mIndex.vIndex);
@@ -289,10 +291,22 @@ void MainGameController::processGridCellSelected(unsigned int rIndex,unsigned in
             GridCell *preCell=dynamic_cast<GridCell *>(mStageConnectedElements->lastObject()) ;
             CC_BREAK_IF(!preCell);
             GridElementProperty *preBlockProperty=preCell->getCellProperty();
+            CC_BREAK_IF(!preBlockProperty);
+//            CCLog("pre cell type:%d,index(%d,%d)",preBlockProperty->mType,preBlockProperty->mIndex.rIndex,preBlockProperty->mIndex.vIndex);
             
-            if (blockProperty->mIndex.vIndex==preBlockProperty->mIndex.vIndex && blockProperty->mIndex.rIndex== preBlockProperty->mIndex.rIndex) {
+            GridCell *prePreCell=NULL;
+            GridElementProperty *prePreBlockProperty=NULL;
+            if (mStageConnectedElements->count()>=2) {
+                prePreCell=dynamic_cast<GridCell *>(mStageConnectedElements->objectAtIndex(mStageConnectedElements->count()-2)) ;
+                CC_BREAK_IF(!prePreCell);
+                prePreBlockProperty=prePreCell->getCellProperty();
+                CC_BREAK_IF(!prePreBlockProperty);
+            }
+            
+            if(prePreBlockProperty && blockProperty->mIndex.vIndex==prePreBlockProperty->mIndex.vIndex && blockProperty->mIndex.rIndex== prePreBlockProperty->mIndex.rIndex){
                 //remove
                 removeCellFromConnectedArray();
+//                CCLog("%s-----remove",__FUNCTION__);
             }else{
                 if (blockProperty->mType == preBlockProperty->mType) {
                     //same type elements

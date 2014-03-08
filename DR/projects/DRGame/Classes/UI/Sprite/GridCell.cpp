@@ -37,6 +37,7 @@ bool GridCell::initWith(const char *pszFileName)
         CC_BREAK_IF(!pszFileName);
         m_elementGridImg=CCSprite::createWithSpriteFrameName(pszFileName);
         CC_BREAK_IF(!m_elementGridImg);
+        this->setContentSize(m_elementGridImg->getContentSize());
         addChild(m_elementGridImg);
         
         tRet=true;
