@@ -76,7 +76,7 @@ void GridCell::constructMonsterCellEX()
     do{
         CC_BREAK_IF(!m_property);
         CC_BREAK_IF(!m_property->mType==kElementType_Monster);
-        
+//        CCLog("damage:%f",m_property->mMonsterProperty.mDamage);
         CCString *attachValue=CCString::createWithFormat("%d",(int)m_property->mMonsterProperty.mDamage);
         CCLabelTTF *tAttackValueTTF = CCLabelTTF::create(attachValue->getCString(),"Marker Felt",14);
         CC_BREAK_IF(!tAttackValueTTF);
@@ -85,8 +85,8 @@ void GridCell::constructMonsterCellEX()
         tAttackValueTTF->setColor(ccc3(0,255,0));
         tAttackValueTTF->setPosition(ccp(m_elementGridImg->getPosition().x+m_elementGridImg->getContentSize().width,m_elementGridImg->getPosition().y+m_elementGridImg->getContentSize().height-tAttackValueTTF->getContentSize().height));
         this->addChild(tAttackValueTTF);
-        
-        CCString *defenceValue=CCString::createWithFormat("%d",(int)m_property->mMonsterProperty.mDamage);
+//        CCLog("defence:%f",m_property->mMonsterProperty.mDefence);
+        CCString *defenceValue=CCString::createWithFormat("%d",(int)m_property->mMonsterProperty.mDefence);
         CCLabelTTF *tDefenceValueTTF = CCLabelTTF::create(defenceValue->getCString(),"Marker Felt",14);
         CC_BREAK_IF(!tDefenceValueTTF);
         tDefenceValueTTF->setAnchorPoint(ccp(0.5,0.5));
@@ -94,8 +94,8 @@ void GridCell::constructMonsterCellEX()
         tDefenceValueTTF->setColor(ccc3(0,255,0));
         tDefenceValueTTF->setPosition(ccp(m_elementGridImg->getPosition().x+m_elementGridImg->getContentSize().width,m_elementGridImg->getPosition().y+m_elementGridImg->getContentSize().height-2*tAttackValueTTF->getContentSize().height));
         this->addChild(tDefenceValueTTF);
-        
-        CCString *lifeValue=CCString::createWithFormat("%d",(int)m_property->mMonsterProperty.mDamage);
+//        CCLog("life:%f",m_property->mMonsterProperty.mLife);
+        CCString *lifeValue=CCString::createWithFormat("%d",(int)m_property->mMonsterProperty.mLife);
         CCLabelTTF *tLifeValueTTF = CCLabelTTF::create(lifeValue->getCString(),"Marker Felt",14);
         CC_BREAK_IF(!tLifeValueTTF);
         tLifeValueTTF->setAnchorPoint(ccp(0.5,0.5));
