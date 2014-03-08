@@ -59,6 +59,7 @@ private:
     void configureNormalMonsterProperty();  //normal monster
     void configureBossProperty();           //boss
     BossFileConfigure *getRandomBoss();   //get the boss according to rate;
+    MonsterFileConfigure * getRandomMonster();
     
 private:
     bool m_status;                          //true:cleared    false:uncleared

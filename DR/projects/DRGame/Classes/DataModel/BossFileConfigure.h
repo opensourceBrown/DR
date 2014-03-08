@@ -12,20 +12,13 @@
 #include <iostream>
 
 #include "cocos2d.h"
+#include "MonsterFileConfigure.h"
 
 USING_NS_CC;
 
-class BossFileConfigure : public CCObject
+class BossFileConfigure : public MonsterFileConfigure
 {
-public:
-    unsigned int mBossId;
-    float       mBossRate;
-    float       mD;
-    float       mE;
-    float       mF;
-    float       mG;
-    float       mH;
-    float       mI;
+    
 };
 
 #endif /* defined(__DRGame__BossFileConfigure__) */

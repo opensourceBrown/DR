@@ -117,13 +117,17 @@ void GridElementProperty::configureNormalMonsterProperty()
     //TODO:需要确认普通怪生成逻辑，这里写成固定的
     mMonsterProperty.mType = kBustyType_Common;
     mMonsterProperty.mSkillType = kBossBustyType_None;
-    mMonsterProperty.mID = 0;
     mMonsterProperty.mName = "normal monster";
     mMonsterProperty.mDescription = "This is a test Normal Monster";
-    mMonsterProperty.mDefence = 2;
-    mMonsterProperty.mLife = 3;
-    mMonsterProperty.mMaxLife = 3;
-    mMonsterProperty.mDamage = 2;
+    
+    GameStatusType *gameStatus = DataManager::sharedInstance()->gameStatus();
+    MonsterFileConfigure *mfConfigure = this->getRandomMonster();
+    mMonsterProperty.mID = mfConfigure->mBossId;
+    mMonsterProperty.mDefence = mfConfigure->mF + mfConfigure->mG*(float)gameStatus->mNumberOfRound;      //defence = f + g * round
+    mMonsterProperty.mMaxLife = mfConfigure->mD + mfConfigure->mE*(float)gameStatus->mNumberOfRound;      //life = d + e * round
+    mMonsterProperty.mLife = mMonsterProperty.mMaxLife;
+    mMonsterProperty.mDamage = mfConfigure->mH + mfConfigure->mI*(float)gameStatus->mNumberOfRound;      //damage = H + I * round
+    
 }
 
 void GridElementProperty::configureBossProperty()
@@ -172,3 +176,32 @@ BossFileConfigure * GridElementProperty::getRandomBoss()
     return NULL;
 }
 
+//MonsterFileConfigure * Grid
+MonsterFileConfigure * GridElementProperty::getRandomMonster()
+{
+    CCArray *monsterConfigures = DataManager::sharedInstance()->monsterConfigures();
+    
+    int mCongfiguresCount = monsterConfigures->count();
+    float monsterRates[mCongfiguresCount];
+    
+    BossFileConfigure *monsterConfigure = NULL;
+    CCObject *object = NULL;
+    
+    float randomFloat = DRUtility::randFraction();
+    
+    float previousMonsterRate = 0.0f;
+    int i = 0;
+    CCARRAY_FOREACH(monsterConfigures, object)
+    {
+        monsterConfigure = (BossFileConfigure *)object;
+        
+        monsterRates[i] = previousMonsterRate + monsterConfigure->mBossRate;
+        if (randomFloat < monsterRates[i]) {
+            return monsterConfigure;
+        }
+        
+        previousMonsterRate = monsterRates[i];
+        i++;
+    }
+    return NULL;
+}

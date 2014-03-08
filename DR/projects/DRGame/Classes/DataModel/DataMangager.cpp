@@ -41,6 +41,9 @@ DataManager::DataManager()
     _bossConfigures = CCArray::create();
     _bossConfigures->retain();
     
+    _monsterConfigures = CCArray::create();
+    _monsterConfigures->retain();
+    
     _weaponConfigures = CCArray::create();
     _weaponConfigures->retain();
     
@@ -57,6 +60,7 @@ DataManager::~DataManager()
     delete _gameStatus;
     _barrierConfigures->release();
     _bossConfigures->release();
+    _monsterConfigures->release();
     _weaponConfigures->release();
 }
 
@@ -107,9 +111,27 @@ void DataManager::readDataFromCSV()
         
     }
     
+    //monsterData
+    CCArray *monsterData = DRUtility::readCSVFileWithName("monsterData.csv", true);
+    CCARRAY_FOREACH(monsterData, object)
+    {
+        dict = (CCDictionary *)object;
+        
+        MonsterFileConfigure *monsterConfigure = new MonsterFileConfigure();
+        monsterConfigure->autorelease();
+        monsterConfigure->mBossId = ((CCString *)dict->objectForKey("monsterid"))->intValue();
+        monsterConfigure->mD = ((CCString *)dict->objectForKey("D"))->floatValue();
+        monsterConfigure->mE = ((CCString *)dict->objectForKey("E"))->floatValue();
+        monsterConfigure->mF = ((CCString *)dict->objectForKey("F"))->floatValue();
+        monsterConfigure->mG = ((CCString *)dict->objectForKey("G"))->floatValue();
+        monsterConfigure->mH = ((CCString *)dict->objectForKey("H"))->floatValue();
+        monsterConfigure->mI = ((CCString *)dict->objectForKey("I"))->floatValue();
+        monsterConfigure->mBossRate = ((CCString *)dict->objectForKey("monsterRate"))->floatValue();
+        _monsterConfigures->addObject(monsterConfigure);
+    }
+    
     //weaponData
     CCArray *weaponData = DRUtility::readCSVFileWithName("weaponData.csv", false);
-    cout<<"weaponData#Count = "<<weaponData->count();
     CCARRAY_FOREACH(weaponData, object)
     {
         dict = (CCDictionary *)object;
