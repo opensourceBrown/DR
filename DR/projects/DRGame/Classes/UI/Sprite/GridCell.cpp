@@ -51,10 +51,20 @@ void GridCell::setCellProperty(GridElementProperty *pElement)
     m_property->mIndex.rIndex=pElement->mIndex.rIndex;
     m_property->mIndex.vIndex=pElement->mIndex.vIndex;
     m_property->mType=pElement->mType;
+    
+    m_property->mMonsterProperty.mType = pElement->mMonsterProperty.mType;
+    m_property->mMonsterProperty.mSkillType = pElement->mMonsterProperty.mSkillType;
+    m_property->mMonsterProperty.mID = pElement->mMonsterProperty.mID;
+    m_property->mMonsterProperty.mName = pElement->mMonsterProperty.mName;
+    m_property->mMonsterProperty.mDescription = pElement->mMonsterProperty.mDescription;
+    m_property->mMonsterProperty.mDefence = pElement->mMonsterProperty.mDefence;
+    m_property->mMonsterProperty.mLife = pElement->mMonsterProperty.mLife;
+    m_property->mMonsterProperty.mMaxLife = pElement->mMonsterProperty.mMaxLife;
+    m_property->mMonsterProperty.mDamage = pElement->mMonsterProperty.mDamage;
+    
+    m_property->setStatus(pElement->getStatus());
     do {
-//        CC_BREAK_IF(!pElement);
-//        m_property=pElement;
-//        m_property->retain();
+
     } while (0);
     
     constructMonsterCellEX();
