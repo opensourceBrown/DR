@@ -74,7 +74,7 @@ void  MainGameStatusBar::constructUI()
         m_containerLayer->addChild(tSword);
         
         CCString *baseAttachValue=CCString::createWithFormat("+%d",3);
-        CCLabelTTF *tBaseAttackValueTTF = CCLabelTTF::create(baseAttachValue->getCString(),"Marker Felt",28);
+        CCLabelTTF *tBaseAttackValueTTF = CCLabelTTF::create(baseAttachValue->getCString(),"Marker Felt",24);
         CC_BREAK_IF(!tBaseAttackValueTTF);
         tBaseAttackValueTTF->setAnchorPoint(ccp(0.5,0.5));
         tBaseAttackValueTTF->setColor(ccc3(0,0,255));
@@ -84,7 +84,7 @@ void  MainGameStatusBar::constructUI()
         int maxShieldValue=4;
         int curShieldValue=4;
         CCString *shieldValue=CCString::createWithFormat("%d/%d",curShieldValue,maxShieldValue);
-        m_shiledValueTTF = CCLabelTTF::create(shieldValue->getCString(),"Marker Felt",28);
+        m_shiledValueTTF = CCLabelTTF::create(shieldValue->getCString(),"Marker Felt",24);
         CC_BREAK_IF(!m_shiledValueTTF);
         m_shiledValueTTF->setAnchorPoint(ccp(0.5,0.5));
         m_shiledValueTTF->setColor(ccc3(0,0,255));
@@ -93,17 +93,22 @@ void  MainGameStatusBar::constructUI()
         
         int damageValue=2;
         CCString *equitAttachValue=CCString::createWithFormat("+%d",damageValue);
-        CCLabelTTF *tEquipDamageValueTTF = CCLabelTTF::create(equitAttachValue->getCString(),"Marker Felt",28);
+        CCLabelTTF *tEquipDamageValueTTF = CCLabelTTF::create(equitAttachValue->getCString(),"Marker Felt",24);
         CC_BREAK_IF(!tEquipDamageValueTTF);
         tEquipDamageValueTTF->setAnchorPoint(ccp(0.5,0.5));
         tEquipDamageValueTTF->setColor(ccc3(0,0,255));
         tEquipDamageValueTTF->setPosition(ccp(tSword->getPosition().x,tSword->getPosition().y-tSword->getContentSize().height));
         m_containerLayer->addChild(tEquipDamageValueTTF);
         
+        float tScaleX=1;
         //portion
         m_portionObit=CCSprite::createWithSpriteFrameName("GR_progress_obit.png");
         CC_BREAK_IF(!m_portionObit);
+        if (m_portionObit->getContentSize().width/(m_containerLayer->getContentSize().width/3)>1) {
+            tScaleX=(m_containerLayer->getContentSize().width/3)/m_portionObit->getContentSize().width;
+        }
         m_portionObit->setPosition(ccp(15+m_portionObit->getContentSize().width/2,m_containerLayer->getContentSize().height-m_portionObit->getContentSize().height-15));
+        m_portionObit->setScaleX(tScaleX);
         m_containerLayer->addChild(m_portionObit);
         
         m_portionProgress=CCProgressTimer::create(CCSprite::createWithSpriteFrameName("GR_progress_timer.png"));
@@ -112,12 +117,14 @@ void  MainGameStatusBar::constructUI()
         m_portionProgress->setBarChangeRate(ccp(1, 0));
         m_portionProgress->setPercentage(70);
         m_portionProgress->setAnchorPoint(ccp(0,0.5));
+        m_portionProgress->setScaleX(tScaleX);
         m_portionProgress->setPosition(ccp(m_portionObit->getPosition().x-m_portionObit->getContentSize().width/2-(m_portionObit->getContentSize().width-m_portionProgress->getContentSize().width*m_portionProgress->getPercentage()/100)/2,m_portionObit->getPosition().y));
         m_containerLayer->addChild(m_portionProgress);
         
         //coin
         m_coinObit=CCSprite::createWithSpriteFrameName("GR_progress_obit.png");
         CC_BREAK_IF(!m_coinObit);
+        m_coinObit->setScaleX(tScaleX);
         m_coinObit->setPosition(ccp(15+m_coinObit->getContentSize().width/2,m_containerLayer->getContentSize().height-2*m_coinObit->getContentSize().height-35));
         m_containerLayer->addChild(m_coinObit);
         
@@ -127,12 +134,14 @@ void  MainGameStatusBar::constructUI()
         m_coinProgress->setBarChangeRate(ccp(1, 0));
         m_coinProgress->setPercentage(15);
         m_coinProgress->setAnchorPoint(ccp(0,0.5));
+        m_coinProgress->setScaleX(tScaleX);
         m_coinProgress->setPosition(ccp(m_coinObit->getPosition().x-m_coinObit->getContentSize().width/2-(m_coinObit->getContentSize().width-m_coinProgress->getContentSize().width*m_coinProgress->getPercentage()/100)/2,m_coinObit->getPosition().y));
         m_containerLayer->addChild(m_coinProgress);
         
         //kill monster
         m_killMonsterObit=CCSprite::createWithSpriteFrameName("GR_progress_obit.png");
         CC_BREAK_IF(!m_killMonsterObit);
+        m_killMonsterObit->setScaleX(tScaleX);
         m_killMonsterObit->setPosition(ccp(2*m_containerLayer->getContentSize().width/3+20+m_killMonsterObit->getContentSize().width/2,m_containerLayer->getContentSize().height-m_killMonsterObit->getContentSize().height-15));
         m_containerLayer->addChild(m_killMonsterObit);
         
@@ -142,12 +151,14 @@ void  MainGameStatusBar::constructUI()
         m_killMonsterProgress->setBarChangeRate(ccp(1, 0));
         m_killMonsterProgress->setPercentage(40);
         m_killMonsterProgress->setAnchorPoint(ccp(0,0.5));
+        m_killMonsterProgress->setScaleX(tScaleX);
         m_killMonsterProgress->setPosition(ccp(m_killMonsterObit->getPosition().x-m_killMonsterObit->getContentSize().width/2-(m_killMonsterObit->getContentSize().width-m_killMonsterProgress->getContentSize().width*m_killMonsterProgress->getPercentage()/100)/2,m_killMonsterObit->getPosition().y));
         m_containerLayer->addChild(m_killMonsterProgress);
         
         //score
         m_scoreObit=CCSprite::createWithSpriteFrameName("GR_progress_obit.png");
         CC_BREAK_IF(!m_scoreObit);
+        m_scoreObit->setScaleX(tScaleX);
         m_scoreObit->setPosition(ccp(2*m_containerLayer->getContentSize().width/3+20+m_scoreObit->getContentSize().width/2,m_containerLayer->getContentSize().height-2*m_scoreObit->getContentSize().height-35));
         m_containerLayer->addChild(m_scoreObit);
         
@@ -157,6 +168,7 @@ void  MainGameStatusBar::constructUI()
         m_scoreProgress->setBarChangeRate(ccp(1, 0));
         m_scoreProgress->setPercentage(20);
         m_scoreProgress->setAnchorPoint(ccp(0,0.5));
+        m_scoreProgress->setScaleX(tScaleX);
         m_scoreProgress->setPosition(ccp(m_scoreObit->getPosition().x-m_scoreObit->getContentSize().width/2-(m_scoreObit->getContentSize().width-m_scoreProgress->getContentSize().width*m_scoreProgress->getPercentage()/100)/2,m_scoreObit->getPosition().y));
         m_containerLayer->addChild(m_scoreProgress);
 		

@@ -19,6 +19,18 @@ public:
     //score
     void setScore(unsigned int pScore){m_score=pScore;}
     unsigned int getScore(){return m_score;}
+    
+    //monster
+    void setKillMonsterCount(unsigned int pCount){m_killMonsterCount=pCount;}
+    unsigned int getKillMonsterCount(){return m_killMonsterCount;}
+    
+    //coin
+    void setCoin(unsigned int pCount){m_coin=pCount;}
+    unsigned int getCoin(){return m_coin;}
+    
+    //weapon
+    void setWeaponSwitch(bool pSwitch){m_weaponSwitch=pSwitch;}
+    bool getWeaponSwitch(){return m_weaponSwitch;}
 
 private:
     void writeUserDefault();
@@ -27,6 +39,10 @@ private:
 private:
 	unsigned int     m_roundCount;
     unsigned int     m_score;
+    unsigned int     m_killMonsterCount;
+    unsigned int     m_coin;
+    
+    bool             m_weaponSwitch;
 };
 
 #endif // __DR_USERDEFAULT_H__

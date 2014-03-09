@@ -6,6 +6,7 @@
 #include "MainGameGridLayer.h"
 #include "GridCell.h"
 #include "DataMangager.h"
+#include "DRUserDefault.h"
 
 MainGameController::MainGameController():
     mMagicInStage(NULL),
@@ -113,7 +114,6 @@ void MainGameController::resetStageConnectedElements()
 
 void MainGameController::clearConnectedElements()
 {
-//    CCLog("clear connected count:%d",mStageConnectedElements->count());
     do {
         MainGameGridLayer *gridLayer = ((MainGameScene *)m_scene)->getGridLayer();
         CC_BREAK_IF(!gridLayer);
@@ -128,6 +128,16 @@ void MainGameController::clearConnectedElements()
             GridElementProperty *block=cell->getCellProperty();
             CC_BREAK_IF(!block);
             block->setStatus(true);
+            if (block->mType==kElementType_Monster) {
+                DRUserDefault::sharedUserDefault()->setKillMonsterCount(DRUserDefault::sharedUserDefault()->getKillMonsterCount()+1);
+            }else if(block->mType==kElementType_Coin){
+                DRUserDefault::sharedUserDefault()->setCoin(DRUserDefault::sharedUserDefault()->getCoin()+1);
+            }else if(block->mType==kElementType_Shield){
+                
+            }
+            else if(block->mType==kElementType_Potion){
+                
+            }
             
             GridElementProperty *item=dynamic_cast<GridElementProperty *>(mGridPropertyContainer->objectAtIndex(block->mIndex.rIndex*GRID_VOLUME+block->mIndex.vIndex));
             CC_BREAK_IF(!item);
@@ -155,7 +165,6 @@ void MainGameController::clearConnectedElements()
                         GridElementProperty *block=dynamic_cast<GridElementProperty *>(mGridPropertyContainer->objectAtIndex(k*GRID_VOLUME+i));
                         CC_BREAK_IF(!block);
                         if (false==block->getStatus()) {
-//                            CCLog("block(%d,%d),item(%d,%d)",block->mIndex.rIndex,block->mIndex.vIndex,item->mIndex.rIndex,item->mIndex.vIndex);
                             //update the vIndex after exchange the two elements
                             int tIndex=item->mIndex.rIndex;
                             item->mIndex.rIndex=block->mIndex.rIndex;
@@ -182,7 +191,6 @@ void MainGameController::clearConnectedElements()
                 }else{
                     break;
                 }
-//                CCLog("11111111(%d,%d)-------item status:%d",item->mIndex.rIndex,item->mIndex.vIndex,item->getStatus());
             }
         }
         
@@ -192,6 +200,8 @@ void MainGameController::clearConnectedElements()
     } while (0);
         
     mStageConnectedElements->removeAllObjects();
+    
+    DRUserDefault::sharedUserDefault()->setRoundCount(DRUserDefault::sharedUserDefault()->getRoundCount()+1);
     
 	//√øªÿ∫œΩ· ¯∂º≈–∂œµ±«∞πÿø® «∑ÒΩ· ¯
 	//judge whether the current stage is end
