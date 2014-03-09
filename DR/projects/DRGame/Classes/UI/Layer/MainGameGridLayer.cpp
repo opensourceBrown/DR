@@ -4,6 +4,10 @@
 #include "DataConstant.h"
 #include "DataMangager.h"
 
+#if (CC_TARGET_PLATFORM==CC_PLATFORM_IOS)
+#include "OCBridge.h"
+#endif
+
 MainGameGridLayer::MainGameGridLayer():
     m_containerLayer(NULL),
     m_GridCellArray(NULL),
@@ -120,7 +124,19 @@ void MainGameGridLayer::addGridCellToLayer(GridElementProperty *gProperty)
     item->setCellProperty(gProperty);
     int row = gProperty->mIndex.rIndex;
     int col = gProperty->mIndex.vIndex;
-    item->setPosition(ccp((col+1)*m_containerLayer->getContentSize().width/GRID_VOLUME-3.0/2*item->getContentSize().width,m_containerLayer->getContentSize().height-row*m_containerLayer->getContentSize().height/GRID_ROW-2*item->getContentSize().height));
+#if (CC_TARGET_PLATFORM==CC_PLATFORM_IOS)
+    IOS_PLATFORM_TYPE platform= OCBridge::getPlatformType();
+    float offsetXCoe=0;
+    float offsetYCoe=0;
+    if (platform==kIOS_PLATFORM_TYPE_ipad) {
+        offsetXCoe=1.5;
+        offsetYCoe=2;
+    }else{
+        offsetXCoe=0.5;
+        offsetYCoe=0.5;
+    }
+    item->setPosition(ccp((col+1)*m_containerLayer->getContentSize().width/GRID_VOLUME-offsetXCoe*item->getContentSize().width,m_containerLayer->getContentSize().height-row*m_containerLayer->getContentSize().height/GRID_ROW-offsetYCoe*item->getContentSize().height));
+#endif
     item->setStatus(true);
     m_containerLayer->addChild(item);
     m_GridCellArray->addObject(item);
@@ -196,7 +212,19 @@ void MainGameGridLayer::addGridCell(unsigned int rIndex,unsigned int vIndex)
                 step++;
             }
         }
-        item->setPosition(ccp((col+1)*m_containerLayer->getContentSize().width/GRID_VOLUME-3.0/2*item->getContentSize().width,m_containerLayer->getContentSize().height+m_containerLayer->getContentSize().height/GRID_ROW-2*item->getContentSize().height));
+#if (CC_TARGET_PLATFORM==CC_PLATFORM_IOS)
+        IOS_PLATFORM_TYPE platform= OCBridge::getPlatformType();
+        float offsetXCoe=0;
+        float offsetYCoe=0;
+        if (platform==kIOS_PLATFORM_TYPE_ipad) {
+            offsetXCoe=1.5;
+            offsetYCoe=2;
+        }else{
+            offsetXCoe=0.5;
+            offsetYCoe=0.5;
+        }
+        item->setPosition(ccp((col+1)*m_containerLayer->getContentSize().width/GRID_VOLUME-offsetXCoe*item->getContentSize().width,m_containerLayer->getContentSize().height+m_containerLayer->getContentSize().height/GRID_ROW-offsetYCoe*item->getContentSize().height));
+#endif
         m_containerLayer->addChild(item);
         m_GridCellArray->replaceObjectAtIndex(rIndex*GRID_VOLUME+vIndex, item);
     }while(0);
@@ -262,7 +290,19 @@ void MainGameGridLayer::moveGridCellAnimation(unsigned int rIndex,unsigned int v
         CC_BREAK_IF(!blockProperty);
         
         //move action
-        cell->runAction(CCMoveTo::create(0.2, ccp((blockProperty->mIndex.vIndex+1)*m_containerLayer->getContentSize().width/GRID_VOLUME-3.0/2*cell->getContentSize().width,m_containerLayer->getContentSize().height-blockProperty->mIndex.rIndex*m_containerLayer->getContentSize().height/GRID_ROW-2*cell->getContentSize().height)));
+#if (CC_TARGET_PLATFORM==CC_PLATFORM_IOS)
+        IOS_PLATFORM_TYPE platform= OCBridge::getPlatformType();
+        float offsetXCoe=0;
+        float offsetYCoe=0;
+        if (platform==kIOS_PLATFORM_TYPE_ipad) {
+            offsetXCoe=1.5;
+            offsetYCoe=2;
+        }else{
+            offsetXCoe=0.5;
+            offsetYCoe=0.5;
+        }
+        cell->runAction(CCMoveTo::create(0.2, ccp((blockProperty->mIndex.vIndex+1)*m_containerLayer->getContentSize().width/GRID_VOLUME-offsetXCoe*cell->getContentSize().width,m_containerLayer->getContentSize().height-blockProperty->mIndex.rIndex*m_containerLayer->getContentSize().height/GRID_ROW-offsetYCoe*cell->getContentSize().height)));
+#endif
         
     }while(0);
 }
