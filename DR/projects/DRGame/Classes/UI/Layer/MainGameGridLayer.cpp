@@ -132,8 +132,10 @@ void MainGameGridLayer::addGridCellToLayer(GridElementProperty *gProperty)
         offsetXCoe=1.5;
         offsetYCoe=2;
     }else{
-        offsetXCoe=0.5;
-        offsetYCoe=0.5;
+//        offsetXCoe=0.5;
+//        offsetYCoe=0.5;
+        offsetXCoe=1.5;
+        offsetYCoe=2;
     }
     item->setPosition(ccp((col+1)*m_containerLayer->getContentSize().width/GRID_VOLUME-offsetXCoe*item->getContentSize().width,m_containerLayer->getContentSize().height-row*m_containerLayer->getContentSize().height/GRID_ROW-offsetYCoe*item->getContentSize().height));
 #endif
@@ -220,8 +222,10 @@ void MainGameGridLayer::addGridCell(unsigned int rIndex,unsigned int vIndex)
             offsetXCoe=1.5;
             offsetYCoe=2;
         }else{
-            offsetXCoe=0.5;
-            offsetYCoe=0.5;
+//            offsetXCoe=0.5;
+//            offsetYCoe=0.5;
+            offsetXCoe=1.5;
+            offsetYCoe=2;
         }
         item->setPosition(ccp((col+1)*m_containerLayer->getContentSize().width/GRID_VOLUME-offsetXCoe*item->getContentSize().width,m_containerLayer->getContentSize().height+m_containerLayer->getContentSize().height/GRID_ROW-offsetYCoe*item->getContentSize().height));
 #endif
@@ -298,8 +302,10 @@ void MainGameGridLayer::moveGridCellAnimation(unsigned int rIndex,unsigned int v
             offsetXCoe=1.5;
             offsetYCoe=2;
         }else{
-            offsetXCoe=0.5;
-            offsetYCoe=0.5;
+//            offsetXCoe=0.5;
+//            offsetYCoe=0.5;
+            offsetXCoe=1.5;
+            offsetYCoe=2;
         }
         cell->runAction(CCMoveTo::create(0.2, ccp((blockProperty->mIndex.vIndex+1)*m_containerLayer->getContentSize().width/GRID_VOLUME-offsetXCoe*cell->getContentSize().width,m_containerLayer->getContentSize().height-blockProperty->mIndex.rIndex*m_containerLayer->getContentSize().height/GRID_ROW-offsetYCoe*cell->getContentSize().height)));
 #endif

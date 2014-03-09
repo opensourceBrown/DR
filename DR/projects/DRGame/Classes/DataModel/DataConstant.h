@@ -64,7 +64,8 @@ typedef enum{
 
 //定义魔法类型
 typedef enum{
-    kMagicType_Steal=0,
+    kMagicType_None=0,
+    kMagicType_Steal,
     kMagicType_Fireball,
     kMagicType_CounterAttack,
     kMagicType_GoldenTouch,
@@ -81,12 +82,19 @@ typedef struct{
 	MagicType				mMagicType;
 	unsigned int			mID;
 	unsigned int			mCDTime;
+    
+    void init(){
+        mMagicType=kMagicType_None;
+        mID=0;
+        mCDTime=0;
+    }
 }MagicProperty;
 
 //定义职业类型
 typedef enum{
     kOccupationType_Human=0,					//人类
     kOccupationType_Bower,						//弓手
+    kOccupationType_Pastor,                     //牧师
     kOccupationType_Hunter,						//猎人
     kOccupationType_Master,						//法师
     kOccupationType_Barbarian,					//蛮族
@@ -118,6 +126,7 @@ typedef struct{
 
 //定义职业结构
 typedef struct{
+    OccupationType mType;                       //类型
 	char mName[GENERAL_CHAR_LENGTH];			//职业名称
 	unsigned char mLevel;						//级别
 	unsigned int mCoin;							//该职业所需的金币
@@ -131,10 +140,27 @@ typedef struct{
 	float 	mLeech;								//吸血，通过攻击可以恢复的血量
 	float 	mCriticalDamageRate;				//暴击概率
 	float	mPierce;							//穿透率
+    
+    void init(){
+        mType=kOccupationType_Human;
+        mLevel=0;
+        mCoin=0;
+        mPay=0;
+        mMaxHealth=0;
+        mDefencePerShield=0;
+        mMaxShield=0;
+        mHealthPerPotion=0;
+        mBasicDamage=0;
+        mWeaponDamage=0;
+        mLeech=0;
+        mCriticalDamageRate=0;
+        mPierce=0;
+    }
 }OccupationProperty;
 
 //定义玩家结构
 typedef struct{
+    OccupationType mType; 
 	unsigned int mMaxHealth;					//最大生命值
 	unsigned int mDefencePerShield;				//每个盾的防御力
 	unsigned int mMaxShield;					//最多持有盾数
@@ -145,6 +171,18 @@ typedef struct{
 	float 	mCriticalDamageRate;				//暴击概率
 	float	mPierce;							//穿透率
 	
+    void init(){
+        mType=kOccupationType_Human;
+        mMaxHealth=0;
+        mDefencePerShield=0;
+        mMaxShield=0;
+        mHealthPerPotion=0;
+        mBasicDamage=0;
+        mWeaponDamage=0;
+        mLeech=0;
+        mCriticalDamageRate=0;
+        mPierce=0;
+    }
 }PlayerProperty;
 
 //定义怪结构

@@ -35,6 +35,8 @@ public:
     
 	//消除相连元素
 	void clearConnectedElements();
+    
+    OccupationType getPlayerOccupation(){return mPlayerProperty.mType;}
 
 private:
     bool initWith();
@@ -63,8 +65,15 @@ private:
     
     //judge whether the cell can be insert into the connected array
     bool judgeGridCellCanInserted(unsigned int rIndex,unsigned int vIndex);
+    
+    void readPlayerProperty();
+    
+    void selectMagic(MagicType pID=kMagicType_None);
+    bool judgeIsTriggerMagic();
+    void triggerMagic(MagicType pID);
+    
+    void triggerWeapon(unsigned int pID);
 
-	
 private:
 	unsigned int			mCoins;						//每一关卡(stage）累计的金币
 	unsigned int 			mScore;						//每一关卡累计的积分
@@ -79,11 +88,11 @@ private:
     //connected elements array
 	CCArray					*mStageConnectedElements;	//每一回合中已经相连的元素（按顺序存储元素的类型和对应cell的标识，可加可删）
     
-    //grid cell container:
-//	CCArray					*mGridCellContainer;
-    
     //current stage property
     GameStageProperty       mStageProperty;
+    PlayerProperty          mPlayerProperty;
+    
+    MagicProperty           mMagic;
     
     CCArray                 *mGridPropertyContainer;
 private:

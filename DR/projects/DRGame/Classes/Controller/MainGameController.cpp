@@ -12,7 +12,8 @@ MainGameController::MainGameController():
     mMagicInStage(NULL),
     mStageConnectedElements(NULL)
 {
-   
+    mMagic.init();
+    mPlayerProperty.init();
 }
 
 MainGameController::~MainGameController()
@@ -57,10 +58,180 @@ bool MainGameController::initWith()
         CC_BREAK_IF(!m_scene);
         m_scene->retain();
         
+        readPlayerProperty();               //test
+        
         tRet=true;
     } while (0);
     
     return tRet;
+}
+
+void MainGameController::readPlayerProperty()
+{
+    mPlayerProperty.mType=kOccupationType_Human;
+    mPlayerProperty.mMaxHealth=50;
+    mPlayerProperty.mDefencePerShield=1;
+    mPlayerProperty.mMaxShield=4;
+    mPlayerProperty.mHealthPerPotion=1;
+    mPlayerProperty.mBasicDamage=3;
+    mPlayerProperty.mWeaponDamage=2;
+    mPlayerProperty.mLeech=0;
+    mPlayerProperty.mCriticalDamageRate=0;
+    mPlayerProperty.mPierce=0;
+}
+
+void MainGameController::selectMagic(MagicType pID)
+{
+    mMagic.mMagicType=pID;
+    mMagic.mID=pID;
+    switch (pID) {
+        case kMagicType_Steal:
+            mMagic.mCDTime=18;
+            break;
+        case kMagicType_Fireball:
+            mMagic.mCDTime=19;
+            break;
+        case kMagicType_CounterAttack:
+            mMagic.mCDTime=23;
+            break;
+        case kMagicType_GoldenTouch:
+            mMagic.mCDTime=20;
+            break;
+        case kMagicType_BoostHealth:
+            mMagic.mCDTime=20;
+            break;
+        case kMagicType_BigGameHunter:
+            mMagic.mCDTime=20;
+            break;
+        case kMagicType_Shatter:
+            mMagic.mCDTime=23;
+            break;
+        case kMagicType_BoostGold:
+            mMagic.mCDTime=25;
+            break;
+        case kMagicType_Teleport:
+            mMagic.mCDTime=25;
+            break;
+        case kMagicType_Heal:
+            mMagic.mCDTime=20;
+            break;
+        default:
+            break;
+    }
+}
+
+bool MainGameController::judgeIsTriggerMagic()
+{
+    bool tRet=false;
+    switch (mMagic.mMagicType) {
+        case kMagicType_Steal:{     //get 1 coin per monster every round
+            CC_BREAK_IF(mMagic.mCDTime>0);
+            do {
+                CC_BREAK_IF(!mStageConnectedElements || mStageConnectedElements->count()<=0);
+                for (int i=0; i<mStageConnectedElements->count(); i++) {
+                    GridCell *cell=dynamic_cast<GridCell *>(mStageConnectedElements->objectAtIndex(i));
+                    CC_BREAK_IF(!cell);
+                    
+                    GridElementProperty *block=cell->getCellProperty();
+                    CC_BREAK_IF(!block);
+                    if (block->mType==kElementType_Monster){
+                        tRet=true;
+                        break;
+                    }
+                }
+            } while (0);
+            break;
+        }
+        case kMagicType_Fireball:
+            
+            break;
+        case kMagicType_CounterAttack:
+            
+            break;
+        case kMagicType_GoldenTouch:
+            
+            break;
+        case kMagicType_BoostHealth:
+            
+            break;
+        case kMagicType_BigGameHunter:
+            
+            break;
+        case kMagicType_Shatter:
+            
+            break;
+        case kMagicType_BoostGold:
+            
+            break;
+        case kMagicType_Teleport:
+            
+            break;
+        case kMagicType_Heal:
+            
+            break;
+        default:
+            break;
+    }
+    return tRet;
+}
+
+void MainGameController::triggerMagic(MagicType pID)
+{
+    do {
+        switch (pID) {
+            case kMagicType_Steal:{     //get 1 coin per monster every round
+                do {
+                    CC_BREAK_IF(!mStageConnectedElements || mStageConnectedElements->count()<=0);
+                    for (int i=0; i<mStageConnectedElements->count(); i++) {
+                        GridCell *cell=dynamic_cast<GridCell *>(mStageConnectedElements->objectAtIndex(i));
+                        CC_BREAK_IF(!cell);
+                        
+                        GridElementProperty *block=cell->getCellProperty();
+                        CC_BREAK_IF(!block);
+                        if (block->mType==kElementType_Monster){
+                            DRUserDefault::sharedUserDefault()->setCoin(DRUserDefault::sharedUserDefault()->getCoin()+1);
+                        }
+                    }
+                } while (0);
+                mMagic.mCDTime=18;
+                break;
+            }
+            case kMagicType_Fireball:
+                
+                break;
+            case kMagicType_CounterAttack:
+                
+                break;
+            case kMagicType_GoldenTouch:
+                
+                break;
+            case kMagicType_BoostHealth:
+                
+                break;
+            case kMagicType_BigGameHunter:
+                
+                break;
+            case kMagicType_Shatter:
+                
+                break;
+            case kMagicType_BoostGold:
+                
+                break;
+            case kMagicType_Teleport:
+                
+                break;
+            case kMagicType_Heal:
+                
+                break;
+            default:
+                break;
+        }
+    } while (0);
+}
+
+void MainGameController::triggerWeapon(unsigned int pID)
+{
+    
 }
 
 bool MainGameController::judgeGameStageIsEnd()
@@ -120,6 +291,10 @@ void MainGameController::clearConnectedElements()
         
         CC_BREAK_IF(!mStageConnectedElements);
         
+        if (judgeIsTriggerMagic()) {
+            triggerMagic(mMagic.mMagicType);
+            CCLog("trigger magic:%d",mMagic.mMagicType);
+        }
         //set grid element property status
         for (int i=0; i<mStageConnectedElements->count(); i++) {
             GridCell *cell=dynamic_cast<GridCell *>(mStageConnectedElements->objectAtIndex(i));
@@ -201,6 +376,7 @@ void MainGameController::clearConnectedElements()
         
     mStageConnectedElements->removeAllObjects();
     
+    mMagic.mCDTime--;
     DRUserDefault::sharedUserDefault()->setRoundCount(DRUserDefault::sharedUserDefault()->getRoundCount()+1);
     
 	//√øªÿ∫œΩ· ¯∂º≈–∂œµ±«∞πÿø® «∑ÒΩ· ¯

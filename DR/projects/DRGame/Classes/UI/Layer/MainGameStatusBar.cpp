@@ -179,7 +179,7 @@ void MainGameStatusBar::setPortionProgress(int pValue)
 {
     do {
         CC_BREAK_IF(!m_portionProgress);
-        m_portionProgress->setPercentage(pValue);
+        m_portionProgress->setPercentage(pValue>100?100:pValue);
         m_portionProgress->setPosition(ccp(m_portionObit->getPosition().x-m_portionObit->getContentSize().width/2-(m_portionObit->getContentSize().width-m_portionProgress->getContentSize().width*m_portionProgress->getPercentage()/100)/2,m_portionObit->getPosition().y));
     } while (0);
 }
@@ -199,7 +199,7 @@ void MainGameStatusBar::setCoinProgress(int pValue)
 {
     do {
         CC_BREAK_IF(!m_coinProgress);
-        m_coinProgress->setPercentage(pValue);
+        m_coinProgress->setPercentage(pValue>100?100:pValue);
         m_coinProgress->setPosition(ccp(m_coinObit->getPosition().x-m_coinObit->getContentSize().width/2-(m_coinObit->getContentSize().width-m_coinProgress->getContentSize().width*m_coinProgress->getPercentage()/100)/2,m_coinObit->getPosition().y));
     } while (0);
 }
@@ -219,7 +219,7 @@ void MainGameStatusBar::setKillMonsterProgress(int pValue)
 {
     do {
         CC_BREAK_IF(!m_killMonsterProgress);
-        m_killMonsterProgress->setPercentage(pValue);
+        m_killMonsterProgress->setPercentage(pValue>100?100:pValue);
         m_killMonsterProgress->setPosition(ccp(m_killMonsterObit->getPosition().x-m_killMonsterObit->getContentSize().width/2-(m_killMonsterObit->getContentSize().width-m_killMonsterProgress->getContentSize().width*m_killMonsterProgress->getPercentage()/100)/2,m_killMonsterObit->getPosition().y));
     } while (0);
 }
@@ -239,7 +239,7 @@ void MainGameStatusBar::setScoreProgress(int pValue)
 {
     do {
         CC_BREAK_IF(!m_scoreProgress);
-        m_scoreProgress->setPercentage(pValue);
+        m_scoreProgress->setPercentage(pValue>100?100:pValue);
         m_scoreProgress->setPosition(ccp(m_scoreObit->getPosition().x-m_scoreObit->getContentSize().width/2-(m_scoreObit->getContentSize().width-m_scoreProgress->getContentSize().width*m_scoreProgress->getPercentage()/100)/2,m_scoreObit->getPosition().y));
     } while (0);
 }
