@@ -1,13 +1,24 @@
 #include "MainGameStatusBar.h"
 #include "MainGameController.h"
 
+#define STATUS_CONTAINER_TAG        50
+#define STATUS_PORTION_TAG          100
+#define STATUS_COIN_TAG             101
+#define STATUS_KILLMONSTER_TAG      102
+#define STATUS_SCORE_TAG            103
+#define STATUS_SHIELD_TAG           105
+#define STATUS_PORTION_OBIT_TAG     110
+#define STATUS_COIN_OBIT_TAG        111
+#define STATUS_KILLMONSTER_OBIT_TAG 112
+#define STATUS_SCORE_OBIT_TAG       113
+
 MainGameStatusBar::MainGameStatusBar():
-    m_containerLayer(NULL),
-    m_shiledValueTTF(NULL),
-    m_portionProgress(NULL),
-    m_coinProgress(NULL),
-    m_killMonsterProgress(NULL),
-    m_scoreProgress(NULL)
+    m_containerLayer(NULL)
+//    m_shiledValueTTF(NULL),
+//    m_portionProgress(NULL),
+//    m_coinProgress(NULL),
+//    m_killMonsterProgress(NULL),
+//    m_scoreProgress(NULL)
 {
     do {
         
@@ -18,7 +29,10 @@ MainGameStatusBar::MainGameStatusBar():
 MainGameStatusBar::~MainGameStatusBar()
 {
     do{
-        
+//        CC_SAFE_RELEASE(m_shiledValueTTF);
+//        CC_SAFE_RELEASE(m_portionProgress);
+//        
+//        CC_SAFE_RELEASE(m_containerLayer);
     }while(0);
 }
 
@@ -55,6 +69,7 @@ void  MainGameStatusBar::constructUI()
     do{
 		m_containerLayer=CCLayerColor::create(ccc4(0,255,0,255));
 		CC_BREAK_IF(!m_containerLayer);
+        m_containerLayer->setTag(STATUS_CONTAINER_TAG);
 		m_containerLayer->setContentSize(CCSizeMake(WIN_SIZE.width,100));
 		addChild(m_containerLayer);
         
@@ -73,7 +88,8 @@ void  MainGameStatusBar::constructUI()
         tSword->setPosition(ccp(WIN_SIZE.width/3+2*WIN_SIZE.width/9+tSword->getContentSize().width,m_containerLayer->getContentSize().height-tSword->getContentSize().height));
         m_containerLayer->addChild(tSword);
         
-        CCString *baseAttachValue=CCString::createWithFormat("+%d",3);
+        PlayerProperty player=((MainGameController *)m_delegate)->getPlayerProperty();
+        CCString *baseAttachValue=CCString::createWithFormat("+%d",player.mBasicDamage);
         CCLabelTTF *tBaseAttackValueTTF = CCLabelTTF::create(baseAttachValue->getCString(),"Marker Felt",24);
         CC_BREAK_IF(!tBaseAttackValueTTF);
         tBaseAttackValueTTF->setAnchorPoint(ccp(0.5,0.5));
@@ -81,17 +97,18 @@ void  MainGameStatusBar::constructUI()
         tBaseAttackValueTTF->setPosition(ccp(tMonster->getPosition().x,tMonster->getPosition().y-tMonster->getContentSize().height));
         m_containerLayer->addChild(tBaseAttackValueTTF);
         
-        int maxShieldValue=4;
-        int curShieldValue=4;
+        int maxShieldValue=player.mMaxShield;
+        int curShieldValue=0;//player.mMaxShield;
         CCString *shieldValue=CCString::createWithFormat("%d/%d",curShieldValue,maxShieldValue);
-        m_shiledValueTTF = CCLabelTTF::create(shieldValue->getCString(),"Marker Felt",24);
+        CCLabelTTF *m_shiledValueTTF = CCLabelTTF::create(shieldValue->getCString(),"Marker Felt",24);
         CC_BREAK_IF(!m_shiledValueTTF);
+        m_shiledValueTTF->setTag(STATUS_SHIELD_TAG);
         m_shiledValueTTF->setAnchorPoint(ccp(0.5,0.5));
         m_shiledValueTTF->setColor(ccc3(0,0,255));
         m_shiledValueTTF->setPosition(ccp(tShield->getPosition().x,tShield->getPosition().y-tShield->getContentSize().height));
         m_containerLayer->addChild(m_shiledValueTTF);
         
-        int damageValue=2;
+        int damageValue=player.mWeaponDamage;
         CCString *equitAttachValue=CCString::createWithFormat("+%d",damageValue);
         CCLabelTTF *tEquipDamageValueTTF = CCLabelTTF::create(equitAttachValue->getCString(),"Marker Felt",24);
         CC_BREAK_IF(!tEquipDamageValueTTF);
@@ -102,8 +119,9 @@ void  MainGameStatusBar::constructUI()
         
         float tScaleX=1;
         //portion
-        m_portionObit=CCSprite::createWithSpriteFrameName("GR_progress_obit.png");
+        CCSprite *m_portionObit=CCSprite::createWithSpriteFrameName("GR_progress_obit.png");
         CC_BREAK_IF(!m_portionObit);
+        m_portionObit->setTag(STATUS_PORTION_OBIT_TAG);
         if (m_portionObit->getContentSize().width/(m_containerLayer->getContentSize().width/3)>1) {
             tScaleX=(m_containerLayer->getContentSize().width/3)/m_portionObit->getContentSize().width;
         }
@@ -111,8 +129,9 @@ void  MainGameStatusBar::constructUI()
         m_portionObit->setScaleX(tScaleX);
         m_containerLayer->addChild(m_portionObit);
         
-        m_portionProgress=CCProgressTimer::create(CCSprite::createWithSpriteFrameName("GR_progress_timer.png"));
+        CCProgressTimer *m_portionProgress=CCProgressTimer::create(CCSprite::createWithSpriteFrameName("GR_progress_timer.png"));
         CC_BREAK_IF(!m_portionProgress);
+        m_portionProgress->setTag(STATUS_PORTION_TAG);
         m_portionProgress->setType(kCCProgressTimerTypeBar);
         m_portionProgress->setBarChangeRate(ccp(1, 0));
         m_portionProgress->setPercentage(70);
@@ -122,14 +141,16 @@ void  MainGameStatusBar::constructUI()
         m_containerLayer->addChild(m_portionProgress);
         
         //coin
-        m_coinObit=CCSprite::createWithSpriteFrameName("GR_progress_obit.png");
+        CCSprite *m_coinObit=CCSprite::createWithSpriteFrameName("GR_progress_obit.png");
         CC_BREAK_IF(!m_coinObit);
+        m_coinObit->setTag(STATUS_COIN_OBIT_TAG);
         m_coinObit->setScaleX(tScaleX);
         m_coinObit->setPosition(ccp(15+m_coinObit->getContentSize().width/2,m_containerLayer->getContentSize().height-2*m_coinObit->getContentSize().height-35));
         m_containerLayer->addChild(m_coinObit);
         
-        m_coinProgress=CCProgressTimer::create(CCSprite::createWithSpriteFrameName("GR_progress_timer.png"));
+        CCProgressTimer *m_coinProgress=CCProgressTimer::create(CCSprite::createWithSpriteFrameName("GR_progress_timer.png"));
         CC_BREAK_IF(!m_coinProgress);
+        m_coinProgress->setTag(STATUS_COIN_TAG);
         m_coinProgress->setType(kCCProgressTimerTypeBar);
         m_coinProgress->setBarChangeRate(ccp(1, 0));
         m_coinProgress->setPercentage(15);
@@ -139,14 +160,16 @@ void  MainGameStatusBar::constructUI()
         m_containerLayer->addChild(m_coinProgress);
         
         //kill monster
-        m_killMonsterObit=CCSprite::createWithSpriteFrameName("GR_progress_obit.png");
+        CCSprite *m_killMonsterObit=CCSprite::createWithSpriteFrameName("GR_progress_obit.png");
         CC_BREAK_IF(!m_killMonsterObit);
+        m_killMonsterObit->setTag(STATUS_KILLMONSTER_OBIT_TAG);
         m_killMonsterObit->setScaleX(tScaleX);
         m_killMonsterObit->setPosition(ccp(2*m_containerLayer->getContentSize().width/3+20+m_killMonsterObit->getContentSize().width/2,m_containerLayer->getContentSize().height-m_killMonsterObit->getContentSize().height-15));
         m_containerLayer->addChild(m_killMonsterObit);
         
-        m_killMonsterProgress=CCProgressTimer::create(CCSprite::createWithSpriteFrameName("GR_progress_timer.png"));
+        CCProgressTimer *m_killMonsterProgress=CCProgressTimer::create(CCSprite::createWithSpriteFrameName("GR_progress_timer.png"));
         CC_BREAK_IF(!m_killMonsterProgress);
+        m_killMonsterProgress->setTag(STATUS_KILLMONSTER_TAG);
         m_killMonsterProgress->setType(kCCProgressTimerTypeBar);
         m_killMonsterProgress->setBarChangeRate(ccp(1, 0));
         m_killMonsterProgress->setPercentage(40);
@@ -156,14 +179,16 @@ void  MainGameStatusBar::constructUI()
         m_containerLayer->addChild(m_killMonsterProgress);
         
         //score
-        m_scoreObit=CCSprite::createWithSpriteFrameName("GR_progress_obit.png");
+        CCSprite *m_scoreObit=CCSprite::createWithSpriteFrameName("GR_progress_obit.png");
         CC_BREAK_IF(!m_scoreObit);
+        m_scoreObit->setTag(STATUS_SCORE_OBIT_TAG);
         m_scoreObit->setScaleX(tScaleX);
         m_scoreObit->setPosition(ccp(2*m_containerLayer->getContentSize().width/3+20+m_scoreObit->getContentSize().width/2,m_containerLayer->getContentSize().height-2*m_scoreObit->getContentSize().height-35));
         m_containerLayer->addChild(m_scoreObit);
         
-        m_scoreProgress=CCProgressTimer::create(CCSprite::createWithSpriteFrameName("GR_progress_timer.png"));
+        CCProgressTimer *m_scoreProgress=CCProgressTimer::create(CCSprite::createWithSpriteFrameName("GR_progress_timer.png"));
         CC_BREAK_IF(!m_scoreProgress);
+        m_scoreProgress->setTag(STATUS_SCORE_TAG);
         m_scoreProgress->setType(kCCProgressTimerTypeBar);
         m_scoreProgress->setBarChangeRate(ccp(1, 0));
         m_scoreProgress->setPercentage(20);
@@ -178,9 +203,14 @@ void  MainGameStatusBar::constructUI()
 void MainGameStatusBar::setPortionProgress(int pValue)
 {
     do {
-        CC_BREAK_IF(!m_portionProgress);
-        m_portionProgress->setPercentage(pValue>100?100:pValue);
-        m_portionProgress->setPosition(ccp(m_portionObit->getPosition().x-m_portionObit->getContentSize().width/2-(m_portionObit->getContentSize().width-m_portionProgress->getContentSize().width*m_portionProgress->getPercentage()/100)/2,m_portionObit->getPosition().y));
+        CCLayer *containerLayer=dynamic_cast<CCLayer *>(this->getChildByTag(STATUS_CONTAINER_TAG));
+        CC_BREAK_IF(!containerLayer);
+        CCProgressTimer *progress=dynamic_cast<CCProgressTimer *>(containerLayer->getChildByTag(STATUS_PORTION_TAG));
+        CC_BREAK_IF(!progress);
+        CCSprite *obit=dynamic_cast<CCSprite *>(containerLayer->getChildByTag(STATUS_PORTION_OBIT_TAG));
+        CC_BREAK_IF(!obit);
+        progress->setPercentage(pValue>100?100:pValue);
+        progress->setPosition(ccp(obit->getPosition().x-obit->getContentSize().width/2-(obit->getContentSize().width-progress->getContentSize().width*progress->getPercentage()/100)/2,obit->getPosition().y));
     } while (0);
 }
 
@@ -188,8 +218,11 @@ float MainGameStatusBar::getPortionProgress()
 {
     float tProgress=0;
     do {
-        CC_BREAK_IF(!m_portionProgress);
-        tProgress=m_portionProgress->getPercentage();
+        CCLayer *containerLayer=dynamic_cast<CCLayer *>(this->getChildByTag(STATUS_CONTAINER_TAG));
+        CC_BREAK_IF(!containerLayer);
+        CCProgressTimer *progress=dynamic_cast<CCProgressTimer *>(containerLayer->getChildByTag(STATUS_PORTION_TAG));
+        CC_BREAK_IF(!progress);
+        tProgress=progress->getPercentage();
     } while (0);
     
     return tProgress;
@@ -198,9 +231,14 @@ float MainGameStatusBar::getPortionProgress()
 void MainGameStatusBar::setCoinProgress(int pValue)
 {
     do {
-        CC_BREAK_IF(!m_coinProgress);
-        m_coinProgress->setPercentage(pValue>100?100:pValue);
-        m_coinProgress->setPosition(ccp(m_coinObit->getPosition().x-m_coinObit->getContentSize().width/2-(m_coinObit->getContentSize().width-m_coinProgress->getContentSize().width*m_coinProgress->getPercentage()/100)/2,m_coinObit->getPosition().y));
+        CCLayer *containerLayer=dynamic_cast<CCLayer *>(this->getChildByTag(STATUS_CONTAINER_TAG));
+        CC_BREAK_IF(!containerLayer);
+        CCProgressTimer *progress=dynamic_cast<CCProgressTimer *>(containerLayer->getChildByTag(STATUS_COIN_TAG));
+        CC_BREAK_IF(!progress);
+        CCSprite *obit=dynamic_cast<CCSprite *>(containerLayer->getChildByTag(STATUS_COIN_OBIT_TAG));
+        CC_BREAK_IF(!obit);
+        progress->setPercentage(pValue>100?100:pValue);
+        progress->setPosition(ccp(obit->getPosition().x-obit->getContentSize().width/2-(obit->getContentSize().width-progress->getContentSize().width*progress->getPercentage()/100)/2,obit->getPosition().y));
     } while (0);
 }
 
@@ -208,8 +246,11 @@ float MainGameStatusBar::getCoinProgress()
 {
     float tProgress=0;
     do {
-        CC_BREAK_IF(!m_coinProgress);
-        tProgress=m_coinProgress->getPercentage();
+        CCLayer *containerLayer=dynamic_cast<CCLayer *>(this->getChildByTag(STATUS_CONTAINER_TAG));
+        CC_BREAK_IF(!containerLayer);
+        CCProgressTimer *progress=dynamic_cast<CCProgressTimer *>(containerLayer->getChildByTag(STATUS_COIN_TAG));
+        CC_BREAK_IF(!progress);
+        tProgress=progress->getPercentage();
     } while (0);
     
     return tProgress;
@@ -218,9 +259,14 @@ float MainGameStatusBar::getCoinProgress()
 void MainGameStatusBar::setKillMonsterProgress(int pValue)
 {
     do {
-        CC_BREAK_IF(!m_killMonsterProgress);
-        m_killMonsterProgress->setPercentage(pValue>100?100:pValue);
-        m_killMonsterProgress->setPosition(ccp(m_killMonsterObit->getPosition().x-m_killMonsterObit->getContentSize().width/2-(m_killMonsterObit->getContentSize().width-m_killMonsterProgress->getContentSize().width*m_killMonsterProgress->getPercentage()/100)/2,m_killMonsterObit->getPosition().y));
+        CCLayer *containerLayer=dynamic_cast<CCLayer *>(this->getChildByTag(STATUS_CONTAINER_TAG));
+        CC_BREAK_IF(!containerLayer);
+        CCProgressTimer *progress=dynamic_cast<CCProgressTimer *>(containerLayer->getChildByTag(STATUS_KILLMONSTER_TAG));
+        CC_BREAK_IF(!progress);
+        CCSprite *obit=dynamic_cast<CCSprite *>(containerLayer->getChildByTag(STATUS_KILLMONSTER_OBIT_TAG));
+        CC_BREAK_IF(!obit);
+        progress->setPercentage(pValue>100?100:pValue);
+        progress->setPosition(ccp(obit->getPosition().x-obit->getContentSize().width/2-(obit->getContentSize().width-progress->getContentSize().width*progress->getPercentage()/100)/2,obit->getPosition().y));
     } while (0);
 }
 
@@ -228,8 +274,11 @@ float MainGameStatusBar::getKillMonsterProgress()
 {
     float tProgress=0;
     do {
-        CC_BREAK_IF(!m_killMonsterProgress);
-        tProgress=m_killMonsterProgress->getPercentage();
+        CCLayer *containerLayer=dynamic_cast<CCLayer *>(this->getChildByTag(STATUS_CONTAINER_TAG));
+        CC_BREAK_IF(!containerLayer);
+        CCProgressTimer *progress=dynamic_cast<CCProgressTimer *>(containerLayer->getChildByTag(STATUS_KILLMONSTER_TAG));
+        CC_BREAK_IF(!progress);
+        tProgress=progress->getPercentage();
     } while (0);
     
     return tProgress;
@@ -238,9 +287,14 @@ float MainGameStatusBar::getKillMonsterProgress()
 void MainGameStatusBar::setScoreProgress(int pValue)
 {
     do {
-        CC_BREAK_IF(!m_scoreProgress);
-        m_scoreProgress->setPercentage(pValue>100?100:pValue);
-        m_scoreProgress->setPosition(ccp(m_scoreObit->getPosition().x-m_scoreObit->getContentSize().width/2-(m_scoreObit->getContentSize().width-m_scoreProgress->getContentSize().width*m_scoreProgress->getPercentage()/100)/2,m_scoreObit->getPosition().y));
+        CCLayer *containerLayer=dynamic_cast<CCLayer *>(this->getChildByTag(STATUS_CONTAINER_TAG));
+        CC_BREAK_IF(!containerLayer);
+        CCProgressTimer *progress=dynamic_cast<CCProgressTimer *>(containerLayer->getChildByTag(STATUS_SCORE_TAG));
+        CC_BREAK_IF(!progress);
+        CCSprite *obit=dynamic_cast<CCSprite *>(containerLayer->getChildByTag(STATUS_SCORE_OBIT_TAG));
+        CC_BREAK_IF(!obit);
+        progress->setPercentage(pValue>100?100:pValue);
+        progress->setPosition(ccp(obit->getPosition().x-obit->getContentSize().width/2-(obit->getContentSize().width-progress->getContentSize().width*progress->getPercentage()/100)/2,obit->getPosition().y));
     } while (0);
 }
 
@@ -248,8 +302,11 @@ float MainGameStatusBar::getScoreProgress()
 {
     float tProgress=0;
     do {
-        CC_BREAK_IF(!m_scoreProgress);
-        tProgress=m_scoreProgress->getPercentage();
+        CCLayer *containerLayer=dynamic_cast<CCLayer *>(this->getChildByTag(STATUS_CONTAINER_TAG));
+        CC_BREAK_IF(!containerLayer);
+        CCProgressTimer *progress=dynamic_cast<CCProgressTimer *>(containerLayer->getChildByTag(STATUS_SCORE_TAG));
+        CC_BREAK_IF(!progress);
+        tProgress=progress->getPercentage();
     } while (0);
     
     return tProgress;
@@ -258,9 +315,12 @@ float MainGameStatusBar::getScoreProgress()
 void MainGameStatusBar::setShieldValue(int curValue,int maxValue)
 {
     do {
-        CC_BREAK_IF(!m_shiledValueTTF);
+        CCLayer *containerLayer=dynamic_cast<CCLayer *>(this->getChildByTag(STATUS_CONTAINER_TAG));
+        CC_BREAK_IF(!containerLayer);
+        CCLabelTTF *label=dynamic_cast<CCLabelTTF *>(containerLayer->getChildByTag(STATUS_SHIELD_TAG));
+        CC_BREAK_IF(!label);
         CCString *shieldValue=CCString::createWithFormat("%d/%d",curValue,maxValue);
-        m_shiledValueTTF->setString(shieldValue->getCString());
+        label->setString(shieldValue->getCString());
     } while (0);
 }
 

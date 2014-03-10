@@ -7,10 +7,13 @@
 #include "GridCell.h"
 #include "DataMangager.h"
 #include "DRUserDefault.h"
+#include "MainGameStatusBar.h"
 
 MainGameController::MainGameController():
     mMagicInStage(NULL),
-    mStageConnectedElements(NULL)
+    mStageConnectedElements(NULL),
+    mCurShield(0),
+    mCurPortion(0)
 {
     mMagic.init();
     mPlayerProperty.init();
@@ -58,7 +61,10 @@ bool MainGameController::initWith()
         CC_BREAK_IF(!m_scene);
         m_scene->retain();
         
-        readPlayerProperty();               //test
+        readPlayerProperty();
+        mCurShield=mPlayerProperty.mMaxShield;
+        mCurPortion=mPlayerProperty.mMaxHealth;
+        updateStatusData();
         
         tRet=true;
     } while (0);
@@ -68,6 +74,7 @@ bool MainGameController::initWith()
 
 void MainGameController::readPlayerProperty()
 {
+    //
     mPlayerProperty.mType=kOccupationType_Human;
     mPlayerProperty.mMaxHealth=50;
     mPlayerProperty.mDefencePerShield=1;
@@ -78,6 +85,16 @@ void MainGameController::readPlayerProperty()
     mPlayerProperty.mLeech=0;
     mPlayerProperty.mCriticalDamageRate=0;
     mPlayerProperty.mPierce=0;
+}
+
+void MainGameController::updateStatusData()
+{
+    do {
+        MainGameStatusBar *statusBar = ((MainGameScene *)m_scene)->getStatusLayer();
+        CC_BREAK_IF(!statusBar);
+        statusBar->setShieldValue(mCurShield,mPlayerProperty.mMaxShield);
+        statusBar->setPortionProgress((unsigned int)(100.0*mCurPortion/mPlayerProperty.mMaxHealth));
+    } while (0);
 }
 
 void MainGameController::selectMagic(MagicType pID)

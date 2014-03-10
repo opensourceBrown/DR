@@ -63,7 +63,6 @@ void MainGameScene::constructUI()
 		m_gridLayer->setDelegate(m_delegate);
 		addChild(m_gridLayer);
         
-        
 		m_statusBar=MainGameStatusBar::create();
 		CC_BREAK_IF(!m_statusBar);
         m_statusBar->retain();
@@ -75,35 +74,6 @@ void MainGameScene::constructUI()
         m_toolBar->retain();
 		m_toolBar->setDelegate(m_delegate);
 		addChild(m_toolBar);
-         
-        /*
-		CCLayerColor *statusInfoContainer=CCLayerColor::create(ccc4(256, 0, 0, 256));
-        statusInfoContainer->setContentSize(CCSizeMake(WIN_SIZE.width, 80.0));
-		statusInfoContainer->setPosition(CCPointZero);
-		m_statusBar->addChild(statusInfoContainer);
-
-		CCLayerColor *toolContainer=CCLayerColor::create(ccc4(0, 256, 0, 256));
-		toolContainer->setContentSize(CCSizeMake(WIN_SIZE.width,80.0));
-		toolContainer->setPosition(ccp(0,WIN_SIZE.height-80));
-		m_toolBar->addChild(statusInfoContainer);
-
-		//status bar
-		CCLabelTTF *coinLabel=NULL;
-		CCLabelTTF *roundLabel=NULL;
-		CCLabelTTF *scoreLabel=NULL;
-		CCLabelTTF *killdMonsterLabel=NULL;
-		CCLabelTTF *healthLabel=NULL;
-
-		CCSprite *baseDamageIcon=NULL;
-		CCSprite *shieldIcon=NULL;
-		CCSprite *weaponDamageIcon=NULL;
-		CCLabelTTF *baseDamageLabel=NULL;
-		CCLabelTTF *shieldLabel=NULL;
-		CCLabelTTF *weaponDamageLabel=NULL;
-
-		//tool bar
-
-         */
         
         testDataMethod();
     }while(0);
@@ -115,6 +85,20 @@ MainGameGridLayer *MainGameScene::getGridLayer()
     CCAssert(m_gridLayer, "m_gridLayer is null");
     
     return m_gridLayer;
+}
+
+MainGameStatusBar *MainGameScene::getStatusLayer()
+{
+    LOG_TRACE
+    CCAssert(m_statusBar, "status bar is null");
+    return m_statusBar;
+}
+
+MainGameToolBar *MainGameScene::getToolBar()
+{
+    LOG_TRACE
+    CCAssert(m_toolBar, "tool bar is null");
+    return m_toolBar;
 }
 
 #include "CSVParser.h"

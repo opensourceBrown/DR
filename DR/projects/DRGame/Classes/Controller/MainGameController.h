@@ -37,6 +37,9 @@ public:
 	void clearConnectedElements();
     
     OccupationType getPlayerOccupation(){return mPlayerProperty.mType;}
+    PlayerProperty getPlayerProperty(){return mPlayerProperty;}
+    
+    void updateStatusData();
 
 private:
     bool initWith();
@@ -81,6 +84,9 @@ private:
 	unsigned int			mKilledMonster;				//杀死的怪数
 	unsigned int			mCurrentShield;				//当前的盾数
 	unsigned int			mCurrentPotion;				//当前的血量
+    
+    unsigned int            mCurShield;
+    unsigned int            mCurPortion;
 	
     //current valid magic in current game stage
 	CCArray					*mMagicInStage;				//当前关卡中可以使用的魔法

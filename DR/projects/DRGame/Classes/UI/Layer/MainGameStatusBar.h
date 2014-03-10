@@ -39,16 +39,16 @@ private:
 private:
 	CCLayerColor			*m_containerLayer;
     
-    CCProgressTimer         *m_portionProgress;
-    CCProgressTimer         *m_coinProgress;
-    CCProgressTimer         *m_killMonsterProgress;
-    CCProgressTimer         *m_scoreProgress;
-    CCSprite                *m_portionObit;
-    CCSprite                *m_coinObit;
-    CCSprite                *m_killMonsterObit;
-    CCSprite                *m_scoreObit;
-    
-    CCLabelTTF              *m_shiledValueTTF;
+//    CCProgressTimer         *m_portionProgress;
+//    CCProgressTimer         *m_coinProgress;
+//    CCProgressTimer         *m_killMonsterProgress;
+//    CCProgressTimer         *m_scoreProgress;
+//    CCSprite                *m_portionObit;
+//    CCSprite                *m_coinObit;
+//    CCSprite                *m_killMonsterObit;
+//    CCSprite                *m_scoreObit;
+//    
+//    CCLabelTTF              *m_shiledValueTTF;
 };
 
 #endif
