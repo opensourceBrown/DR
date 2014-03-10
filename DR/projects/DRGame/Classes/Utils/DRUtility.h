@@ -27,7 +27,10 @@ public:
     static CCArray * readCSVFileWithName(const char *fileName, bool byCol);
     
     static int randn(int n);            //generate [0,n-1] uniform distribution random int number
-    static float randFraction();        //generate [0,1] float number 
+    static float randFraction();        //generate [0,1] float number
+    
+    //iPad Adaptation
+    static bool isiPadAdaptation();
 private:
     
     

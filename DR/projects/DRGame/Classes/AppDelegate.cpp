@@ -1,6 +1,7 @@
 #include "AppDelegate.h"
 #include "MainGameScene.h"
 #include "MainGameController.h"
+#include "DRUtility.h"
 
 USING_NS_CC;
 
@@ -24,13 +25,13 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
-
-    // create a scene. it's an autorelease object
-    //MainGameScene *pScene = new MainGameScene();
-
-    // run
-    //pDirector->runWithScene(pScene);
-    //pScene->constructUI();
+    
+    // Set the design resolution
+    if (DRUtility::isiPadAdaptation()) {
+        CCEGLView::sharedOpenGLView()->setDesignResolutionSize(768,1075, kResolutionExactFit);
+    } else {
+        CCEGLView::sharedOpenGLView()->setDesignResolutionSize(720,1224,  kResolutionExactFit);
+    }
     
     //create scene
     MainGameController *controller=MainGameController::create() ;

@@ -9,6 +9,7 @@
 #include "DRUtility.h"
 #include "XMLParser.h"
 #include "CSVParser.h"
+#include "GameConstant.h"
 
 using namespace cocos2d;
 
@@ -187,4 +188,14 @@ float DRUtility::randFraction()
     int rand1000FloatNumber = DRUtility::randn(1000+1);
     float fNumber = (float)rand1000FloatNumber/(float)1000;
     return fNumber;
+}
+
+//iPad Adaptation
+bool DRUtility::isiPadAdaptation() {
+    CCSize frameSize = CCEGLView::sharedOpenGLView()->getFrameSize();
+    if (frameSize.width/frameSize.height <= iPadAdaptionPara) {
+        return true;
+    } else {
+        return false;
+    }
 }
