@@ -76,6 +76,8 @@ private:
     void triggerWeapon(unsigned int pID);
     
     void statisticsDataPerRound();
+    
+    void resetStageStatusData();
 
 private:
 	unsigned int			mCoins;						//每一关卡(stage）累计的金币
@@ -85,8 +87,11 @@ private:
 	unsigned int			mCurrentShield;				//当前的盾数
 	unsigned int			mCurrentPotion;				//当前的血量
     
-    unsigned int            mCurShield;
-    unsigned int            mCurPortion;
+    int                     mCurShield;
+    int                     mCurPortion;
+    int                     mCurStageKillMonster;
+    int                     mCurStageCoin;
+    int                     mCurStageScore;
 	
     //current valid magic in current game stage
 	CCArray					*mMagicInStage;				//当前关卡中可以使用的魔法

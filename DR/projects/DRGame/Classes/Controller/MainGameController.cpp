@@ -9,11 +9,18 @@
 #include "DRUserDefault.h"
 #include "MainGameStatusBar.h"
 
+//test
+#define PASS_STAGE_KILL_MONSTER         100
+#define PASS_STAGE_COIN                 1000
+
 MainGameController::MainGameController():
     mMagicInStage(NULL),
     mStageConnectedElements(NULL),
     mCurShield(0),
-    mCurPortion(0)
+    mCurPortion(0),
+    mCurStageKillMonster(0),
+    mCurStageCoin(0),
+    mCurStageScore(0)
 {
     mMagic.init();
     mPlayerProperty.init();
@@ -64,6 +71,7 @@ bool MainGameController::initWith()
         readPlayerProperty();
         mCurShield=mPlayerProperty.mMaxShield;
         mCurPortion=mPlayerProperty.mMaxHealth;
+        
         updateStatusData();
         
         tRet=true;
@@ -90,10 +98,13 @@ void MainGameController::readPlayerProperty()
 void MainGameController::updateStatusData()
 {
     do {
+        CCLog("%s:mCurShield=%d,mCurPortion=%d,mCurStageKillMonster=%d,mCurStageCoin=%d",__FUNCTION__,mCurShield,mCurPortion,mCurStageKillMonster,mCurStageCoin);
         MainGameStatusBar *statusBar = ((MainGameScene *)m_scene)->getStatusLayer();
         CC_BREAK_IF(!statusBar);
         statusBar->setShieldValue(mCurShield,mPlayerProperty.mMaxShield);
-        statusBar->setPortionProgress((unsigned int)(100.0*mCurPortion/mPlayerProperty.mMaxHealth));
+        statusBar->setPortionProgress((int)(100.0*mCurPortion/mPlayerProperty.mMaxHealth));
+        statusBar->setKillMonsterProgress((int)(100.0*mCurStageKillMonster/PASS_STAGE_KILL_MONSTER));
+        statusBar->setCoinProgress((int)(100.0*mCurStageCoin/PASS_STAGE_COIN));
     } while (0);
 }
 
@@ -266,8 +277,10 @@ void MainGameController::statisticsDataPerRound()
             CC_BREAK_IF(!block);
             if (block->mType==kElementType_Monster) {
                 DRUserDefault::sharedUserDefault()->setKillMonsterCount(DRUserDefault::sharedUserDefault()->getKillMonsterCount()+1);
+                mCurStageKillMonster++;
             }else if(block->mType==kElementType_Coin){
                 DRUserDefault::sharedUserDefault()->setCoin(DRUserDefault::sharedUserDefault()->getCoin()+1);
+                mCurStageCoin++;
             }else if(block->mType==kElementType_Shield){
                 mCurShield++;
                 if (mCurShield>mPlayerProperty.mMaxShield) {
@@ -311,6 +324,14 @@ void MainGameController::statisticsDataPerRound()
     } while (0);
 }
 
+void MainGameController::resetStageStatusData()
+{
+    mCurStageKillMonster=0;
+    mCurStageCoin=0;
+    mCurPortion=0;
+    mCurShield=0;
+}
+
 bool MainGameController::judgeGameStageIsEnd()
 {
     bool tRet=false;
@@ -331,7 +352,7 @@ void MainGameController::endCurrentStage()
 {
     //end game stage:save game status data
     do{
-        
+        resetStageStatusData();
     }while(0);
 }
 
@@ -379,22 +400,6 @@ void MainGameController::clearConnectedElements()
             GridElementProperty *block=cell->getCellProperty();
             CC_BREAK_IF(!block);
             block->setStatus(true);
-//            if (block->mType==kElementType_Monster) {
-//                DRUserDefault::sharedUserDefault()->setKillMonsterCount(DRUserDefault::sharedUserDefault()->getKillMonsterCount()+1);
-//            }else if(block->mType==kElementType_Coin){
-//                DRUserDefault::sharedUserDefault()->setCoin(DRUserDefault::sharedUserDefault()->getCoin()+1);
-//            }else if(block->mType==kElementType_Shield){
-//                mCurShield++;
-//                if (mCurShield>mPlayerProperty.mMaxShield) {
-//                    mCurShield=mPlayerProperty.mMaxShield;
-//                }
-//            }
-//            else if(block->mType==kElementType_Potion){
-//                mCurPortion++;
-//                if (mCurPortion>mPlayerProperty.mMaxHealth) {
-//                    mCurPortion=mPlayerProperty.mMaxHealth;
-//                }
-//            }
             
             GridElementProperty *item=dynamic_cast<GridElementProperty *>(mGridPropertyContainer->objectAtIndex(block->mIndex.rIndex*GRID_VOLUME+block->mIndex.vIndex));
             CC_BREAK_IF(!item);

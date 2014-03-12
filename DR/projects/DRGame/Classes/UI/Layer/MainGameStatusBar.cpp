@@ -89,7 +89,7 @@ void  MainGameStatusBar::constructUI()
         containerLayer->addChild(tBaseAttackValueTTF);
         
         int maxShieldValue=player.mMaxShield;
-        int curShieldValue=0;//player.mMaxShield;
+        int curShieldValue=player.mMaxShield;
         CCString *shieldValue=CCString::createWithFormat("%d/%d",curShieldValue,maxShieldValue);
         CCLabelTTF *m_shiledValueTTF = CCLabelTTF::create(shieldValue->getCString(),"Marker Felt",24);
         CC_BREAK_IF(!m_shiledValueTTF);
@@ -125,7 +125,7 @@ void  MainGameStatusBar::constructUI()
         m_portionProgress->setTag(STATUS_PORTION_TAG);
         m_portionProgress->setType(kCCProgressTimerTypeBar);
         m_portionProgress->setBarChangeRate(ccp(1, 0));
-        m_portionProgress->setPercentage(70);
+        m_portionProgress->setPercentage(100);
         m_portionProgress->setAnchorPoint(ccp(0,0.5));
         m_portionProgress->setScaleX(tScaleX);
         m_portionProgress->setPosition(ccp(m_portionObit->getPosition().x-m_portionObit->getContentSize().width/2-(m_portionObit->getContentSize().width-m_portionProgress->getContentSize().width*m_portionProgress->getPercentage()/100)/2,m_portionObit->getPosition().y));
@@ -144,7 +144,7 @@ void  MainGameStatusBar::constructUI()
         m_coinProgress->setTag(STATUS_COIN_TAG);
         m_coinProgress->setType(kCCProgressTimerTypeBar);
         m_coinProgress->setBarChangeRate(ccp(1, 0));
-        m_coinProgress->setPercentage(15);
+        m_coinProgress->setPercentage(0);
         m_coinProgress->setAnchorPoint(ccp(0,0.5));
         m_coinProgress->setScaleX(tScaleX);
         m_coinProgress->setPosition(ccp(m_coinObit->getPosition().x-m_coinObit->getContentSize().width/2-(m_coinObit->getContentSize().width-m_coinProgress->getContentSize().width*m_coinProgress->getPercentage()/100)/2,m_coinObit->getPosition().y));
@@ -163,7 +163,7 @@ void  MainGameStatusBar::constructUI()
         m_killMonsterProgress->setTag(STATUS_KILLMONSTER_TAG);
         m_killMonsterProgress->setType(kCCProgressTimerTypeBar);
         m_killMonsterProgress->setBarChangeRate(ccp(1, 0));
-        m_killMonsterProgress->setPercentage(40);
+        m_killMonsterProgress->setPercentage(0);
         m_killMonsterProgress->setAnchorPoint(ccp(0,0.5));
         m_killMonsterProgress->setScaleX(tScaleX);
         m_killMonsterProgress->setPosition(ccp(m_killMonsterObit->getPosition().x-m_killMonsterObit->getContentSize().width/2-(m_killMonsterObit->getContentSize().width-m_killMonsterProgress->getContentSize().width*m_killMonsterProgress->getPercentage()/100)/2,m_killMonsterObit->getPosition().y));
@@ -182,7 +182,7 @@ void  MainGameStatusBar::constructUI()
         m_scoreProgress->setTag(STATUS_SCORE_TAG);
         m_scoreProgress->setType(kCCProgressTimerTypeBar);
         m_scoreProgress->setBarChangeRate(ccp(1, 0));
-        m_scoreProgress->setPercentage(20);
+        m_scoreProgress->setPercentage(0);
         m_scoreProgress->setAnchorPoint(ccp(0,0.5));
         m_scoreProgress->setScaleX(tScaleX);
         m_scoreProgress->setPosition(ccp(m_scoreObit->getPosition().x-m_scoreObit->getContentSize().width/2-(m_scoreObit->getContentSize().width-m_scoreProgress->getContentSize().width*m_scoreProgress->getPercentage()/100)/2,m_scoreObit->getPosition().y));
@@ -307,6 +307,7 @@ float MainGameStatusBar::getScoreProgress()
 void MainGameStatusBar::setShieldValue(int curValue,int maxValue)
 {
     do {
+        CCLog("%s:curValue=%d",__FUNCTION__,curValue);
         CCLayer *containerLayer=(CCLayerColor *)(this->getChildByTag(STATUS_CONTAINER_TAG));
         CCLog("%s-------%p",__FUNCTION__,containerLayer);
         CC_BREAK_IF(!containerLayer);
