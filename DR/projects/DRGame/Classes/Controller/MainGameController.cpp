@@ -251,6 +251,66 @@ void MainGameController::triggerWeapon(unsigned int pID)
     
 }
 
+void MainGameController::statisticsDataPerRound()
+{
+    //statistics cur connected cell status data
+    do {
+        MainGameGridLayer *gridLayer = ((MainGameScene *)m_scene)->getGridLayer();
+        CC_BREAK_IF(!gridLayer);
+        CC_BREAK_IF(!mStageConnectedElements);
+        for (int i=0; i<mStageConnectedElements->count(); i++) {
+            GridCell *cell=dynamic_cast<GridCell *>(mStageConnectedElements->objectAtIndex(i));
+            CC_BREAK_IF(!cell);
+            
+            GridElementProperty *block=cell->getCellProperty();
+            CC_BREAK_IF(!block);
+            if (block->mType==kElementType_Monster) {
+                DRUserDefault::sharedUserDefault()->setKillMonsterCount(DRUserDefault::sharedUserDefault()->getKillMonsterCount()+1);
+            }else if(block->mType==kElementType_Coin){
+                DRUserDefault::sharedUserDefault()->setCoin(DRUserDefault::sharedUserDefault()->getCoin()+1);
+            }else if(block->mType==kElementType_Shield){
+                mCurShield++;
+                if (mCurShield>mPlayerProperty.mMaxShield) {
+                    mCurShield=mPlayerProperty.mMaxShield;
+                }
+            }else if(block->mType==kElementType_Potion){
+                mCurPortion++;
+                if (mCurPortion>mPlayerProperty.mMaxHealth) {
+                    mCurPortion=mPlayerProperty.mMaxHealth;
+                }
+            }
+        }
+    }while(0);
+    
+    //statistics the unconnected cell status data(shield and portion)
+    do {
+        MainGameGridLayer *gridLayer = ((MainGameScene *)m_scene)->getGridLayer();
+        CC_BREAK_IF(!gridLayer);
+        
+        for (int i=0; i<GRID_ROW; i++) {
+            for (int j=0; j<GRID_VOLUME; j++) {
+                GridCell *cell=gridLayer->getGridCell(i, j);
+                CC_BREAK_IF(!cell);
+                
+                GridElementProperty *block=cell->getCellProperty();
+                CC_BREAK_IF(!block);
+                if (false==block->getStatus()) {
+                    if (block->mType==kElementType_Monster) {
+                        mCurShield--;
+                        if (mCurShield<=0) {
+                            mCurShield=0;
+                            mCurPortion--;
+                            if (mCurPortion<=0) {
+                                mCurPortion=0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    } while (0);
+}
+
 bool MainGameController::judgeGameStageIsEnd()
 {
     bool tRet=false;
@@ -310,7 +370,6 @@ void MainGameController::clearConnectedElements()
         
         if (judgeIsTriggerMagic()) {
             triggerMagic(mMagic.mMagicType);
-            CCLog("trigger magic:%d",mMagic.mMagicType);
         }
         //set grid element property status
         for (int i=0; i<mStageConnectedElements->count(); i++) {
@@ -320,21 +379,29 @@ void MainGameController::clearConnectedElements()
             GridElementProperty *block=cell->getCellProperty();
             CC_BREAK_IF(!block);
             block->setStatus(true);
-            if (block->mType==kElementType_Monster) {
-                DRUserDefault::sharedUserDefault()->setKillMonsterCount(DRUserDefault::sharedUserDefault()->getKillMonsterCount()+1);
-            }else if(block->mType==kElementType_Coin){
-                DRUserDefault::sharedUserDefault()->setCoin(DRUserDefault::sharedUserDefault()->getCoin()+1);
-            }else if(block->mType==kElementType_Shield){
-                
-            }
-            else if(block->mType==kElementType_Potion){
-                
-            }
+//            if (block->mType==kElementType_Monster) {
+//                DRUserDefault::sharedUserDefault()->setKillMonsterCount(DRUserDefault::sharedUserDefault()->getKillMonsterCount()+1);
+//            }else if(block->mType==kElementType_Coin){
+//                DRUserDefault::sharedUserDefault()->setCoin(DRUserDefault::sharedUserDefault()->getCoin()+1);
+//            }else if(block->mType==kElementType_Shield){
+//                mCurShield++;
+//                if (mCurShield>mPlayerProperty.mMaxShield) {
+//                    mCurShield=mPlayerProperty.mMaxShield;
+//                }
+//            }
+//            else if(block->mType==kElementType_Potion){
+//                mCurPortion++;
+//                if (mCurPortion>mPlayerProperty.mMaxHealth) {
+//                    mCurPortion=mPlayerProperty.mMaxHealth;
+//                }
+//            }
             
             GridElementProperty *item=dynamic_cast<GridElementProperty *>(mGridPropertyContainer->objectAtIndex(block->mIndex.rIndex*GRID_VOLUME+block->mIndex.vIndex));
             CC_BREAK_IF(!item);
             item->setStatus(true);
         }
+        
+        statisticsDataPerRound();
         
         //clear cells on MainGameGridLayer
         for (int i=0; i<mStageConnectedElements->count(); i++) {
@@ -396,6 +463,7 @@ void MainGameController::clearConnectedElements()
     mMagic.mCDTime--;
     DRUserDefault::sharedUserDefault()->setRoundCount(DRUserDefault::sharedUserDefault()->getRoundCount()+1);
     
+    updateStatusData();
 	//√øªÿ∫œΩ· ¯∂º≈–∂œµ±«∞πÿø® «∑ÒΩ· ¯
 	//judge whether the current stage is end
     if (this->judgeGameStageIsEnd()) {

@@ -37,7 +37,6 @@ private:
 	virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
 
 private:
-	CCLayerColor			*m_containerLayer;
     
 //    CCProgressTimer         *m_portionProgress;
 //    CCProgressTimer         *m_coinProgress;

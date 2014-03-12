@@ -52,8 +52,6 @@ private:
     
     //结束当前游戏关卡
 	void endCurrentStage();
-	
-	
     
 	//remove a cell from the connected array
 	void removeCellFromConnectedArray();
@@ -76,6 +74,8 @@ private:
     void triggerMagic(MagicType pID);
     
     void triggerWeapon(unsigned int pID);
+    
+    void statisticsDataPerRound();
 
 private:
 	unsigned int			mCoins;						//每一关卡(stage）累计的金币
