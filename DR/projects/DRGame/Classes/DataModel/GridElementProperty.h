@@ -35,7 +35,7 @@ public:
         m_status=false;
         
         mMonsterProperty.mType = kBustyType_Common;
-        mMonsterProperty.mSkillType = kBossBustyType_Chaotic;
+        mMonsterProperty.mSkillType = kBossBustyType_None;
         mMonsterProperty.mID = 0;
         mMonsterProperty.mName = "name";
         mMonsterProperty.mDescription = "Description";

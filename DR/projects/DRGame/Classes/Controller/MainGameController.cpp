@@ -11,7 +11,8 @@
 
 //test
 #define PASS_STAGE_KILL_MONSTER         100
-#define PASS_STAGE_COIN                 1000
+#define PASS_STAGE_COIN                 100
+#define PASS_STAGE_ROUND                100
 
 MainGameController::MainGameController():
     mMagicInStage(NULL),
@@ -105,6 +106,7 @@ void MainGameController::updateStatusData()
         statusBar->setPortionProgress((int)(100.0*mCurPortion/mPlayerProperty.mMaxHealth));
         statusBar->setKillMonsterProgress((int)(100.0*mCurStageKillMonster/PASS_STAGE_KILL_MONSTER));
         statusBar->setCoinProgress((int)(100.0*mCurStageCoin/PASS_STAGE_COIN));
+        statusBar->setRoundValue(DRUserDefault::sharedUserDefault()->getRoundCount());
     } while (0);
 }
 

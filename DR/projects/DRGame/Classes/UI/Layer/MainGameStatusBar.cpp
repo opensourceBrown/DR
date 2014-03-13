@@ -7,6 +7,7 @@
 #define STATUS_KILLMONSTER_TAG      102
 #define STATUS_SCORE_TAG            103
 #define STATUS_SHIELD_TAG           105
+#define STATUS_ROUND_TAG            106
 #define STATUS_PORTION_OBIT_TAG     110
 #define STATUS_COIN_OBIT_TAG        111
 #define STATUS_KILLMONSTER_OBIT_TAG 112
@@ -107,6 +108,16 @@ void  MainGameStatusBar::constructUI()
         tEquipDamageValueTTF->setColor(ccc3(0,0,255));
         tEquipDamageValueTTF->setPosition(ccp(tSword->getPosition().x,tSword->getPosition().y-tSword->getContentSize().height));
         containerLayer->addChild(tEquipDamageValueTTF);
+        
+        //round count
+        CCString *roundValue=CCString::createWithFormat("round:%d",0);
+        CCLabelTTF *RoundValueTTF = CCLabelTTF::create(roundValue->getCString(),"Marker Felt",24);
+        CC_BREAK_IF(!RoundValueTTF);
+        RoundValueTTF->setTag(STATUS_ROUND_TAG);
+        RoundValueTTF->setAnchorPoint(ccp(0.5,0.5));
+        RoundValueTTF->setColor(ccc3(0,0,255));
+        RoundValueTTF->setPosition(ccp(m_shiledValueTTF->getPosition().x,m_shiledValueTTF->getPosition().y-m_shiledValueTTF->getContentSize().height));
+        containerLayer->addChild(RoundValueTTF);
         
         float tScaleX=1;
         //portion
@@ -307,14 +318,24 @@ float MainGameStatusBar::getScoreProgress()
 void MainGameStatusBar::setShieldValue(int curValue,int maxValue)
 {
     do {
-        CCLog("%s:curValue=%d",__FUNCTION__,curValue);
         CCLayer *containerLayer=(CCLayerColor *)(this->getChildByTag(STATUS_CONTAINER_TAG));
-        CCLog("%s-------%p",__FUNCTION__,containerLayer);
         CC_BREAK_IF(!containerLayer);
         CCLabelTTF *label=(CCLabelTTF *)(containerLayer->getChildByTag(STATUS_SHIELD_TAG));
         CC_BREAK_IF(!label);
         CCString *shieldValue=CCString::createWithFormat("%d/%d",curValue,maxValue);
         label->setString(shieldValue->getCString());
+    } while (0);
+}
+
+void MainGameStatusBar::setRoundValue(int pValue)
+{
+    do {
+        CCLayer *containerLayer=(CCLayerColor *)(this->getChildByTag(STATUS_CONTAINER_TAG));
+        CC_BREAK_IF(!containerLayer);
+        CCLabelTTF *label=(CCLabelTTF *)(containerLayer->getChildByTag(STATUS_ROUND_TAG));
+        CC_BREAK_IF(!label);
+        CCString *roundValue=CCString::createWithFormat("round:%d",pValue);
+        label->setString(roundValue->getCString());
     } while (0);
 }
 

@@ -26,6 +26,8 @@ public:
     void    setScoreProgress(int pValue);
     float   getScoreProgress();
     
+    void    setRoundValue(int pValue);
+    
     void    setShieldValue(int curValue,int maxValue);
     
 private:
@@ -37,17 +39,6 @@ private:
 	virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
 
 private:
-    
-//    CCProgressTimer         *m_portionProgress;
-//    CCProgressTimer         *m_coinProgress;
-//    CCProgressTimer         *m_killMonsterProgress;
-//    CCProgressTimer         *m_scoreProgress;
-//    CCSprite                *m_portionObit;
-//    CCSprite                *m_coinObit;
-//    CCSprite                *m_killMonsterObit;
-//    CCSprite                *m_scoreObit;
-//    
-//    CCLabelTTF              *m_shiledValueTTF;
 };
 
 #endif
