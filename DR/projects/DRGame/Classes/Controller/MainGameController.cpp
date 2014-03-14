@@ -271,6 +271,9 @@ void MainGameController::statisticsDataPerRound()
         MainGameGridLayer *gridLayer = ((MainGameScene *)m_scene)->getGridLayer();
         CC_BREAK_IF(!gridLayer);
         CC_BREAK_IF(!mStageConnectedElements);
+
+        
+        
         for (int i=0; i<mStageConnectedElements->count(); i++) {
             GridCell *cell=dynamic_cast<GridCell *>(mStageConnectedElements->objectAtIndex(i));
             CC_BREAK_IF(!cell);
@@ -321,6 +324,24 @@ void MainGameController::statisticsDataPerRound()
                         }
                     }
                 }
+            }
+        }
+    } while (0);
+}
+
+void MainGameController::computeTotalDamageOfRound()
+{
+    do {
+        mTotalDamagePerRound = 0;
+        CC_BREAK_IF(!mStageConnectedElements);
+        for (int i=0; i<mStageConnectedElements->count(); i++) {
+            GridCell *cell=dynamic_cast<GridCell *>(mStageConnectedElements->objectAtIndex(i));
+            CC_BREAK_IF(!cell);
+            
+            GridElementProperty *block=cell->getCellProperty();
+            CC_BREAK_IF(!block);
+            if (block->mType==kElementType_Sword || block->mType == kElementType_Bow) {
+                mTotalDamagePerRound+=mPlayerProperty.mBasicDamage;
             }
         }
     } while (0);
@@ -394,6 +415,8 @@ void MainGameController::clearConnectedElements()
         if (judgeIsTriggerMagic()) {
             triggerMagic(mMagic.mMagicType);
         }
+        statisticsDataPerRound();
+        
         //set grid element property status
         for (int i=0; i<mStageConnectedElements->count(); i++) {
             GridCell *cell=dynamic_cast<GridCell *>(mStageConnectedElements->objectAtIndex(i));
@@ -407,8 +430,6 @@ void MainGameController::clearConnectedElements()
             CC_BREAK_IF(!item);
             item->setStatus(true);
         }
-        
-        statisticsDataPerRound();
         
         //clear cells on MainGameGridLayer
         for (int i=0; i<mStageConnectedElements->count(); i++) {

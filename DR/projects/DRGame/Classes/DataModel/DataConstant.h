@@ -173,11 +173,11 @@ typedef struct{
 	
     void init(){
         mType=kOccupationType_Human;
-        mMaxHealth=0;
-        mDefencePerShield=0;
-        mMaxShield=0;
-        mHealthPerPotion=0;
-        mBasicDamage=0;
+        mMaxHealth=50;
+        mDefencePerShield=3;
+        mMaxShield=3;
+        mHealthPerPotion=1;
+        mBasicDamage=2;
         mWeaponDamage=0;
         mLeech=0;
         mCriticalDamageRate=0;

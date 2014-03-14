@@ -36,8 +36,11 @@ public:
 	//消除相连元素
 	void clearConnectedElements();
     
-    OccupationType getPlayerOccupation(){return mPlayerProperty.mType;}
-    PlayerProperty getPlayerProperty(){return mPlayerProperty;}
+    OccupationType getPlayerOccupation(){ return mPlayerProperty.mType; }
+    PlayerProperty getPlayerProperty(){
+        mPlayerProperty.init();
+        return mPlayerProperty;
+    }
     
     void updateStatusData();
 
@@ -76,7 +79,7 @@ private:
     void triggerWeapon(unsigned int pID);
     
     void statisticsDataPerRound();
-    
+    void computeTotalDamageOfRound();
     void resetStageStatusData();
 
 private:
@@ -93,6 +96,8 @@ private:
     int                     mCurStageCoin;
     int                     mCurStageScore;
 	
+    int                     mTotalDamagePerRound;
+    
     //current valid magic in current game stage
 	CCArray					*mMagicInStage;				//当前关卡中可以使用的魔法
     
