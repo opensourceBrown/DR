@@ -273,7 +273,7 @@ void MainGameController::statisticsDataPerRound()
         CC_BREAK_IF(!mStageConnectedElements);
 
         
-        
+        int totalDamagePerRound = this->computeTotalDamageOfRound();
         for (int i=0; i<mStageConnectedElements->count(); i++) {
             GridCell *cell=dynamic_cast<GridCell *>(mStageConnectedElements->objectAtIndex(i));
             CC_BREAK_IF(!cell);
@@ -281,8 +281,16 @@ void MainGameController::statisticsDataPerRound()
             GridElementProperty *block=cell->getCellProperty();
             CC_BREAK_IF(!block);
             if (block->mType==kElementType_Monster) {
-                DRUserDefault::sharedUserDefault()->setKillMonsterCount(DRUserDefault::sharedUserDefault()->getKillMonsterCount()+1);
-                mCurStageKillMonster++;
+                
+                if (totalDamagePerRound >= block->mMonsterProperty.mLife) {
+                    block->mMonsterProperty.mLife = 0;
+                    
+                    DRUserDefault::sharedUserDefault()->setKillMonsterCount(DRUserDefault::sharedUserDefault()->getKillMonsterCount()+1);
+                    mCurStageKillMonster++;
+                } else {
+                    block->mMonsterProperty.mLife -= totalDamagePerRound;
+                }
+                
             }else if(block->mType==kElementType_Coin){
                 DRUserDefault::sharedUserDefault()->setCoin(DRUserDefault::sharedUserDefault()->getCoin()+1);
                 mCurStageCoin++;
@@ -329,10 +337,10 @@ void MainGameController::statisticsDataPerRound()
     } while (0);
 }
 
-void MainGameController::computeTotalDamageOfRound()
+int MainGameController::computeTotalDamageOfRound()
 {
+    int totalDamagePerRound = 0;
     do {
-        mTotalDamagePerRound = 0;
         CC_BREAK_IF(!mStageConnectedElements);
         for (int i=0; i<mStageConnectedElements->count(); i++) {
             GridCell *cell=dynamic_cast<GridCell *>(mStageConnectedElements->objectAtIndex(i));
@@ -341,10 +349,12 @@ void MainGameController::computeTotalDamageOfRound()
             GridElementProperty *block=cell->getCellProperty();
             CC_BREAK_IF(!block);
             if (block->mType==kElementType_Sword || block->mType == kElementType_Bow) {
-                mTotalDamagePerRound+=mPlayerProperty.mBasicDamage;
+                totalDamagePerRound+=mPlayerProperty.mBasicDamage;
             }
         }
     } while (0);
+    
+    return totalDamagePerRound;
 }
 
 void MainGameController::resetStageStatusData()
@@ -404,8 +414,9 @@ void MainGameController::resetStageConnectedElements()
     } while (0);
 }
 
-void MainGameController::clearConnectedElements()
+bool MainGameController::clearConnectedElements()
 {
+    bool hasMonsterUndead = false;
     do {
         MainGameGridLayer *gridLayer = ((MainGameScene *)m_scene)->getGridLayer();
         CC_BREAK_IF(!gridLayer);
@@ -424,11 +435,24 @@ void MainGameController::clearConnectedElements()
             
             GridElementProperty *block=cell->getCellProperty();
             CC_BREAK_IF(!block);
-            block->setStatus(true);
             
             GridElementProperty *item=dynamic_cast<GridElementProperty *>(mGridPropertyContainer->objectAtIndex(block->mIndex.rIndex*GRID_VOLUME+block->mIndex.vIndex));
             CC_BREAK_IF(!item);
-            item->setStatus(true);
+            if (block->mType==kElementType_Monster) {
+                if (block->mMonsterProperty.mLife == 0) {
+                    block->setStatus(true);
+                    item->setStatus(true);
+                } else {
+                    block->setStatus(false);
+                    item->setStatus(false);
+                    
+                    //monster is undead
+                    hasMonsterUndead = true;
+                }
+            } else {
+                block->setStatus(true);
+                item->setStatus(true);
+            }
         }
         
         //clear cells on MainGameGridLayer
@@ -438,7 +462,9 @@ void MainGameController::clearConnectedElements()
             
             GridElementProperty *block=cell->getCellProperty();
             CC_BREAK_IF(!block);
-            gridLayer->removeGridCell(block->mIndex.rIndex, block->mIndex.vIndex);
+            if (block->getStatus()) {
+                gridLayer->removeGridCell(block->mIndex.rIndex, block->mIndex.vIndex);
+            }
         }
         
         //update property data in mGridPropertyContainer:bubble sort
@@ -497,6 +523,8 @@ void MainGameController::clearConnectedElements()
     if (this->judgeGameStageIsEnd()) {
         this->endCurrentStage();
     }
+    
+    return hasMonsterUndead;
 }
 
 bool MainGameController::generateGridCell(unsigned int rIndex,unsigned int vIndex)
@@ -511,27 +539,27 @@ bool MainGameController::generateGridCell(unsigned int rIndex,unsigned int vInde
 
         if (rDict->count() > 0) {
             
-            std::stringstream sStream;
-            sStream<<rIndex<<"_"<<vIndex;
-            
-            CCDictionary *currentDic = (CCDictionary *)rDict->objectForKey(sStream.str());
-            if (currentDic) {
-                //read plist Data
-                CCString *strRIndex = (CCString *)currentDic->objectForKey("rIndex");
-                blockProperty->mIndex.rIndex= strRIndex->intValue();
-                CCString *strVIndex = (CCString *)currentDic->objectForKey("vIndex");
-                blockProperty->mIndex.vIndex=strVIndex->intValue();
-                CCString *strType = (CCString *)currentDic->objectForKey("mType");
-                blockProperty->mType=(ElementType)strType->intValue();
-                CCString *strID = (CCString *)currentDic->objectForKey("mID");
-                blockProperty->mID=strID->intValue();
-            } else {
+//            std::stringstream sStream;
+//            sStream<<rIndex<<"_"<<vIndex;
+//            
+//            CCDictionary *currentDic = (CCDictionary *)rDict->objectForKey(sStream.str());
+//            if (currentDic) {
+//                //read plist Data
+//                CCString *strRIndex = (CCString *)currentDic->objectForKey("rIndex");
+//                blockProperty->mIndex.rIndex= strRIndex->intValue();
+//                CCString *strVIndex = (CCString *)currentDic->objectForKey("vIndex");
+//                blockProperty->mIndex.vIndex=strVIndex->intValue();
+//                CCString *strType = (CCString *)currentDic->objectForKey("mType");
+//                blockProperty->mType=(ElementType)strType->intValue();
+//                CCString *strID = (CCString *)currentDic->objectForKey("mID");
+//                blockProperty->mID=strID->intValue();
+//            } else {
                 blockProperty->mIndex.rIndex=rIndex;
                 blockProperty->mIndex.vIndex=vIndex;
                 blockProperty->generateGridElementDataByCSV(true);
                 
                 blockProperty->saveToDictionary(rDict);
-            }
+//            }
         } else {
             blockProperty->mIndex.rIndex=rIndex;
             blockProperty->mIndex.vIndex=vIndex;

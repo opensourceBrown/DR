@@ -17,6 +17,8 @@ public:
     
     static GridCell* createWithFrameName(const char *pszFileName);
 
+    void refreshMonsterPropertyLabel();         //refresh Monster`s attack,defence or life
+    
     void setCellProperty(GridElementProperty *pElement);
     GridElementProperty *getCellProperty(){return m_property;}
     
@@ -34,7 +36,10 @@ private:
     GridElementProperty *m_property;             //cell对应的结构属性
     
     bool                m_status;                   //true:added    false:unadded
-
+    
+    CCLabelTTF          *m_AttackValueTTF;
+    CCLabelTTF          *m_DefenceValueTTF;
+    CCLabelTTF          *m_LifeValueTTF;
 };
 
 #endif

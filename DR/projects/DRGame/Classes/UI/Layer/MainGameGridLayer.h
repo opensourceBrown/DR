@@ -41,6 +41,7 @@ private:
 	virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
 	virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
 
+    void                    refreshMonsterPropertyLabelOfAllGridCell();
 private:
 	CCLayerColor			*m_containerLayer;
 	CCArray					*m_GridCellArray;

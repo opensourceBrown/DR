@@ -34,7 +34,7 @@ public:
     void resetStageConnectedElements();
     
 	//消除相连元素
-	void clearConnectedElements();
+	bool clearConnectedElements();      //if there is any monster who is undead, return YES
     
     OccupationType getPlayerOccupation(){ return mPlayerProperty.mType; }
     PlayerProperty getPlayerProperty(){
@@ -79,7 +79,7 @@ private:
     void triggerWeapon(unsigned int pID);
     
     void statisticsDataPerRound();
-    void computeTotalDamageOfRound();
+    int  computeTotalDamageOfRound();
     void resetStageStatusData();
 
 private:
@@ -96,7 +96,7 @@ private:
     int                     mCurStageCoin;
     int                     mCurStageScore;
 	
-    int                     mTotalDamagePerRound;
+    int                     mTotalDamagePerRound;       //damage of current Round
     
     //current valid magic in current game stage
 	CCArray					*mMagicInStage;				//当前关卡中可以使用的魔法

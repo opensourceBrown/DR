@@ -464,6 +464,8 @@ void MainGameGridLayer::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
         
         if (((MainGameController *)m_delegate)->judgeConnectedElementsCanClear()) {
             ((MainGameController *)m_delegate)->clearConnectedElements();
+            
+            this->refreshMonsterPropertyLabelOfAllGridCell();
         }else{
             ((MainGameController *)m_delegate)->resetStageConnectedElements();
         }
@@ -475,4 +477,16 @@ void MainGameGridLayer::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 void MainGameGridLayer::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
 {
     
+}
+
+void MainGameGridLayer::refreshMonsterPropertyLabelOfAllGridCell()
+{
+    do{
+        CC_BREAK_IF(!m_GridCellArray);
+        for(int i=0;i<m_GridCellArray->count();i++){
+			GridCell *cell=dynamic_cast<GridCell *>(m_GridCellArray->objectAtIndex(i));
+			CC_BREAK_IF(!cell);
+            cell->refreshMonsterPropertyLabel();
+		}
+    }while(0);
 }

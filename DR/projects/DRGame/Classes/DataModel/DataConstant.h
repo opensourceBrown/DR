@@ -13,15 +13,13 @@
 
 //定义游戏消除元素类型
 typedef enum{
-    kElementType_Monster=0,					//怪
+    kElementType_UnDefined,
+    kElementType_Monster=1,					//怪
     kElementType_Sword,						//剑
     kElementType_Bow,						//弓
     kElementType_Coin,						//金币
     kElementType_Potion,					//血瓶
     kElementType_Shield,					//盾
-    
-    
-    kElementType_End,                       //结束标示，用于取得枚举个数
 }ElementType;
 
 //定义怪物的类型
