@@ -363,6 +363,7 @@ void MainGameController::resetStageStatusData()
     mCurStageCoin=0;
     mCurPortion=0;
     mCurShield=0;
+    mCurStageScore=0;
 }
 
 bool MainGameController::judgeGameStageIsEnd()
