@@ -176,7 +176,7 @@ typedef struct{
         mMaxShield=3;
         mHealthPerPotion=1;
         mBasicDamage=2;
-        mWeaponDamage=0;
+        mWeaponDamage=3;
         mLeech=0;
         mCriticalDamageRate=0;
         mPierce=0;

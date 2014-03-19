@@ -342,6 +342,7 @@ int MainGameController::computeTotalDamageOfRound()
     int totalDamagePerRound = 0;
     do {
         CC_BREAK_IF(!mStageConnectedElements);
+        bool hasMonster = false;
         for (int i=0; i<mStageConnectedElements->count(); i++) {
             GridCell *cell=dynamic_cast<GridCell *>(mStageConnectedElements->objectAtIndex(i));
             CC_BREAK_IF(!cell);
@@ -349,8 +350,14 @@ int MainGameController::computeTotalDamageOfRound()
             GridElementProperty *block=cell->getCellProperty();
             CC_BREAK_IF(!block);
             if (block->mType==kElementType_Sword || block->mType == kElementType_Bow) {
-                totalDamagePerRound+=mPlayerProperty.mBasicDamage;
+                totalDamagePerRound+=mPlayerProperty.mWeaponDamage;
+            } else if (block->mType==kElementType_Monster) {
+                hasMonster = true;
             }
+        }
+        
+        if (hasMonster) {
+            totalDamagePerRound+=mPlayerProperty.mBasicDamage;
         }
     } while (0);
     
