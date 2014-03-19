@@ -325,7 +325,7 @@ void MainGameController::statisticsDataPerRound()
                         mCurShield--;
                         if (mCurShield<=0) {
                             mCurShield=0;
-                            mCurPortion--;
+                            mCurPortion-=block->mMonsterProperty.mDamage;
                             if (mCurPortion<=0) {
                                 mCurPortion=0;
                             }
@@ -361,6 +361,7 @@ int MainGameController::computeTotalDamageOfRound()
         }
     } while (0);
     
+    CCLog("---------------totalDamagePerRound=%d",totalDamagePerRound);
     return totalDamagePerRound;
 }
 
@@ -394,6 +395,7 @@ void MainGameController::endCurrentStage()
     //end game stage:save game status data
     do{
         resetStageStatusData();
+        CCLog("_______________stage end");
     }while(0);
 }
 

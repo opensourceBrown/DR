@@ -39,6 +39,7 @@ private:
 	virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
 
 private:
+    
 };
 
 #endif

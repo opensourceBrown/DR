@@ -13,6 +13,11 @@ public:
 
     virtual void onEnter();
 	virtual void onExit();
+    
+    void    addMagic(int pID);
+    void    resetMagicSkill();
+    
+    void    magicItemClicked(CCObject *pSender);
 
 private:
 	void constructUI();
@@ -27,6 +32,7 @@ private:
 
 private:
 	CCLayerColor			*m_containerLayer;
+    CCArray                 *m_magicArray;
 };
 
 #endif

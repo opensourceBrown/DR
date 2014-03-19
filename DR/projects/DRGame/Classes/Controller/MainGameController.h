@@ -43,6 +43,8 @@ public:
     }
     
     void updateStatusData();
+    
+    void selectMagic(MagicType pID=kMagicType_None);
 
 private:
     bool initWith();
@@ -72,7 +74,6 @@ private:
     
     void readPlayerProperty();
     
-    void selectMagic(MagicType pID=kMagicType_None);
     bool judgeIsTriggerMagic();
     void triggerMagic(MagicType pID);
     

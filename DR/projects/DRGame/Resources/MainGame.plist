@@ -88,7 +88,7 @@
 			<key>spriteTrimmed</key>
 			<true/>
 			<key>textureRect</key>
-			<string>{{957, 0}, {29, 29}}</string>
+			<string>{{895, 0}, {29, 29}}</string>
 			<key>textureRotated</key>
 			<false/>
 		</dict>
@@ -132,7 +132,7 @@
 			<key>spriteTrimmed</key>
 			<true/>
 			<key>textureRect</key>
-			<string>{{926, 0}, {29, 29}}</string>
+			<string>{{833, 0}, {29, 29}}</string>
 			<key>textureRotated</key>
 			<false/>
 		</dict>
@@ -154,7 +154,7 @@
 			<key>spriteTrimmed</key>
 			<true/>
 			<key>textureRect</key>
-			<string>{{833, 0}, {29, 29}}</string>
+			<string>{{926, 0}, {29, 29}}</string>
 			<key>textureRotated</key>
 			<false/>
 		</dict>
@@ -176,7 +176,7 @@
 			<key>spriteTrimmed</key>
 			<true/>
 			<key>textureRect</key>
-			<string>{{988, 0}, {29, 29}}</string>
+			<string>{{957, 0}, {29, 29}}</string>
 			<key>textureRotated</key>
 			<false/>
 		</dict>
@@ -198,7 +198,7 @@
 			<key>spriteTrimmed</key>
 			<true/>
 			<key>textureRect</key>
-			<string>{{895, 0}, {29, 29}}</string>
+			<string>{{988, 0}, {29, 29}}</string>
 			<key>textureRotated</key>
 			<false/>
 		</dict>
@@ -269,7 +269,7 @@
 			<false/>
 		</dict>
 		
-		<key>magic_steal_new.jpg</key>
+		<key>magic_01.jpg</key>
 		<dict>
 			<key>aliases</key>
 			<array>

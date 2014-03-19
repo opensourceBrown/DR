@@ -97,7 +97,13 @@ void MainGameGridLayer::addGridCellToLayer(GridElementProperty *gProperty)
         case kElementType_Monster:
         {
             //select monster image according to the type
-            typeStr=CCString::create("Grid_cell_monster.png");              //暂时写成固定
+            //select monster image according to the type
+            if (gProperty->mMonsterProperty.mType==kBustyType_Common) {
+                typeStr=CCString::create("Grid_cell_monster.png");
+            }else if (gProperty->mMonsterProperty.mType==kBustyType_Boss){
+                CCLog("+++++++++++++++++++++++");
+                typeStr=CCString::create("Grid_cell_boss_monster.jpg");
+            }
         }
             break;
         case kElementType_Sword:
@@ -183,6 +189,7 @@ void MainGameGridLayer::addGridCell(unsigned int rIndex,unsigned int vIndex)
                 if (blockProperty->mMonsterProperty.mType==kBustyType_Common) {
                     typeStr=CCString::create("Grid_cell_monster.png");
                 }else if (blockProperty->mMonsterProperty.mType==kBustyType_Boss){
+                    CCLog("---------------------------");
                     typeStr=CCString::create("Grid_cell_boss_monster.jpg");
                 }
             }

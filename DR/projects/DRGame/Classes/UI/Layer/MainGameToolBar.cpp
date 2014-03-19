@@ -2,10 +2,13 @@
 #include "MainGameController.h"
 
 MainGameToolBar::MainGameToolBar():
-    m_containerLayer(NULL)
+    m_containerLayer(NULL),
+    m_magicArray(NULL)
 {
     do {
-        
+        m_magicArray=CCArray::create();
+        CC_BREAK_IF(!m_magicArray);
+        m_magicArray->retain();
     } while (0);
     
 }
@@ -13,7 +16,7 @@ MainGameToolBar::MainGameToolBar():
 MainGameToolBar::~MainGameToolBar()
 {
     do{
-        
+        CC_SAFE_RELEASE(m_magicArray);
     }while(0);
 }
 
@@ -78,13 +81,11 @@ void  MainGameToolBar::constructUI()
         tSkillBG4->setPosition(ccp(index*m_containerLayer->getContentSize().width/6+(m_containerLayer->getContentSize().width/6)/2,m_containerLayer->getContentSize().height/2));
         m_containerLayer->addChild(tSkillBG4);
         
-        ccColor3B selColor = ccc3(150, 150, 150);
         CCSprite *tMenuItemSP1=CCSprite::createWithSpriteFrameName("Main_game_menu.png");
         CC_BREAK_IF(!tMenuItemSP1);
         CCSprite *tMenuItemSP2=CCSprite::createWithSpriteFrameName("Main_game_menu.png");
         CC_BREAK_IF(!tMenuItemSP2);
         tMenuItemSP2->setScale(1.1);
-        tMenuItemSP2->setColor(selColor);
         CCMenuItemSprite *menuItem = CCMenuItemSprite::create(tMenuItemSP1, tMenuItemSP2,this, menu_selector(MainGameToolBar::menuItemClicked));
         CC_BREAK_IF(!menuItem);
         menuItem->setPosition(ccp(m_containerLayer->getContentSize().width-m_containerLayer->getContentSize().width/6, m_containerLayer->getContentSize().height/2+tMenuItemSP2->getContentSize().height));
@@ -94,7 +95,6 @@ void  MainGameToolBar::constructUI()
         CCSprite *tStatusItemSP2=CCSprite::createWithSpriteFrameName("Main_game_status.png");
         CC_BREAK_IF(!tStatusItemSP2);
         tStatusItemSP2->setScale(1.1);
-        tStatusItemSP2->setColor(selColor);
         CCMenuItemSprite *statusItem = CCMenuItemSprite::create(tStatusItemSP1, tStatusItemSP2,this, menu_selector(MainGameToolBar::statusItemClicked));
         CC_BREAK_IF(!statusItem);
         statusItem->setPosition(ccp(m_containerLayer->getContentSize().width-m_containerLayer->getContentSize().width/6, m_containerLayer->getContentSize().height/2-tStatusItemSP2->getContentSize().height));
@@ -102,7 +102,65 @@ void  MainGameToolBar::constructUI()
         CC_BREAK_IF(!menu);
         m_containerLayer->addChild(menu);
         
+        //magic
+        this->addMagic(1);          //test
+        CCArray *magicArray=CCArray::create();
+        CC_BREAK_IF(!magicArray);
+        magicArray->retain();
+        
+        CC_BREAK_IF(!m_magicArray);
+        for (int i=0; i<m_magicArray->count(); i++) {
+            CCString *item=dynamic_cast<CCString *>(m_magicArray->objectAtIndex(i));
+            CC_BREAK_IF(!item);
+            int mID=item->intValue();
+            CCString *mImgStr=CCString::createWithFormat("magic_%02d.jpg",mID);
+            CC_BREAK_IF(!mImgStr);
+            CCSprite *backSp1 = CCSprite::createWithSpriteFrameName(mImgStr->getCString());
+            CCSprite *backSp2 = CCSprite::createWithSpriteFrameName(mImgStr->getCString());
+            backSp2->setScale(1.1);
+            
+            CCMenuItemSprite *magicItem = CCMenuItemSprite::create(backSp1, backSp2,this, menu_selector(MainGameToolBar::magicItemClicked));
+            CC_BREAK_IF(!magicItem);
+            magicItem->setPosition(ccp(i*m_containerLayer->getContentSize().width/6+(m_containerLayer->getContentSize().width/6)/2,m_containerLayer->getContentSize().height/2));
+            magicItem->setTag(mID);
+            magicArray->addObject(magicItem);
+        }
+        
+        CCMenu *magicMenu=CCMenu::createWithArray(magicArray);
+        CC_BREAK_IF(!magicMenu);
+        magicMenu->setPosition(CCPointZero);
+        m_containerLayer->addChild(magicMenu);
+        
+        CC_SAFE_RELEASE(magicArray);
 	}while(0);
+}
+
+void MainGameToolBar::addMagic(int pID)
+{
+    do {
+        CC_BREAK_IF(!m_magicArray);
+        m_magicArray->addObject(CCString::createWithFormat("%d",pID));
+    } while (0);
+}
+
+void MainGameToolBar::resetMagicSkill()
+{
+    do {
+        CC_BREAK_IF(!m_magicArray);
+        m_magicArray->removeAllObjects();
+    } while (0);
+}
+
+void MainGameToolBar::magicItemClicked(CCObject *pSender)
+{
+    do {
+        CCMenuItemSprite *magicItem=(CCMenuItemSprite *)pSender;
+        CC_BREAK_IF(!magicItem);
+        int mID=magicItem->getTag();
+        CCLog("mID=%d",mID);
+        CC_BREAK_IF(!m_delegate);
+//        ((MainGameController *)m_delegate)->selectMagic(mID);
+    } while (0);
 }
 
 void MainGameToolBar::menuItemClicked(CCObject *pSender)

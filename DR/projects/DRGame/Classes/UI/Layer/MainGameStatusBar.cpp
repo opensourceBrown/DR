@@ -24,7 +24,7 @@ MainGameStatusBar::MainGameStatusBar()
 MainGameStatusBar::~MainGameStatusBar()
 {
     do{
-
+        
     }while(0);
 }
 
@@ -206,7 +206,6 @@ void MainGameStatusBar::setPortionProgress(int pValue)
 {
     do {
         CCLayer *containerLayer=(CCLayerColor *)(this->getChildByTag(STATUS_CONTAINER_TAG));
-        CCLog("%s-------%p",__FUNCTION__,containerLayer);
         CC_BREAK_IF(!containerLayer);
         CCProgressTimer *progress=dynamic_cast<CCProgressTimer *>(containerLayer->getChildByTag(STATUS_PORTION_TAG));
         CC_BREAK_IF(!progress);
