@@ -180,7 +180,11 @@ void MainGameGridLayer::addGridCell(unsigned int rIndex,unsigned int vIndex)
             case kElementType_Monster:
             {
                 //select monster image according to the type
-                typeStr=CCString::create("Grid_cell_monster.png");              //暂时写成固定
+                if (blockProperty->mMonsterProperty.mType==kBustyType_Common) {
+                    typeStr=CCString::create("Grid_cell_monster.png");
+                }else if (blockProperty->mMonsterProperty.mType==kBustyType_Boss){
+                    typeStr=CCString::create("Grid_cell_boss_monster.jpg");
+                }
             }
                 break;
             case kElementType_Sword:
