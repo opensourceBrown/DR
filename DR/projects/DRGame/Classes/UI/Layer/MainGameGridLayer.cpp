@@ -476,7 +476,7 @@ void MainGameGridLayer::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
         if (((MainGameController *)m_delegate)->judgeConnectedElementsCanClear()) {
             ((MainGameController *)m_delegate)->clearConnectedElements();
             
-            this->refreshMonsterPropertyLabelOfAllGridCell();
+            refreshMonsterPropertyLabelOfAllGridCell();           //刷新怪物血量等信息
         }else{
             ((MainGameController *)m_delegate)->resetStageConnectedElements();
         }
@@ -490,6 +490,7 @@ void MainGameGridLayer::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
     
 }
 
+//刷新怪物血量等信息
 void MainGameGridLayer::refreshMonsterPropertyLabelOfAllGridCell()
 {
     do{
@@ -498,6 +499,13 @@ void MainGameGridLayer::refreshMonsterPropertyLabelOfAllGridCell()
 			GridCell *cell=dynamic_cast<GridCell *>(m_GridCellArray->objectAtIndex(i));
 			CC_BREAK_IF(!cell);
             cell->refreshMonsterPropertyLabel();
+            
+            GridElementProperty *geProperty = cell->getCellProperty();
+            if (geProperty->mType == kElementType_Monster
+                && geProperty->mMonsterProperty.mType == kBustyType_Boss
+                && geProperty->mMonsterProperty.mSkillType == kBossBustyType_Chaotic) {
+                //TODO:Chaotic boss,触发位移技能
+            }
 		}
     }while(0);
 }

@@ -44,9 +44,9 @@ typedef struct{
 //定义boss怪的类型
 typedef enum{
     kBossBustyType_None=0,
-    kBossBustyType_Chaotic,
-    kBossBustyType_Poisonous,
-    kBossBustyType_Healer,
+    kBossBustyType_Chaotic,         //每一回合随机移动自己的地方
+    kBossBustyType_Poisonous,       //每次攻击会使Ｐｌａｙｅｒ的状态变成毒。毒的效果是让Ｐｌａｙｅｒ每一回合受到最大生命之的１０％的伤害。无法被盾抵抗。效果持续５回合。
+    kBossBustyType_Healer,          //让所有受到伤害的怪兽回复生命值到最大值。
     kBossBustyType_Spiky,
     kBossBustyType_Acidic,
     kBossBustyType_Vampire,

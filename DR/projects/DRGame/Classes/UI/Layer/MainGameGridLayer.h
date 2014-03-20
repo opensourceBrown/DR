@@ -33,7 +33,7 @@ private:
     void refreshGrid(float pDelta);
     
     void removeGridCellCompleteCallback(CCObject *pSender);
-	void moveGridCellAnimation(unsigned int rIndex,unsigned int vIndex);				//ÏÂÒÆcell¶¯»­
+	void moveGridCellAnimation(unsigned int rIndex,unsigned int vIndex);				//Å“Â¬â€œâˆ†cellâˆ‚Ã˜Âªâ‰ 
     bool rectContainPoint(CCRect pRect,CCPoint pPoint);
 
 	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
@@ -42,6 +42,7 @@ private:
 	virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
 
     void                    refreshMonsterPropertyLabelOfAllGridCell();
+
 private:
 	CCLayerColor			*m_containerLayer;
 	CCArray					*m_GridCellArray;
