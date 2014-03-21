@@ -507,7 +507,8 @@ void MainGameGridLayer::refreshMonsterPropertyLabelOfAllGridCell()
                 && geProperty->mMonsterProperty.mType == kBustyType_Boss) {
                 if (geProperty->mMonsterProperty.mSkillType == kBossBustyType_Chaotic) {
                     //TODO:Chaotic boss,随机移动自己的地方
-
+                    int randomIndex = arc4random()%m_GridCellArray->count();
+                    exchangeGridCell(i, randomIndex);
                 } else if (geProperty->mMonsterProperty.mSkillType == kBossBustyType_Healer) {
                     //TODO:让所有受到伤害的怪兽回复生命值到最大值。
                     hasBossHealer = true;
