@@ -42,7 +42,7 @@ private:
 	virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
 
     void                    refreshMonsterPropertyLabelOfAllGridCell();
-
+    void                    recoverMonsterLifeFull();                  //恢复所有怪物生命到最大
 private:
 	CCLayerColor			*m_containerLayer;
 	CCArray					*m_GridCellArray;

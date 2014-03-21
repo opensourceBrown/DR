@@ -495,6 +495,8 @@ void MainGameGridLayer::refreshMonsterPropertyLabelOfAllGridCell()
 {
     do{
         CC_BREAK_IF(!m_GridCellArray);
+        
+        bool hasBossHealer = false;
         for(int i=0;i<m_GridCellArray->count();i++){
 			GridCell *cell=dynamic_cast<GridCell *>(m_GridCellArray->objectAtIndex(i));
 			CC_BREAK_IF(!cell);
@@ -502,10 +504,33 @@ void MainGameGridLayer::refreshMonsterPropertyLabelOfAllGridCell()
             
             GridElementProperty *geProperty = cell->getCellProperty();
             if (geProperty->mType == kElementType_Monster
-                && geProperty->mMonsterProperty.mType == kBustyType_Boss
-                && geProperty->mMonsterProperty.mSkillType == kBossBustyType_Chaotic) {
-                //TODO:Chaotic boss,触发位移技能
+                && geProperty->mMonsterProperty.mType == kBustyType_Boss) {
+                if (geProperty->mMonsterProperty.mSkillType == kBossBustyType_Chaotic) {
+                    //TODO:Chaotic boss,随机移动自己的地方
+
+                } else if (geProperty->mMonsterProperty.mSkillType == kBossBustyType_Healer) {
+                    //TODO:让所有受到伤害的怪兽回复生命值到最大值。
+                    hasBossHealer = true;
+                }
             }
 		}
+        
+        if (hasBossHealer) {
+            recoverMonsterLifeFull();
+        }
     }while(0);
+}
+
+//所有怪物回复生命值到最大
+void MainGameGridLayer::recoverMonsterLifeFull()
+{
+    for(int i=0;i<m_GridCellArray->count();i++){
+        
+        GridCell *cell=dynamic_cast<GridCell *>(m_GridCellArray->objectAtIndex(i));
+        CC_BREAK_IF(!cell);
+        GridElementProperty *geProperty = cell->getCellProperty();
+        if (geProperty->mType == kElementType_Monster) {
+            geProperty->mMonsterProperty.mLife = geProperty->mMonsterProperty.mMaxLife;
+        }
+    }
 }
