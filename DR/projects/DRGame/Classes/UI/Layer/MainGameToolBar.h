@@ -14,10 +14,12 @@ public:
     virtual void onEnter();
 	virtual void onExit();
     
-    void    addMagic(int pID);
+    void    addMagic(MagicType pID);
     void    resetMagicSkill();
-    
     void    magicItemClicked(CCObject *pSender);
+    
+    //test
+    void    weaponItemClicked(CCObject *pSender);
 
 private:
 	void constructUI();

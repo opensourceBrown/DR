@@ -112,41 +112,43 @@ void MainGameController::updateStatusData()
 
 void MainGameController::selectMagic(MagicType pID)
 {
-    mMagic.mMagicType=pID;
-    mMagic.mID=pID;
-    switch (pID) {
-        case kMagicType_Steal:
-            mMagic.mCDTime=18;
-            break;
-        case kMagicType_Fireball:
-            mMagic.mCDTime=19;
-            break;
-        case kMagicType_CounterAttack:
-            mMagic.mCDTime=23;
-            break;
-        case kMagicType_GoldenTouch:
-            mMagic.mCDTime=20;
-            break;
-        case kMagicType_BoostHealth:
-            mMagic.mCDTime=20;
-            break;
-        case kMagicType_BigGameHunter:
-            mMagic.mCDTime=20;
-            break;
-        case kMagicType_Shatter:
-            mMagic.mCDTime=23;
-            break;
-        case kMagicType_BoostGold:
-            mMagic.mCDTime=25;
-            break;
-        case kMagicType_Teleport:
-            mMagic.mCDTime=25;
-            break;
-        case kMagicType_Heal:
-            mMagic.mCDTime=20;
-            break;
-        default:
-            break;
+    if (mMagic.mMagicType!=pID) {
+        mMagic.mMagicType=pID;
+        mMagic.mID=pID;
+        switch (pID) {
+            case kMagicType_Steal:
+                mMagic.mCDTime=18;
+                break;
+            case kMagicType_Fireball:
+                mMagic.mCDTime=19;
+                break;
+            case kMagicType_CounterAttack:
+                mMagic.mCDTime=23;
+                break;
+            case kMagicType_GoldenTouch:
+                mMagic.mCDTime=20;
+                break;
+            case kMagicType_BoostHealth:
+                mMagic.mCDTime=20;
+                break;
+            case kMagicType_BigGameHunter:
+                mMagic.mCDTime=20;
+                break;
+            case kMagicType_Shatter:
+                mMagic.mCDTime=23;
+                break;
+            case kMagicType_BoostGold:
+                mMagic.mCDTime=25;
+                break;
+            case kMagicType_Teleport:
+                mMagic.mCDTime=25;
+                break;
+            case kMagicType_Heal:
+                mMagic.mCDTime=20;
+                break;
+            default:
+                break;
+        }
     }
 }
 
@@ -257,6 +259,18 @@ void MainGameController::triggerMagic(MagicType pID)
                 break;
         }
     } while (0);
+}
+
+void MainGameController::equipWeapon(unsigned int pID)
+{
+    mPlayerProperty.mWeaponID=pID;
+}
+
+void MainGameController::disableWeapon(unsigned int pID)
+{
+    if (mPlayerProperty.mWeaponID==pID) {
+        mPlayerProperty.mWeaponID=0;
+    }
 }
 
 void MainGameController::triggerWeapon(unsigned int pID)

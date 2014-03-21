@@ -105,6 +105,7 @@ typedef enum{
 //定义装备结构
 typedef struct{
 	char mName[GENERAL_CHAR_LENGTH];			//装备名称
+    unsigned int  mID;                          //id
 	unsigned char mLevel;						//级别
 	unsigned int mCoin;							//该装备所需的金币
 	unsigned int mPay;							//购买或升级到该装备所需要的支付费用
@@ -158,7 +159,8 @@ typedef struct{
 
 //定义玩家结构
 typedef struct{
-    OccupationType mType; 
+    OccupationType mType;
+    unsigned int mWeaponID;                     //武器id
 	unsigned int mMaxHealth;					//最大生命值
 	unsigned int mDefencePerShield;				//每个盾的防御力
 	unsigned int mMaxShield;					//最多持有盾数
@@ -171,6 +173,7 @@ typedef struct{
 	
     void init(){
         mType=kOccupationType_Human;
+        mWeaponID=0;
         mMaxHealth=50;
         mDefencePerShield=3;
         mMaxShield=3;

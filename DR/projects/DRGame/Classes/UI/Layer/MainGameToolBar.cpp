@@ -88,7 +88,7 @@ void  MainGameToolBar::constructUI()
         tMenuItemSP2->setScale(1.1);
         CCMenuItemSprite *menuItem = CCMenuItemSprite::create(tMenuItemSP1, tMenuItemSP2,this, menu_selector(MainGameToolBar::menuItemClicked));
         CC_BREAK_IF(!menuItem);
-        menuItem->setPosition(ccp(m_containerLayer->getContentSize().width-m_containerLayer->getContentSize().width/6, m_containerLayer->getContentSize().height/2+tMenuItemSP2->getContentSize().height));
+        menuItem->setPosition(ccp(m_containerLayer->getContentSize().width-m_containerLayer->getContentSize().width/6, m_containerLayer->getContentSize().height/2+tMenuItemSP2->getContentSize().height/2+3));
         
         CCSprite *tStatusItemSP1=CCSprite::createWithSpriteFrameName("Main_game_status.png");
         CC_BREAK_IF(!tStatusItemSP1);
@@ -97,13 +97,10 @@ void  MainGameToolBar::constructUI()
         tStatusItemSP2->setScale(1.1);
         CCMenuItemSprite *statusItem = CCMenuItemSprite::create(tStatusItemSP1, tStatusItemSP2,this, menu_selector(MainGameToolBar::statusItemClicked));
         CC_BREAK_IF(!statusItem);
-        statusItem->setPosition(ccp(m_containerLayer->getContentSize().width-m_containerLayer->getContentSize().width/6, m_containerLayer->getContentSize().height/2-tStatusItemSP2->getContentSize().height));
-        CCMenu *menu = CCMenu::create(menuItem,statusItem,NULL);
-        CC_BREAK_IF(!menu);
-        m_containerLayer->addChild(menu);
+        statusItem->setPosition(ccp(m_containerLayer->getContentSize().width-m_containerLayer->getContentSize().width/6, m_containerLayer->getContentSize().height/2-tStatusItemSP2->getContentSize().height/2-3));
         
         //magic
-        this->addMagic(1);          //test
+        this->addMagic(kMagicType_Steal);          //test
         CCArray *magicArray=CCArray::create();
         CC_BREAK_IF(!magicArray);
         magicArray->retain();
@@ -132,10 +129,29 @@ void  MainGameToolBar::constructUI()
         m_containerLayer->addChild(magicMenu);
         
         CC_SAFE_RELEASE(magicArray);
+        
+        //weapon:test
+        CCString *weaponImgStr=CCString::createWithFormat("weapon_bloodSword_01.png");
+        CC_BREAK_IF(!weaponImgStr);
+        CCSprite *weaponSp1 = CCSprite::createWithSpriteFrameName(weaponImgStr->getCString());
+        CC_BREAK_IF(!weaponSp1);
+        CCSprite *weaponSp2 = CCSprite::createWithSpriteFrameName(weaponImgStr->getCString());
+        CC_BREAK_IF(!weaponSp2);
+        weaponSp2->setScale(1.1);
+        
+        CCMenuItemSprite *weaponItem = CCMenuItemSprite::create(weaponSp1, weaponSp2,this, menu_selector(MainGameToolBar::weaponItemClicked));
+        CC_BREAK_IF(!weaponItem);
+        weaponItem->setPosition(ccp(3*m_containerLayer->getContentSize().width/6+(m_containerLayer->getContentSize().width/6)/2,m_containerLayer->getContentSize().height/2));
+        weaponItem->setTag(1);
+        
+        CCMenu *menu = CCMenu::create(menuItem,statusItem,weaponItem,NULL);
+        CC_BREAK_IF(!menu);
+        menu->setPosition(CCPointZero);
+        m_containerLayer->addChild(menu);
 	}while(0);
 }
 
-void MainGameToolBar::addMagic(int pID)
+void MainGameToolBar::addMagic(MagicType pID)
 {
     do {
         CC_BREAK_IF(!m_magicArray);
@@ -156,10 +172,22 @@ void MainGameToolBar::magicItemClicked(CCObject *pSender)
     do {
         CCMenuItemSprite *magicItem=(CCMenuItemSprite *)pSender;
         CC_BREAK_IF(!magicItem);
-        int mID=magicItem->getTag();
+        MagicType mID=(MagicType)(magicItem->getTag());
         CCLog("mID=%d",mID);
         CC_BREAK_IF(!m_delegate);
-//        ((MainGameController *)m_delegate)->selectMagic(mID);
+        ((MainGameController *)m_delegate)->selectMagic(mID);
+    } while (0);
+}
+
+void MainGameToolBar::weaponItemClicked(CCObject *pSender)
+{
+    do {
+        CCMenuItemSprite *weaponItem=(CCMenuItemSprite *)pSender;
+        CC_BREAK_IF(!weaponItem);
+        int mID=weaponItem->getTag();
+        CCLog("weapon ID=%d",mID);
+        CC_BREAK_IF(!m_delegate);
+        ((MainGameController *)m_delegate)->equipWeapon(mID);
     } while (0);
 }
 

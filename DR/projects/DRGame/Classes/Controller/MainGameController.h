@@ -45,6 +45,9 @@ public:
     void updateStatusData();
     
     void selectMagic(MagicType pID=kMagicType_None);
+    
+    void equipWeapon(unsigned int pID);
+    void disableWeapon(unsigned int pID);
 
 private:
     bool initWith();
