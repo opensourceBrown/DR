@@ -8,6 +8,8 @@
 #include "DataMangager.h"
 #include "DRUserDefault.h"
 #include "MainGameStatusBar.h"
+#include "WeaponConfigure.h"
+
 
 //test
 #define PASS_STAGE_KILL_MONSTER         100
@@ -335,8 +337,9 @@ void MainGameController::statisticsDataPerRound()
                 GridElementProperty *block=cell->getCellProperty();
                 CC_BREAK_IF(!block);
                 if (false==block->getStatus()) {
-                    if (block->mType==kElementType_Monster) {
-                        mCurShield--;
+                    if (block->mType==kElementType_Monster && block->mMonsterProperty.mLife>0) {
+                        mCurShield-=(block->mMonsterProperty.mDamage-mCurShield>=0?(block->mMonsterProperty.mDamage-mCurShield):0);
+//                        mCurShield--;
                         if (mCurShield<=0) {
                             mCurShield=0;
                             mCurPortion-=block->mMonsterProperty.mDamage;
@@ -351,8 +354,21 @@ void MainGameController::statisticsDataPerRound()
     } while (0);
 }
 
+//此处判断是否装备了武器,如果装备了武器，则需要根据武器属性计算总伤害值
 int MainGameController::computeTotalDamageOfRound()
 {
+    CCArray *weaponsConf=DataManager::sharedInstance()->weaponConfigures();
+    WeaponConfigure *weapon=NULL;
+    if (mPlayerProperty.mWeaponID>0 && weaponsConf && weaponsConf->count()) {
+        for (int i=0;i<weaponsConf->count();i++) {
+            WeaponConfigure *item=dynamic_cast<WeaponConfigure *>(weaponsConf->objectAtIndex(i));
+            CC_BREAK_IF(!item);
+            if (item->mWeaponNumber==mPlayerProperty.mWeaponID) {
+                weapon=item;
+                break;
+            }
+        }
+    }
     int totalDamagePerRound = 0;
     do {
         CC_BREAK_IF(!mStageConnectedElements);
@@ -365,12 +381,18 @@ int MainGameController::computeTotalDamageOfRound()
             CC_BREAK_IF(!block);
             if (block->mType==kElementType_Sword || block->mType == kElementType_Bow) {
                 totalDamagePerRound+=mPlayerProperty.mWeaponDamage;
+                if (weapon) {
+                    totalDamagePerRound+=(int)(weapon->mWeaponDamage);
+                }
             } else if (block->mType==kElementType_Monster) {
                 hasMonster = true;
             }
         }
         
         if (hasMonster) {
+            if (weapon) {
+                totalDamagePerRound+=(int)(weapon->mBasicDamage);
+            }
             totalDamagePerRound+=mPlayerProperty.mBasicDamage;
         }
     } while (0);

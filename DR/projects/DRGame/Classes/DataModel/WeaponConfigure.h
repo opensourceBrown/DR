@@ -1,25 +1,19 @@
-//
-//  WeaponConfigure.h
-//  DRGame
-//
-//  Created by Magic Song on 14-3-5.
-//
-//
+
 
 #ifndef __DRGame__WeaponConfigure__
 #define __DRGame__WeaponConfigure__
 
 #include "cocos2d.h"
-#include <iostream>
+//#include <iostream>
 
 USING_NS_CC;
-using namespace std;
+//using namespace std;
 
 class WeaponConfigure : public CCObject
 {
 public:
     int     mWeaponNumber;
-    string  mName;
+    std::string  mName;
     int     mLevel;
     float   mDefencePerShield;
     float   mMaxSheild;
