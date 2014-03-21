@@ -33,7 +33,7 @@ private:
     void refreshGrid(float pDelta);
     
     void removeGridCellCompleteCallback(CCObject *pSender);
-	void moveGridCellAnimation(unsigned int rIndex,unsigned int vIndex);				//����cell����
+	void moveGridCellAnimation(unsigned int rIndex,unsigned int vIndex);				//œ¬“∆cell∂Øª≠
     bool rectContainPoint(CCRect pRect,CCPoint pPoint);
 
 	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
@@ -42,6 +42,7 @@ private:
 	virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
 
     void                    refreshMonsterPropertyLabelOfAllGridCell();
+    void                    recoverMonsterLifeFull();                  //恢复所有怪物生命到最大
 private:
 	CCLayerColor			*m_containerLayer;
 	CCArray					*m_GridCellArray;

@@ -476,7 +476,7 @@ void MainGameGridLayer::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
         if (((MainGameController *)m_delegate)->judgeConnectedElementsCanClear()) {
             ((MainGameController *)m_delegate)->clearConnectedElements();
             
-            this->refreshMonsterPropertyLabelOfAllGridCell();
+            refreshMonsterPropertyLabelOfAllGridCell();           //刷新怪物血量等信息
         }else{
             ((MainGameController *)m_delegate)->resetStageConnectedElements();
         }
@@ -490,14 +490,48 @@ void MainGameGridLayer::ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent)
     
 }
 
+//刷新怪物血量等信息
 void MainGameGridLayer::refreshMonsterPropertyLabelOfAllGridCell()
 {
     do{
         CC_BREAK_IF(!m_GridCellArray);
+        
+        bool hasBossHealer = false;
         for(int i=0;i<m_GridCellArray->count();i++){
 			GridCell *cell=dynamic_cast<GridCell *>(m_GridCellArray->objectAtIndex(i));
 			CC_BREAK_IF(!cell);
             cell->refreshMonsterPropertyLabel();
+            
+            GridElementProperty *geProperty = cell->getCellProperty();
+            if (geProperty->mType == kElementType_Monster
+                && geProperty->mMonsterProperty.mType == kBustyType_Boss) {
+                if (geProperty->mMonsterProperty.mSkillType == kBossBustyType_Chaotic) {
+                    //TODO:Chaotic boss,随机移动自己的地方
+                    int randomIndex = arc4random()%m_GridCellArray->count();
+                    exchangeGridCell(i, randomIndex);
+                } else if (geProperty->mMonsterProperty.mSkillType == kBossBustyType_Healer) {
+                    //TODO:让所有受到伤害的怪兽回复生命值到最大值。
+                    hasBossHealer = true;
+                }
+            }
 		}
+        
+        if (hasBossHealer) {
+            recoverMonsterLifeFull();
+        }
     }while(0);
+}
+
+//所有怪物回复生命值到最大
+void MainGameGridLayer::recoverMonsterLifeFull()
+{
+    for(int i=0;i<m_GridCellArray->count();i++){
+        
+        GridCell *cell=dynamic_cast<GridCell *>(m_GridCellArray->objectAtIndex(i));
+        CC_BREAK_IF(!cell);
+        GridElementProperty *geProperty = cell->getCellProperty();
+        if (geProperty->mType == kElementType_Monster) {
+            geProperty->mMonsterProperty.mLife = geProperty->mMonsterProperty.mMaxLife;
+        }
+    }
 }
