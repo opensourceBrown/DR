@@ -1,5 +1,6 @@
 #include "MainGameToolBar.h"
 #include "MainGameController.h"
+#include "WeaponController.h"
 
 MainGameToolBar::MainGameToolBar():
     m_containerLayer(NULL),
@@ -130,7 +131,7 @@ void  MainGameToolBar::constructUI()
         
         CC_SAFE_RELEASE(magicArray);
         
-        //weapon:test
+        //weapon:此处要从武器controller中读取，下面暂时用固定的方式写死
         CCString *weaponImgStr=CCString::createWithFormat("weapon_bloodSword_01.png");
         CC_BREAK_IF(!weaponImgStr);
         CCSprite *weaponSp1 = CCSprite::createWithSpriteFrameName(weaponImgStr->getCString());

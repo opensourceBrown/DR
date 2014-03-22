@@ -3,6 +3,8 @@
 
 #include "cocos2d.h"
 
+USING_NS_CC;
+
 class DRUserDefault
 {
 public:
@@ -31,6 +33,8 @@ public:
     //weapon
     void setWeaponSwitch(bool pSwitch){m_weaponSwitch=pSwitch;}
     bool getWeaponSwitch(){return m_weaponSwitch;}
+    void addWeapon(unsigned int pID);
+    CCDictionary *getWeaponPackage(){return m_weaponPackage;}
 
 private:
     void writeUserDefault();
@@ -43,6 +47,7 @@ private:
     unsigned int     m_coin;
     
     bool             m_weaponSwitch;
+    CCDictionary     *m_weaponPackage;
 };
 
 #endif // __DR_USERDEFAULT_H__
