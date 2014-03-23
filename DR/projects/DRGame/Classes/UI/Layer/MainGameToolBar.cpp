@@ -1,6 +1,7 @@
 #include "MainGameToolBar.h"
 #include "MainGameController.h"
 #include "WeaponController.h"
+#include "DRUserDefault.h"
 
 MainGameToolBar::MainGameToolBar():
     m_containerLayer(NULL),
@@ -128,10 +129,29 @@ void  MainGameToolBar::constructUI()
         CC_BREAK_IF(!magicMenu);
         magicMenu->setPosition(CCPointZero);
         m_containerLayer->addChild(magicMenu);
-        
         CC_SAFE_RELEASE(magicArray);
         
         //weapon:此处要从武器controller中读取，下面暂时用固定的方式写死
+        if (DRUserDefault::sharedUserDefault()->getWeaponSwitch()) {
+//            CCString *weaponImgStr=CCString::createWithFormat("weapon_bloodSword_01.png");
+//            CC_BREAK_IF(!weaponImgStr);
+//            CCSprite *weaponSp1 = CCSprite::createWithSpriteFrameName(weaponImgStr->getCString());
+//            CC_BREAK_IF(!weaponSp1);
+//            CCSprite *weaponSp2 = CCSprite::createWithSpriteFrameName(weaponImgStr->getCString());
+//            CC_BREAK_IF(!weaponSp2);
+//            weaponSp2->setScale(1.1);
+//            
+//            CCMenuItemSprite *weaponItem = CCMenuItemSprite::create(weaponSp1, weaponSp2,this, menu_selector(MainGameToolBar::weaponItemClicked));
+//            CC_BREAK_IF(!weaponItem);
+//            weaponItem->setPosition(ccp(3*m_containerLayer->getContentSize().width/6+(m_containerLayer->getContentSize().width/6)/2,m_containerLayer->getContentSize().height/2));
+//            weaponItem->setTag(1);
+//            
+//            CCMenu *menu = CCMenu::create(menuItem,statusItem,weaponItem,NULL);
+//            CC_BREAK_IF(!menu);
+//            menu->setPosition(CCPointZero);
+//            m_containerLayer->addChild(menu);
+        }
+        
         CCString *weaponImgStr=CCString::createWithFormat("weapon_bloodSword_01.png");
         CC_BREAK_IF(!weaponImgStr);
         CCSprite *weaponSp1 = CCSprite::createWithSpriteFrameName(weaponImgStr->getCString());
@@ -150,6 +170,12 @@ void  MainGameToolBar::constructUI()
         menu->setPosition(CCPointZero);
         m_containerLayer->addChild(menu);
 	}while(0);
+}
+
+void MainGameToolBar::refreshWeapon()
+{
+    //刷新武器
+    
 }
 
 void MainGameToolBar::addMagic(MagicType pID)

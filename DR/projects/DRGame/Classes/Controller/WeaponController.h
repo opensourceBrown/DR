@@ -7,6 +7,7 @@
 
 class DRNetworkMangager;
 class MainGameController;
+class WeaponConfigure;
 
 class WeaponController : public BaseController
 {
@@ -18,7 +19,10 @@ public:
     
     void resetWeaponPackage();
     CCArray *getWeaponPackage(){return m_weaponPackage;}
-    
+    void addWeaponToPackage(unsigned int pID);
+    WeaponConfigure *getWeapon(unsigned int pID);
+    void removeWeapon(unsigned int pID);
+    bool judgeWeaponEnableUpgrade(unsigned int pID);
     void updateWeaponPackage(unsigned int pID);
 
 private:
@@ -26,6 +30,7 @@ private:
     void readWeaponConf();              //读取武器包
 private:
     CCArray     *m_weaponPackage;
+    
 };
 
 #endif

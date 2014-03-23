@@ -50,6 +50,8 @@ public:
     void disableWeapon(unsigned int pID);
     
     void triggerBossSkill();
+    
+    void refreshWeapon();
 
 private:
     bool initWith();

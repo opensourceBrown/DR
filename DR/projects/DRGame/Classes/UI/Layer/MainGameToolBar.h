@@ -20,6 +20,7 @@ public:
     
     //test
     void    weaponItemClicked(CCObject *pSender);
+    void    refreshWeapon();
 
 private:
 	void constructUI();

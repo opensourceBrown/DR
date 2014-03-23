@@ -9,7 +9,7 @@
 #include "DRUserDefault.h"
 #include "MainGameStatusBar.h"
 #include "WeaponConfigure.h"
-
+#include "WeaponController.h"
 
 //test
 #define PASS_STAGE_KILL_MONSTER         100
@@ -110,6 +110,11 @@ void MainGameController::updateStatusData()
         statusBar->setCoinProgress((int)(100.0*mCurStageCoin/PASS_STAGE_COIN));
         statusBar->setRoundValue(DRUserDefault::sharedUserDefault()->getRoundCount());
     } while (0);
+}
+
+void MainGameController::refreshWeapon()
+{
+    
 }
 
 void MainGameController::selectMagic(MagicType pID)
@@ -265,13 +270,17 @@ void MainGameController::triggerMagic(MagicType pID)
 
 void MainGameController::equipWeapon(unsigned int pID)
 {
-    mPlayerProperty.mWeaponID=pID;
+    mPlayerProperty.mWeaponID=pID;                  //duplicated
+    WeaponController::shareInstance()->addWeaponToPackage(pID);
 }
 
 void MainGameController::disableWeapon(unsigned int pID)
 {
     if (mPlayerProperty.mWeaponID==pID) {
         mPlayerProperty.mWeaponID=0;
+    }
+    if (WeaponController::shareInstance()->getWeapon(pID)) {
+        WeaponController::shareInstance()->removeWeapon(pID);
     }
 }
 
@@ -388,7 +397,14 @@ void MainGameController::statisticsDataPerRound()
                     mCurShield=mPlayerProperty.mMaxShield;
                 }
             }else if(block->mType==kElementType_Potion){
-                mCurPortion++;
+                int weaponPortion=1;
+                if (mPlayerProperty.mWeaponID) {
+                    WeaponConfigure *weapon=WeaponController::shareInstance()->getWeapon(mPlayerProperty.mWeaponID);
+                    if (weapon) {
+                        weaponPortion=weapon->mHealthPerPotion;
+                    }
+                }
+                mCurPortion+=weaponPortion;
                 if (mCurPortion>mPlayerProperty.mMaxHealth) {
                     mCurPortion=mPlayerProperty.mMaxHealth;
                 }
@@ -410,8 +426,14 @@ void MainGameController::statisticsDataPerRound()
                 CC_BREAK_IF(!block);
                 if (false==block->getStatus()) {
                     if (block->mType==kElementType_Monster && block->mMonsterProperty.mLife>0) {
-                        mCurShield-=(block->mMonsterProperty.mDamage-mCurShield>=0?(block->mMonsterProperty.mDamage-mCurShield):0);
-//                        mCurShield--;
+                        int weaponShield=1;
+                        if (mPlayerProperty.mWeaponID) {
+                            WeaponConfigure *weapon=WeaponController::shareInstance()->getWeapon(mPlayerProperty.mWeaponID);
+                            if (weapon) {
+                                weaponShield=weapon->mDefencePerShield;
+                            }
+                        }
+                        mCurShield=weaponShield*mCurShield-(block->mMonsterProperty.mDamage-mCurShield*weaponShield>=0?(block->mMonsterProperty.mDamage-mCurShield*weaponShield):0);
                         if (mCurShield<=0) {
                             mCurShield=0;
                             mCurPortion-=block->mMonsterProperty.mDamage;
@@ -429,13 +451,15 @@ void MainGameController::statisticsDataPerRound()
 //此处判断是否装备了武器,如果装备了武器，则需要根据武器属性计算总伤害值
 int MainGameController::computeTotalDamageOfRound()
 {
-    CCArray *weaponsConf=DataManager::sharedInstance()->weaponConfigures();
+//    CCArray *weaponsConf=DataManager::sharedInstance()->weaponConfigures();
+    CCArray *weaponsConf=WeaponController::shareInstance()->getWeaponPackage();
     WeaponConfigure *weapon=NULL;
     if (mPlayerProperty.mWeaponID>0 && weaponsConf && weaponsConf->count()) {
         for (int i=0;i<weaponsConf->count();i++) {
             WeaponConfigure *item=dynamic_cast<WeaponConfigure *>(weaponsConf->objectAtIndex(i));
             CC_BREAK_IF(!item);
             if (item->mWeaponNumber==mPlayerProperty.mWeaponID) {
+                CCLog("-----------------------------------------");
                 weapon=item;
                 break;
             }
