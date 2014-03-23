@@ -1,5 +1,5 @@
 #include "DRUserDefault.h"
-#include "DataMangager.cpp"
+#include "DataMangager.h"
 #include "WeaponConfigure.h"
 
 static DRUserDefault* m_spUserDefault = NULL;

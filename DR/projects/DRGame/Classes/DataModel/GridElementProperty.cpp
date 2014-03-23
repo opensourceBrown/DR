@@ -145,8 +145,12 @@ void GridElementProperty::configureBossProperty()
     
     BossFileConfigure *bossConfigure = this->getRandomBoss();
     mMonsterProperty.mType = kBustyType_Boss;
-    mMonsterProperty.mSkillType = kBossBustyType_Chaotic;
     mMonsterProperty.mID = bossConfigure->mBossId;
+    if (bossConfigure->mBossId == 1) {
+        mMonsterProperty.mSkillType = kBossBustyType_Chaotic;
+    } else {
+        mMonsterProperty.mSkillType = kBossBustyType_Healer;
+    }
     mMonsterProperty.mName = "boss";
     mMonsterProperty.mDescription = "This is a boss Monster";
     mMonsterProperty.mDefence = bossConfigure->mF + bossConfigure->mG*(float)gameStatus->mNumberOfRound;      //defence = f + g * round

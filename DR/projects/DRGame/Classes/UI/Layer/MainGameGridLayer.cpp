@@ -205,6 +205,7 @@ void MainGameGridLayer::triggerBossSkill()
                     //TODO:Chaotic boss,随机移动自己的地方
                     int randomIndex = arc4random()%m_GridCellArray->count();
                     if (randomIndex != i) {
+                        //TODO:这里交换技能有Bug
                         GridCell *randomCell=dynamic_cast<GridCell *>(m_GridCellArray->objectAtIndex(randomIndex));
                         
                         GridElementProperty *blockProperty=cell->getCellProperty();
@@ -564,7 +565,6 @@ void MainGameGridLayer::refreshMonsterPropertyLabelOfAllGridCell()
     do{
         CC_BREAK_IF(!m_GridCellArray);
         
-        bool hasBossHealer = false;
         for(int i=0;i<m_GridCellArray->count();i++){
 			GridCell *cell=dynamic_cast<GridCell *>(m_GridCellArray->objectAtIndex(i));
 			CC_BREAK_IF(!cell);
@@ -583,6 +583,7 @@ void MainGameGridLayer::recoverMonsterLifeFull()
         GridElementProperty *geProperty = cell->getCellProperty();
         if (geProperty->mType == kElementType_Monster) {
             geProperty->mMonsterProperty.mLife = geProperty->mMonsterProperty.mMaxLife;
+            cell->refreshMonsterPropertyLabel();
         }
     }
 }
