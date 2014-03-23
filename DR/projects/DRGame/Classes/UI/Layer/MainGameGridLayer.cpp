@@ -14,7 +14,8 @@ MainGameGridLayer::MainGameGridLayer():
     m_containerLayer(NULL),
     m_GridCellArray(NULL),
     m_currentSelCell(NULL),
-    m_gridCellConnLineArray(NULL)
+    m_gridCellConnLineArray(NULL),
+    m_needRefresh(false)
 {
     do {
         m_GridCellArray=CCArray::createWithCapacity(GRID_ROW*GRID_VOLUME);
@@ -156,19 +157,17 @@ void MainGameGridLayer::addGridCellToLayer(GridElementProperty *gProperty)
 void MainGameGridLayer::updateGrid()
 {
     std::cout<<"updateGrid"<<std::endl;
-    scheduleOnce(schedule_selector(MainGameGridLayer::refreshGrid), 0.5);
+    scheduleOnce(schedule_selector(MainGameGridLayer::refreshGrid), 0.2);
 }
 
 void MainGameGridLayer::refreshGrid(float pDelta)
 {
     do{
         CC_BREAK_IF(!m_GridCellArray);
-        
         //update the cell to special position
         for (int i=0; i<m_GridCellArray->count(); i++) {
             moveGridCellWithIndex(i,MOVE_ANIMATION_DURATION);
         }
-        scheduleOnce(schedule_selector(MainGameGridLayer::triggerBossSkill), MOVE_ANIMATION_DURATION);
     }while(0);
 }
 
@@ -182,57 +181,6 @@ void MainGameGridLayer::moveGridCellWithIndex(unsigned int index, float duration
         GridElementProperty *blockProperty=cell->getCellProperty();
         CC_BREAK_IF(!blockProperty);
         this->moveGridCellAnimation(blockProperty->mIndex.rIndex, blockProperty->mIndex.vIndex,duration);
-    }while(0);
-}
-
-/**
- *   触发boss技能
- */
-void MainGameGridLayer::triggerBossSkill()
-{
-    do{
-        CC_BREAK_IF(!m_GridCellArray);
-        
-        bool hasBossHealer = false;
-        for(int i=0;i<m_GridCellArray->count();i++){
-			GridCell *cell=dynamic_cast<GridCell *>(m_GridCellArray->objectAtIndex(i));
-			CC_BREAK_IF(!cell);
-            
-            GridElementProperty *geProperty = cell->getCellProperty();
-            if (geProperty->mType == kElementType_Monster
-                && geProperty->mMonsterProperty.mType == kBustyType_Boss) {
-                if (geProperty->mMonsterProperty.mSkillType == kBossBustyType_Chaotic) {
-                    //TODO:Chaotic boss,随机移动自己的地方
-                    int randomIndex = arc4random()%m_GridCellArray->count();
-                    if (randomIndex != i) {
-                        //TODO:这里交换技能有Bug
-                        GridCell *randomCell=dynamic_cast<GridCell *>(m_GridCellArray->objectAtIndex(randomIndex));
-                        
-                        GridElementProperty *blockProperty=cell->getCellProperty();
-                        GridElementProperty *randomBlockProperty=randomCell->getCellProperty();
-                        int tRIndex = blockProperty->mIndex.rIndex;
-                        int tVindex = blockProperty->mIndex.vIndex;
-                        blockProperty->mIndex.rIndex=randomBlockProperty->mIndex.rIndex;
-                        blockProperty->mIndex.vIndex=randomBlockProperty->mIndex.vIndex;
-                        randomBlockProperty->mIndex.rIndex=tRIndex;
-                        randomBlockProperty->mIndex.vIndex=tVindex;
-                        
-                        m_GridCellArray->exchangeObject(cell, randomCell);
-                        moveGridCellWithIndex(i, 3);
-                        moveGridCellWithIndex(randomIndex, 3);
-                        
-                        std::cout<<"i ="<<i<<"randomIndex="<<randomIndex<<std::endl;
-                    }
-                } else if (geProperty->mMonsterProperty.mSkillType == kBossBustyType_Healer) {
-                    //TODO:让所有受到伤害的怪兽回复生命值到最大值。
-                    hasBossHealer = true;
-                }
-            }
-		}
-        
-        if (hasBossHealer) {
-            recoverMonsterLifeFull();
-        }
     }while(0);
 }
 
@@ -252,7 +200,6 @@ void MainGameGridLayer::addGridCell(unsigned int rIndex,unsigned int vIndex)
                 if (blockProperty->mMonsterProperty.mType==kBustyType_Common) {
                     typeStr=CCString::create("Grid_cell_monster.png");
                 }else if (blockProperty->mMonsterProperty.mType==kBustyType_Boss){
-                    CCLog("---------------------------");
                     typeStr=CCString::create("Grid_cell_boss_monster.jpg");
                 }
             }
@@ -296,8 +243,6 @@ void MainGameGridLayer::addGridCell(unsigned int rIndex,unsigned int vIndex)
             offsetXCoe=1.5;
             offsetYCoe=2;
         }else{
-//            offsetXCoe=0.5;
-//            offsetYCoe=0.5;
             offsetXCoe=1.5;
             offsetYCoe=2;
         }
@@ -318,8 +263,11 @@ void MainGameGridLayer::exchangeGridCell(unsigned int rIndex,unsigned int vIndex
         GridElementProperty *rBlockProperty=rCell->getCellProperty();
         GridElementProperty *sBlockProperty=sCell->getCellProperty();
         int tRIndex=rBlockProperty->mIndex.rIndex;
+        int tVIndex=rBlockProperty->mIndex.vIndex;
         rBlockProperty->mIndex.rIndex=sBlockProperty->mIndex.rIndex;
+        rBlockProperty->mIndex.vIndex=sBlockProperty->mIndex.vIndex;
         sBlockProperty->mIndex.rIndex=tRIndex;
+        sBlockProperty->mIndex.vIndex=tVIndex;
         
         m_GridCellArray->exchangeObject(rCell, sCell);
     } while (0);
@@ -380,15 +328,23 @@ void MainGameGridLayer::moveGridCellAnimation(unsigned int rIndex,unsigned int v
             offsetXCoe=1.5;
             offsetYCoe=2;
         }else{
-            //            offsetXCoe=0.5;
-            //            offsetYCoe=0.5;
             offsetXCoe=1.5;
             offsetYCoe=2;
         }
-        cell->runAction(CCMoveTo::create(duration, ccp((blockProperty->mIndex.vIndex+1)*m_containerLayer->getContentSize().width/GRID_VOLUME-offsetXCoe*cell->getContentSize().width,m_containerLayer->getContentSize().height-blockProperty->mIndex.rIndex*m_containerLayer->getContentSize().height/GRID_ROW-offsetYCoe*cell->getContentSize().height)));
+        cell->runAction(CCSequence::create(CCMoveTo::create(duration, ccp((blockProperty->mIndex.vIndex+1)*m_containerLayer->getContentSize().width/GRID_VOLUME-offsetXCoe*cell->getContentSize().width,m_containerLayer->getContentSize().height-blockProperty->mIndex.rIndex*m_containerLayer->getContentSize().height/GRID_ROW-offsetYCoe*cell->getContentSize().height)),CCCallFuncN::create(this,callfuncN_selector(MainGameGridLayer::moveAnimationCompleteCallback)),NULL) );
 #endif
         
     }while(0);
+}
+
+void MainGameGridLayer::moveAnimationCompleteCallback(CCObject *pSender)
+{
+    do {
+        CC_BREAK_IF(!m_delegate);
+        CC_BREAK_IF(!m_needRefresh);
+        m_needRefresh=false;
+        ((MainGameController *)m_delegate)->triggerBossSkill();
+    } while (0);
 }
 
 bool MainGameGridLayer::rectContainPoint(CCRect pRect,CCPoint pPoint)
@@ -543,7 +499,7 @@ void MainGameGridLayer::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
         if (((MainGameController *)m_delegate)->judgeConnectedElementsCanClear()) {
             bool hasNoElementToClear = ((MainGameController *)m_delegate)->clearConnectedElements();
             if (hasNoElementToClear) {
-                triggerBossSkill();
+//                triggerBossSkill();
             }
             refreshMonsterPropertyLabelOfAllGridCell();           //刷新怪物血量等信息
         }else{
@@ -571,19 +527,4 @@ void MainGameGridLayer::refreshMonsterPropertyLabelOfAllGridCell()
             cell->refreshMonsterPropertyLabel();
 		}
     }while(0);
-}
-
-//所有怪物回复生命值到最大
-void MainGameGridLayer::recoverMonsterLifeFull()
-{
-    for(int i=0;i<m_GridCellArray->count();i++){
-        
-        GridCell *cell=dynamic_cast<GridCell *>(m_GridCellArray->objectAtIndex(i));
-        CC_BREAK_IF(!cell);
-        GridElementProperty *geProperty = cell->getCellProperty();
-        if (geProperty->mType == kElementType_Monster) {
-            geProperty->mMonsterProperty.mLife = geProperty->mMonsterProperty.mMaxLife;
-            cell->refreshMonsterPropertyLabel();
-        }
-    }
 }

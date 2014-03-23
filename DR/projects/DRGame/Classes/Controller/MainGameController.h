@@ -48,6 +48,8 @@ public:
     
     void equipWeapon(unsigned int pID);
     void disableWeapon(unsigned int pID);
+    
+    void triggerBossSkill();
 
 private:
     bool initWith();
@@ -81,6 +83,8 @@ private:
     void triggerMagic(MagicType pID);
     
     void triggerWeapon(unsigned int pID);
+    
+    void recoverMonsterLifeFull();
     
     void statisticsDataPerRound();
     int  computeTotalDamageOfRound();

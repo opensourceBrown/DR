@@ -280,6 +280,78 @@ void MainGameController::triggerWeapon(unsigned int pID)
     
 }
 
+void MainGameController::triggerBossSkill()
+{
+    CCLog("-------------------");
+    do{
+        MainGameGridLayer *gridLayer = ((MainGameScene *)m_scene)->getGridLayer();
+        CC_BREAK_IF(!gridLayer);
+        
+        bool hasBossHealer = false;
+        for (int i=0; i<GRID_ROW*GRID_VOLUME; i++) {
+            
+            GridElementProperty *blockProperty=dynamic_cast<GridElementProperty *>(mGridPropertyContainer->objectAtIndex(i));
+            CC_BREAK_IF(!blockProperty);
+            
+            if (blockProperty->mType == kElementType_Monster
+                && blockProperty->mMonsterProperty.mType == kBustyType_Boss) {
+                if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Chaotic || blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Healer) {
+                    //TODO:Chaotic boss,随机移动自己的地方
+                    int randomIndex = 0;
+                    do {
+                        randomIndex = arc4random()%(GRID_ROW*GRID_VOLUME);
+                    } while ((randomIndex/GRID_VOLUME==blockProperty->mIndex.rIndex) && (randomIndex%GRID_VOLUME==blockProperty->mIndex.vIndex));
+                    
+                    GridElementProperty *randomBlockProperty=dynamic_cast<GridElementProperty *>(mGridPropertyContainer->objectAtIndex(randomIndex));
+                    CC_BREAK_IF(!randomBlockProperty);
+                    
+                    //update the vIndex after exchange the two elements
+                    int tIndex=blockProperty->mIndex.rIndex;
+                    int vIndex=blockProperty->mIndex.vIndex;
+                    blockProperty->mIndex.rIndex=randomBlockProperty->mIndex.rIndex;
+                    blockProperty->mIndex.vIndex=randomBlockProperty->mIndex.vIndex;
+                    randomBlockProperty->mIndex.rIndex=tIndex;
+                    randomBlockProperty->mIndex.vIndex=vIndex;
+                    mGridPropertyContainer->exchangeObject(blockProperty, randomBlockProperty);
+                    
+                    //notify the grid layer to exchange cell in m_GridCellArray
+                    gridLayer->exchangeGridCell(blockProperty->mIndex.rIndex*GRID_VOLUME+blockProperty->mIndex.vIndex, randomBlockProperty->mIndex.rIndex*GRID_VOLUME+randomBlockProperty->mIndex.vIndex);
+                    break;
+                } else if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Healer) {
+                    //TODO:让所有受到伤害的怪兽回复生命值到最大值。
+                    hasBossHealer = true;
+                    break;
+                }
+            }
+        }
+        
+        if (hasBossHealer) {
+            recoverMonsterLifeFull();
+            gridLayer->refreshMonsterPropertyLabelOfAllGridCell();
+        }
+        gridLayer->updateGrid();
+    }while(0);
+}
+
+void MainGameController::recoverMonsterLifeFull()
+{
+    do {
+        MainGameGridLayer *gridLayer = ((MainGameScene *)m_scene)->getGridLayer();
+        CC_BREAK_IF(!gridLayer);
+        for (int i=0; i<GRID_ROW; i++) {
+            for (int j=0; j<GRID_VOLUME; j++) {
+                GridCell *cell=gridLayer->getGridCell(i, j);
+                CC_BREAK_IF(!cell);
+                GridElementProperty *geProperty = cell->getCellProperty();
+                CC_BREAK_IF(!geProperty);
+                if (geProperty->mType == kElementType_Monster) {
+                    geProperty->mMonsterProperty.mLife = geProperty->mMonsterProperty.mMaxLife;
+                }
+            }
+        }
+    } while (0);
+}
+
 void MainGameController::statisticsDataPerRound()
 {
     //statistics cur connected cell status data
@@ -556,6 +628,7 @@ bool MainGameController::clearConnectedElements()
         
         gridLayer->clearConnectLine();
         //update MainGameGridLayer to show new cell
+        gridLayer->setUpdateTip(true);
         gridLayer->updateGrid();
     } while (0);
         

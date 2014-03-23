@@ -27,6 +27,9 @@ public:
     void addConnectLine(GridCell *fCell,GridCell *sCell);
     void removeConnectLine();
     void clearConnectLine();
+    
+    void refreshMonsterPropertyLabelOfAllGridCell();
+    void setUpdateTip(bool pValue){m_needRefresh=pValue;}
 private:
     void constructUI();
     void addGridCellToLayer(GridElementProperty *gProperty);
@@ -37,21 +40,20 @@ private:
     void exchangePositionOfGridCell(unsigned int rIndex, unsigned int vIndex);          //交换GridCell的位置
     void moveGridCellAnimation(unsigned int rIndex,unsigned int vIndex, float duration);
     bool rectContainPoint(CCRect pRect,CCPoint pPoint);
-    void triggerBossSkill();                                            //触发boss技能
 
 	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
 	virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
 	virtual void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
 	virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
 
-    void                    refreshMonsterPropertyLabelOfAllGridCell();
-    void                    recoverMonsterLifeFull();                  //恢复所有怪物生命到最大
+    void moveAnimationCompleteCallback(CCObject *pSender);
 private:
 	CCLayerColor			*m_containerLayer;
 	CCArray					*m_GridCellArray;
     CCArray                 *m_gridCellConnLineArray;
 
     GridCell                *m_currentSelCell;
+    bool                    m_needRefresh;
 };
 
 #endif
