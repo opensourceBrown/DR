@@ -462,7 +462,7 @@ void MainGameController::resetStageConnectedElements()
 
 bool MainGameController::clearConnectedElements()
 {
-    bool hasMonsterUndead = false;
+    bool hasNoElementToClear = true;
     do {
         MainGameGridLayer *gridLayer = ((MainGameScene *)m_scene)->getGridLayer();
         CC_BREAK_IF(!gridLayer);
@@ -488,16 +488,17 @@ bool MainGameController::clearConnectedElements()
                 if (block->mMonsterProperty.mLife == 0) {
                     block->setStatus(true);
                     item->setStatus(true);
+                    
+                    hasNoElementToClear = false;
                 } else {
                     block->setStatus(false);
                     item->setStatus(false);
-                    
-                    //monster is undead
-                    hasMonsterUndead = true;
                 }
             } else {
                 block->setStatus(true);
                 item->setStatus(true);
+                
+                hasNoElementToClear = false;
             }
         }
         
@@ -570,7 +571,7 @@ bool MainGameController::clearConnectedElements()
         this->endCurrentStage();
     }
     
-    return hasMonsterUndead;
+    return hasNoElementToClear;
 }
 
 bool MainGameController::generateGridCell(unsigned int rIndex,unsigned int vIndex)

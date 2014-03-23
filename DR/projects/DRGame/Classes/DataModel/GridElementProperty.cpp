@@ -26,6 +26,7 @@ void GridElementProperty::generateGridElementDataByCSV(bool monsterIncluded)
 {
     GameStatusType *gameStatus = DataManager::sharedInstance()->gameStatus();
     int flag = gameStatus->mFlag;
+    cout<<"flag = "<< flag<<endl;
     if (flag == -1) {
         //not boss
         BarrierFileConfigure *currentBConfigure = DataManager::sharedInstance()->currentBarrierConfigure();
@@ -33,7 +34,7 @@ void GridElementProperty::generateGridElementDataByCSV(bool monsterIncluded)
         int mB = currentBConfigure->mB;
         DataManager::sharedInstance()->gameStatus()->mFlag = mA - mB * gameStatus->mNumberOfRound;
         this->configureNormalElementProperty(monsterIncluded);
-    } else if (flag == 0 && !monsterIncluded) {
+    } else if (flag == 0 && monsterIncluded) {
         //boss
         BarrierFileConfigure *currentBConfigure = DataManager::sharedInstance()->currentBarrierConfigure();
         int mA = currentBConfigure->mA;
@@ -137,7 +138,9 @@ void GridElementProperty::configureNormalMonsterProperty()
 }
 
 void GridElementProperty::configureBossProperty()
-{
+{    
+    this->mType = kElementType_Monster;
+    
     GameStatusType *gameStatus = DataManager::sharedInstance()->gameStatus();
     
     BossFileConfigure *bossConfigure = this->getRandomBoss();

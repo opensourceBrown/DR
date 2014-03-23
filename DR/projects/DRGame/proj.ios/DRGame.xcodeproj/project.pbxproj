@@ -1816,9 +1816,9 @@
 			isa = PBXGroup;
 			children = (
 				3032B4F718C9AC9B0023E334 /* monsterData.csv */,
+				30FC9F1F18BD901A000FE654 /* bossData.csv */,
 				3047533818C7097A003E1E0F /* weaponData.csv */,
 				300CFE4F18C289FF001379FB /* barrierData.csv */,
-				30FC9F1F18BD901A000FE654 /* bossData.csv */,
 				9C6C1EC718B8904D00678A2A /* MainGame.plist */,
 				9C6C1EC818B8904D00678A2A /* MainGame.png */,
 				1AFAF8B916D35E4900DB1158 /* CloseNormal.png */,

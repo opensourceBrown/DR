@@ -30,11 +30,14 @@ public:
 private:
     void constructUI();
     void addGridCellToLayer(GridElementProperty *gProperty);
+    void moveGridCellWithIndex(unsigned int index, float duration);
     void refreshGrid(float pDelta);
     
     void removeGridCellCompleteCallback(CCObject *pSender);
-	void moveGridCellAnimation(unsigned int rIndex,unsigned int vIndex);				//œ¬“∆cell∂Øª≠
+    void exchangePositionOfGridCell(unsigned int rIndex, unsigned int vIndex);          //交换GridCell的位置
+    void moveGridCellAnimation(unsigned int rIndex,unsigned int vIndex, float duration);
     bool rectContainPoint(CCRect pRect,CCPoint pPoint);
+    void triggerBossSkill();                                            //触发boss技能
 
 	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
 	virtual void ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent);
