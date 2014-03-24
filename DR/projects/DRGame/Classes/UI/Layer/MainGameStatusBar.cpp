@@ -62,6 +62,7 @@ void  MainGameStatusBar::constructUI()
 		CCLayerColor *containerLayer=CCLayerColor::create(ccc4(0,255,0,255));
 		CC_BREAK_IF(!containerLayer);
         containerLayer->setTag(STATUS_CONTAINER_TAG);
+        containerLayer->setPosition(ccp(0,WIN_SIZE.height-100));
 		containerLayer->setContentSize(CCSizeMake(WIN_SIZE.width,100));
 		addChild(containerLayer);
         
@@ -179,13 +180,7 @@ float MainGameStatusBar::getPortionProgress()
 {
     float tProgress=0;
     do {
-        /*
-        CCLayer *containerLayer=dynamic_cast<CCLayer *>(this->getChildByTag(STATUS_CONTAINER_TAG));
-        CC_BREAK_IF(!containerLayer);
-        CCProgressTimer *progress=dynamic_cast<CCProgressTimer *>(containerLayer->getChildByTag(STATUS_PORTION_TAG));
-        CC_BREAK_IF(!progress);
-        tProgress=progress->getPercentage();
-         */
+        
     } while (0);
     
     return tProgress;
@@ -208,13 +203,7 @@ float MainGameStatusBar::getCoinProgress()
 {
     float tProgress=0;
     do {
-        /*
-        CCLayer *containerLayer=dynamic_cast<CCLayer *>(this->getChildByTag(STATUS_CONTAINER_TAG));
-        CC_BREAK_IF(!containerLayer);
-        CCProgressTimer *progress=dynamic_cast<CCProgressTimer *>(containerLayer->getChildByTag(STATUS_COIN_TAG));
-        CC_BREAK_IF(!progress);
-        tProgress=progress->getPercentage();
-         */
+        
     } while (0);
     
     return tProgress;
@@ -237,13 +226,7 @@ float MainGameStatusBar::getKillMonsterProgress()
 {
     float tProgress=0;
     do {
-        /*
-        CCLayer *containerLayer=dynamic_cast<CCLayer *>(this->getChildByTag(STATUS_CONTAINER_TAG));
-        CC_BREAK_IF(!containerLayer);
-        CCProgressTimer *progress=dynamic_cast<CCProgressTimer *>(containerLayer->getChildByTag(STATUS_KILLMONSTER_TAG));
-        CC_BREAK_IF(!progress);
-        tProgress=progress->getPercentage();
-         */
+        
     } while (0);
     
     return tProgress;
@@ -266,13 +249,7 @@ float MainGameStatusBar::getScoreProgress()
 {
     float tProgress=0;
     do {
-        /*
-        CCLayer *containerLayer=dynamic_cast<CCLayer *>(this->getChildByTag(STATUS_CONTAINER_TAG));
-        CC_BREAK_IF(!containerLayer);
-        CCProgressTimer *progress=dynamic_cast<CCProgressTimer *>(containerLayer->getChildByTag(STATUS_SCORE_TAG));
-        CC_BREAK_IF(!progress);
-        tProgress=progress->getPercentage();
-         */
+        
     } while (0);
     
     return tProgress;

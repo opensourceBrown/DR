@@ -56,7 +56,6 @@ void  MainGameToolBar::constructUI()
 		m_containerLayer=CCLayerColor::create(ccc4(255,0,0,255));
 		CC_BREAK_IF(!m_containerLayer);
 		m_containerLayer->setContentSize(CCSizeMake(WIN_SIZE.width,100));
-		m_containerLayer->setPosition(ccp(0,WIN_SIZE.height-100));
 		addChild(m_containerLayer);
         
         int index=0;
