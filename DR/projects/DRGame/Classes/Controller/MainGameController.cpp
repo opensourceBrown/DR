@@ -105,9 +105,9 @@ void MainGameController::updateStatusData()
         MainGameStatusBar *statusBar = ((MainGameScene *)m_scene)->getStatusLayer();
         CC_BREAK_IF(!statusBar);
         statusBar->setShieldValue(mCurShield,mPlayerProperty.mMaxShield);
-        statusBar->setPortionProgress((int)(100.0*mCurPortion/mPlayerProperty.mMaxHealth));
-        statusBar->setKillMonsterProgress((int)(100.0*mCurStageKillMonster/PASS_STAGE_KILL_MONSTER));
-        statusBar->setCoinProgress((int)(100.0*mCurStageCoin/PASS_STAGE_COIN));
+        statusBar->setPortionProgress(mCurPortion);
+        statusBar->setKillMonsterProgress(mCurStageKillMonster);
+        statusBar->setCoinProgress(mCurStageCoin);
         statusBar->setRoundValue(DRUserDefault::sharedUserDefault()->getRoundCount());
     } while (0);
 }
