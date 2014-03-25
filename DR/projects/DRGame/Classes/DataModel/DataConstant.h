@@ -79,7 +79,7 @@ typedef enum{
 typedef struct{
 	MagicType				mMagicType;
 	unsigned int			mID;
-	unsigned int			mCDTime;
+	int			mCDTime;
     
     void init(){
         mMagicType=kMagicType_None;

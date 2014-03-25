@@ -101,7 +101,6 @@ void MainGameController::readPlayerProperty()
 void MainGameController::updateStatusData()
 {
     do {
-        CCLog("%s:mCurShield=%d,mCurPortion=%d,mCurStageKillMonster=%d,mCurStageCoin=%d",__FUNCTION__,mCurShield,mCurPortion,mCurStageKillMonster,mCurStageCoin);
         MainGameStatusBar *statusBar = ((MainGameScene *)m_scene)->getStatusLayer();
         CC_BREAK_IF(!statusBar);
         statusBar->setShieldValue(mCurShield,mPlayerProperty.mMaxShield);
@@ -181,33 +180,62 @@ bool MainGameController::judgeIsTriggerMagic()
             } while (0);
             break;
         }
-        case kMagicType_Fireball:
-            
+        case kMagicType_Fireball:{
+            do {
+                if (mMagic.mCDTime==-1) {
+                    tRet=true;
+                }
+            } while (0);
             break;
-        case kMagicType_CounterAttack:
-            
+        }
+        case kMagicType_CounterAttack:{
+            do {
+                
+            } while (0);
             break;
-        case kMagicType_GoldenTouch:
-            
+        }
+        case kMagicType_GoldenTouch:{
+            do {
+                
+            } while (0);
             break;
-        case kMagicType_BoostHealth:
-            
+        }
+        case kMagicType_BoostHealth:{
+            do {
+                
+            } while (0);
             break;
-        case kMagicType_BigGameHunter:
-            
+        }
+        case kMagicType_BigGameHunter:{
+            do {
+                
+            } while (0);
             break;
-        case kMagicType_Shatter:
-            
+        }
+        case kMagicType_Shatter:{
+            do {
+                
+            } while (0);
             break;
-        case kMagicType_BoostGold:
-            
+        }
+        case kMagicType_BoostGold:{
+            do {
+                
+            } while (0);
             break;
-        case kMagicType_Teleport:
-            
+        }
+        case kMagicType_Teleport:{
+            do {
+                
+            } while (0);
             break;
-        case kMagicType_Heal:
-            
+        }
+        case kMagicType_Heal:{
+            do {
+                
+            } while (0);
             break;
+        }
         default:
             break;
     }
@@ -235,9 +263,31 @@ void MainGameController::triggerMagic(MagicType pID)
                 mMagic.mCDTime=18;
                 break;
             }
-            case kMagicType_Fireball:
-                
+            case kMagicType_Fireball:{
+                do {
+                    //随机消去一个3*3的block
+                    CC_BREAK_IF(!mStageConnectedElements);
+                    
+                    int randomIndex = 0;
+                    do {
+                        randomIndex = arc4random()%(GRID_ROW*GRID_VOLUME);
+                    } while ((randomIndex/GRID_VOLUME!=0) && (randomIndex/GRID_VOLUME!=GRID_ROW-1) && (randomIndex%GRID_VOLUME!=0) && (randomIndex%GRID_VOLUME!=GRID_VOLUME-1));
+                    
+                    insertCellIntoConnectedArray(randomIndex/GRID_VOLUME, randomIndex%GRID_VOLUME);
+                    insertCellIntoConnectedArray(randomIndex/GRID_VOLUME-1, randomIndex%GRID_VOLUME-1);
+                    insertCellIntoConnectedArray(randomIndex/GRID_VOLUME-1, randomIndex%GRID_VOLUME);
+                    insertCellIntoConnectedArray(randomIndex/GRID_VOLUME-1, randomIndex%GRID_VOLUME+1);
+                    insertCellIntoConnectedArray(randomIndex/GRID_VOLUME, randomIndex%GRID_VOLUME-1);
+                    insertCellIntoConnectedArray(randomIndex/GRID_VOLUME, randomIndex%GRID_VOLUME+1);
+                    insertCellIntoConnectedArray(randomIndex/GRID_VOLUME+1, randomIndex%GRID_VOLUME-1);
+                    insertCellIntoConnectedArray(randomIndex/GRID_VOLUME+1, randomIndex%GRID_VOLUME);
+                    insertCellIntoConnectedArray(randomIndex/GRID_VOLUME+1, randomIndex%GRID_VOLUME+1);
+                    
+                    clearConnectedElements();
+                } while (0);
+                mMagic.mCDTime=19;
                 break;
+            }
             case kMagicType_CounterAttack:
                 
                 break;
@@ -291,7 +341,6 @@ void MainGameController::triggerWeapon(unsigned int pID)
 
 void MainGameController::triggerBossSkill()
 {
-    CCLog("-------------------");
     do{
         MainGameGridLayer *gridLayer = ((MainGameScene *)m_scene)->getGridLayer();
         CC_BREAK_IF(!gridLayer);
