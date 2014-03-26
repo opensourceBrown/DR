@@ -57,6 +57,8 @@ bool MainGameController::initWith()
     LOG_TRACE
     bool tRet=false;
     do {
+        readPlayerProperty();
+        
         //TO:DO initialization
         mMagicInStage=CCArray::create();
         CC_BREAK_IF(!mMagicInStage);
@@ -74,7 +76,6 @@ bool MainGameController::initWith()
         CC_BREAK_IF(!m_scene);
         m_scene->retain();
         
-        readPlayerProperty();
         mCurShield=mPlayerProperty.mMaxShield;
         mCurPortion=mPlayerProperty.mMaxHealth;
         
@@ -89,16 +90,7 @@ bool MainGameController::initWith()
 void MainGameController::readPlayerProperty()
 {
     //
-    mPlayerProperty.mType=kOccupationType_Human;
-    mPlayerProperty.mMaxHealth=50;
-    mPlayerProperty.mDefencePerShield=1;
-    mPlayerProperty.mMaxShield=4;
-    mPlayerProperty.mHealthPerPotion=1;
-    mPlayerProperty.mBasicDamage=3;
-    mPlayerProperty.mWeaponDamage=2;
-    mPlayerProperty.mLeech=0;
-    mPlayerProperty.mCriticalDamageRate=0;
-    mPlayerProperty.mPierce=0;
+    mPlayerProperty.init();
 }
 
 void MainGameController::updateStatusData()
@@ -469,7 +461,12 @@ void MainGameController::statisticsDataPerRound()
                         }
                     }
                 } else {
-                    block->mMonsterProperty.mLife -= (totalDamagePerRound-block->mMonsterProperty.mDefence);
+                    if (block->mMonsterProperty.mDefence>0 && block->mMonsterProperty.mDefence>=totalDamagePerRound) {
+                        block->mMonsterProperty.mDefence -= totalDamagePerRound;
+                    }else{
+                        block->mMonsterProperty.mLife -= (totalDamagePerRound-block->mMonsterProperty.mDefence);
+                        block->mMonsterProperty.mDefence = 0;
+                    }
                 }
                 
             }else if(block->mType==kElementType_Coin){
@@ -511,6 +508,7 @@ void MainGameController::statisticsDataPerRound()
         MainGameGridLayer *gridLayer = ((MainGameScene *)m_scene)->getGridLayer();
         CC_BREAK_IF(!gridLayer);
         
+        int totalDamage=0;
         for (int i=0; i<GRID_ROW; i++) {
             for (int j=0; j<GRID_VOLUME; j++) {
                 GridCell *cell=gridLayer->getGridCell(i, j);
@@ -520,27 +518,29 @@ void MainGameController::statisticsDataPerRound()
                 CC_BREAK_IF(!block);
                 if (false==block->getStatus()) {
                     if (block->mType==kElementType_Monster && block->mMonsterProperty.mLife>0) {
-                        int weaponShield=1;
-                        if (mPlayerProperty.mWeaponID) {
-                            WeaponConfigure *weapon=WeaponController::shareInstance()->getWeapon(mPlayerProperty.mWeaponID);
-                            if (weapon) {
-                                weaponShield=weapon->mDefencePerShield;
-                            }
-                        }
-                        mCurShield=weaponShield*mCurShield-(block->mMonsterProperty.mDamage-mCurShield*weaponShield>=0?(block->mMonsterProperty.mDamage-mCurShield*weaponShield):0);
-                        if (mCurShield>mPlayerProperty.mMaxShield) {
-                            mCurShield=mPlayerProperty.mMaxShield;
-                        }
-                        if (mCurShield<=0) {
-                            mCurShield=0;
-                            mCurPortion-=block->mMonsterProperty.mDamage;
-                            if (mCurPortion<=0) {
-                                mCurPortion=0;
-                            }
-                        }
+                        totalDamage+=block->mMonsterProperty.mDamage;
                     }
                 }
             }
+        }
+        
+        int weaponShield=1;
+        if (mPlayerProperty.mWeaponID) {
+            WeaponConfigure *weapon=WeaponController::shareInstance()->getWeapon(mPlayerProperty.mWeaponID);
+            if (weapon) {
+                weaponShield=weapon->mDefencePerShield;
+            }
+        }
+        mCurShield=weaponShield*mCurShield-totalDamage;
+        if (mCurShield>0 && mCurShield>mPlayerProperty.mMaxShield) {
+            mCurShield=mPlayerProperty.mMaxShield;
+        }
+        if (mCurShield<0) {
+            mCurPortion+=mCurShield;
+            if (mCurPortion<=0) {
+                mCurPortion=0;
+            }
+            mCurShield=0;
         }
     } while (0);
 }
@@ -583,14 +583,12 @@ int MainGameController::computeTotalDamageOfRound()
         
         if (hasMonster) {
             if (weapon) {
-                CCLog("----------weapon");
                 totalDamagePerRound+=(int)(weapon->mBasicDamage);
             }
             totalDamagePerRound+=mPlayerProperty.mBasicDamage;
         }
     } while (0);
     
-    CCLog("---------------totalDamagePerRound=%d",totalDamagePerRound);
     return totalDamagePerRound;
 }
 

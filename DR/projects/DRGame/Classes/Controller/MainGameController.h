@@ -38,7 +38,6 @@ public:
     
     OccupationType getPlayerOccupation(){ return mPlayerProperty.mType; }
     PlayerProperty getPlayerProperty(){
-        mPlayerProperty.init();
         return mPlayerProperty;
     }
     
