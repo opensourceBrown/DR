@@ -9,13 +9,15 @@
 #endif
 
 #define MOVE_ANIMATION_DURATION         0.2f
+#define BOSS_DESC_LABEL_TAG             100
 
 MainGameGridLayer::MainGameGridLayer():
     m_containerLayer(NULL),
     m_GridCellArray(NULL),
     m_currentSelCell(NULL),
     m_gridCellConnLineArray(NULL),
-    m_needRefresh(false)
+    m_needRefresh(false),
+    m_bossDescTTF(NULL)
 {
     do {
         m_GridCellArray=CCArray::createWithCapacity(GRID_ROW*GRID_VOLUME);
@@ -37,6 +39,7 @@ MainGameGridLayer::~MainGameGridLayer()
         
         CC_BREAK_IF(!m_gridCellConnLineArray);
         CC_SAFE_RELEASE(m_gridCellConnLineArray);
+        CC_SAFE_RELEASE(m_bossDescTTF);
     }while(0);
 }
 
@@ -80,6 +83,17 @@ void  MainGameGridLayer::constructUI()
 		m_containerLayer->setPosition(ccp(0,(WIN_SIZE.height-m_containerLayer->getContentSize().height)/2));
 		addChild(m_containerLayer);
         
+        if (!m_bossDescTTF) {
+            m_bossDescTTF=CCLabelTTF::create("", "Marker Felt", 24);
+            CC_BREAK_IF(!m_bossDescTTF);
+            m_bossDescTTF->retain();
+            m_bossDescTTF->setAnchorPoint(CCPointZero);
+            m_bossDescTTF->setTag(BOSS_DESC_LABEL_TAG);
+            m_bossDescTTF->setColor(ccc3(0,255,0));
+            m_bossDescTTF->setVisible(false);
+            this->addChild(m_bossDescTTF);
+        }
+        
         CC_BREAK_IF(!m_delegate);
         
 		for(int i=0;i<GRID_ROW;i++){
@@ -104,7 +118,6 @@ void MainGameGridLayer::addGridCellToLayer(GridElementProperty *gProperty)
             if (gProperty->mMonsterProperty.mType==kBustyType_Common) {
                 typeStr=CCString::create("Grid_cell_monster.png");
             }else if (gProperty->mMonsterProperty.mType==kBustyType_Boss){
-                CCLog("+++++++++++++++++++++++");
                 typeStr=CCString::create("Grid_cell_boss_monster.jpg");
             }
         }
@@ -129,7 +142,6 @@ void MainGameGridLayer::addGridCellToLayer(GridElementProperty *gProperty)
     }
     GridCell *item=GridCell::createWithFrameName(typeStr->getCString());
     item->setAnchorPoint(ccp(0.5,0.5));
-//    item->setContentSize(CCSizeMake(m_containerLayer->getContentSize().width/GRID_VOLUME, m_containerLayer->getContentSize().height/GRID_ROW));
     item->setCellProperty(gProperty);
     int row = gProperty->mIndex.rIndex;
     int col = gProperty->mIndex.vIndex;
@@ -141,22 +153,19 @@ void MainGameGridLayer::addGridCellToLayer(GridElementProperty *gProperty)
         offsetXCoe=1.5;
         offsetYCoe=2;
     }else{
-//        offsetXCoe=0.5;
-//        offsetYCoe=0.5;
         offsetXCoe=1.5;
         offsetYCoe=2;
     }
     item->setPosition(ccp((col+1)*m_containerLayer->getContentSize().width/GRID_VOLUME-offsetXCoe*item->getContentSize().width,m_containerLayer->getContentSize().height-row*m_containerLayer->getContentSize().height/GRID_ROW-offsetYCoe*item->getContentSize().height));
 #endif
     item->setStatus(true);
-    m_containerLayer->addChild(item);
+    m_containerLayer->addChild(item,1);
     m_GridCellArray->addObject(item);
 }
 
 //update the grid layer:add the new cell to the grid layer and trigger the move action
 void MainGameGridLayer::updateGrid()
 {
-    std::cout<<"updateGrid"<<std::endl;
     scheduleOnce(schedule_selector(MainGameGridLayer::refreshGrid), 0.2);
 }
 
@@ -222,7 +231,6 @@ void MainGameGridLayer::addGridCell(unsigned int rIndex,unsigned int vIndex)
         }
         GridCell *item=GridCell::createWithFrameName(typeStr->getCString());
         item->setAnchorPoint(ccp(0.5,0.5));
-//        item->setContentSize(CCSizeMake(m_containerLayer->getContentSize().width/GRID_VOLUME, m_containerLayer->getContentSize().height/GRID_ROW));
         item->setCellProperty(blockProperty);
 		int row = blockProperty->mIndex.rIndex;
 		int col = blockProperty->mIndex.vIndex;
@@ -248,7 +256,7 @@ void MainGameGridLayer::addGridCell(unsigned int rIndex,unsigned int vIndex)
         }
         item->setPosition(ccp((col+1)*m_containerLayer->getContentSize().width/GRID_VOLUME-offsetXCoe*item->getContentSize().width,m_containerLayer->getContentSize().height+m_containerLayer->getContentSize().height/GRID_ROW-offsetYCoe*item->getContentSize().height));
 #endif
-        m_containerLayer->addChild(item);
+        m_containerLayer->addChild(item,1);
         m_GridCellArray->replaceObjectAtIndex(rIndex*GRID_VOLUME+vIndex, item);
     }while(0);
 }
@@ -440,7 +448,6 @@ void MainGameGridLayer::clearConnectLine()
 bool MainGameGridLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
     CCPoint location=pTouch->getLocation();
-//    CCLog("grid size(%f,%f)",m_containerLayer->getContentSize().width/GRID_VOLUME,m_containerLayer->getContentSize().height/GRID_ROW);
     do{
         CC_BREAK_IF(!m_delegate);
         CC_BREAK_IF(!m_GridCellArray);
@@ -455,6 +462,17 @@ bool MainGameGridLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
                 
                 //notify controller to insert the cell into connected array if the cell can be connected
                 ((MainGameController *)m_delegate)->processGridCellSelected(blockProperty->mIndex.rIndex,blockProperty->mIndex.vIndex);
+                if (blockProperty->mType==kElementType_Monster && blockProperty->mMonsterProperty.mType==kBustyType_Boss) {
+                    if (m_bossDescTTF) {
+                        m_bossDescTTF->setString(blockProperty->mMonsterProperty.mDescription);
+                        m_bossDescTTF->setPosition(ccp(cell->getPosition().x-m_bossDescTTF->getContentSize().width/2,cell->getPosition().y+m_containerLayer->getContentSize().height/GRID_ROW));
+                        m_bossDescTTF->setVisible(true);
+                    }
+                }else{
+                    if (m_bossDescTTF) {
+                        m_bossDescTTF->setVisible(false);
+                    }
+                }
                 break;
 			}
 		}
@@ -485,6 +503,17 @@ void MainGameGridLayer::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
                 
                 //notify controller to insert the cell into connected array if the cell can be connected
                 ((MainGameController *)m_delegate)->processGridCellSelected(blockProperty->mIndex.rIndex,blockProperty->mIndex.vIndex);
+                if (blockProperty->mType==kElementType_Monster && blockProperty->mMonsterProperty.mType==kBustyType_Boss) {
+                    if (m_bossDescTTF) {
+                        m_bossDescTTF->setString(blockProperty->mMonsterProperty.mDescription);
+                        m_bossDescTTF->setPosition(ccp(cell->getPosition().x-m_bossDescTTF->getContentSize().width/2,cell->getPosition().y+m_containerLayer->getContentSize().height/GRID_ROW));
+                        m_bossDescTTF->setVisible(true);
+                    }
+                }else{
+                    if (m_bossDescTTF) {
+                        m_bossDescTTF->setVisible(false);
+                    }
+                }
                 break;
 			}
 		}
@@ -507,6 +536,9 @@ void MainGameGridLayer::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
         }
     }while(0);
     
+    if (m_bossDescTTF) {
+        m_bossDescTTF->setVisible(false);
+    }
     m_currentSelCell=NULL;
 }
 

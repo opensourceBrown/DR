@@ -26,7 +26,6 @@ void GridElementProperty::generateGridElementDataByCSV(bool monsterIncluded)
 {
     GameStatusType *gameStatus = DataManager::sharedInstance()->gameStatus();
     int flag = gameStatus->mFlag;
-    cout<<"flag = "<< flag<<endl;
     if (flag == -1) {
         //not boss
         BarrierFileConfigure *currentBConfigure = DataManager::sharedInstance()->currentBarrierConfigure();
@@ -146,13 +145,40 @@ void GridElementProperty::configureBossProperty()
     BossFileConfigure *bossConfigure = this->getRandomBoss();
     mMonsterProperty.mType = kBustyType_Boss;
     mMonsterProperty.mID = bossConfigure->mBossId;
+<<<<<<< HEAD
     if (bossConfigure->mBossId == 1) {
         mMonsterProperty.mSkillType = kBossBustyType_Chaotic;
+        mMonsterProperty.mName = "chaotic";
+        mMonsterProperty.mDescription = "random exchange the position";
     } else {
         mMonsterProperty.mSkillType = kBossBustyType_Healer;
+        mMonsterProperty.mName = "healer";
+        mMonsterProperty.mDescription = "recover other monster to max value";
     }
+=======
+    std::cout<<"bossid ="<<bossConfigure->mBossId<<std::endl;
+    
+    switch (bossConfigure->mBossId) {
+        case 1:
+            mMonsterProperty.mSkillType = kBossBustyType_Chaotic;
+            break;
+        case 2:
+            mMonsterProperty.mSkillType = kBossBustyType_Healer;
+            break;
+        case 3:
+            mMonsterProperty.mSkillType = kBossBustyType_Spiky;
+            break;
+        case 4:
+            mMonsterProperty.mSkillType = kBossBustyType_Mage;
+            break;
+        default:
+            mMonsterProperty.mSkillType = kBossBustyType_Chaotic;
+            break;
+    }
+    
     mMonsterProperty.mName = "boss";
     mMonsterProperty.mDescription = "This is a boss Monster";
+>>>>>>> FETCH_HEAD
     mMonsterProperty.mDefence = bossConfigure->mF + bossConfigure->mG*(float)gameStatus->mNumberOfRound;      //defence = f + g * round
     mMonsterProperty.mMaxLife = bossConfigure->mD + bossConfigure->mE*(float)gameStatus->mNumberOfRound;      //life = d + e * round
     mMonsterProperty.mLife = mMonsterProperty.mMaxLife;

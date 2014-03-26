@@ -5,7 +5,8 @@
 
 MainGameToolBar::MainGameToolBar():
     m_containerLayer(NULL),
-    m_magicArray(NULL)
+    m_magicArray(NULL),
+    m_magicCDTTF(NULL)
 {
     do {
         m_magicArray=CCArray::create();
@@ -130,6 +131,14 @@ void  MainGameToolBar::constructUI()
         m_containerLayer->addChild(magicMenu);
         CC_SAFE_RELEASE(magicArray);
         
+        if (!m_magicCDTTF) {
+            m_magicCDTTF = CCLabelTTF::create("","Marker Felt",24);
+            CC_BREAK_IF(!m_magicCDTTF);
+            m_magicCDTTF->setColor(ccc3(0,0,255));
+            m_magicCDTTF->setVisible(false);
+            m_containerLayer->addChild(m_magicCDTTF);
+        }
+        
         //weapon:此处要从武器controller中读取，下面暂时用固定的方式写死
         if (DRUserDefault::sharedUserDefault()->getWeaponSwitch()) {
 //            CCString *weaponImgStr=CCString::createWithFormat("weapon_bloodSword_01.png");
@@ -190,6 +199,20 @@ void MainGameToolBar::resetMagicSkill()
     do {
         CC_BREAK_IF(!m_magicArray);
         m_magicArray->removeAllObjects();
+        CC_BREAK_IF(!m_magicCDTTF);
+        m_magicCDTTF->setVisible(false);
+    } while (0);
+}
+
+void MainGameToolBar::refreshMagicCD(int pValue)
+{
+    do {
+        CC_BREAK_IF(!m_magicCDTTF);
+        CCString *cdValue=CCString::createWithFormat("CD:%d",pValue);
+        m_magicCDTTF->setString(cdValue->getCString());
+        if (!(m_magicCDTTF->isVisible())) {
+            m_magicCDTTF->setVisible(true);
+        }
     } while (0);
 }
 
@@ -198,8 +221,10 @@ void MainGameToolBar::magicItemClicked(CCObject *pSender)
     do {
         CCMenuItemSprite *magicItem=(CCMenuItemSprite *)pSender;
         CC_BREAK_IF(!magicItem);
+        if (m_magicCDTTF) {
+            m_magicCDTTF->setPosition(ccp(magicItem->getPosition().x,magicItem->getPosition().y+15));
+        }
         MagicType mID=(MagicType)(magicItem->getTag());
-        CCLog("mID=%d",mID);
         CC_BREAK_IF(!m_delegate);
         ((MainGameController *)m_delegate)->selectMagic(mID);
     } while (0);

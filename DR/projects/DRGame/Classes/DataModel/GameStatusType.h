@@ -21,7 +21,7 @@ public:
     int mBarrierId;              //current barrier
     int mFlag;                   //to calculate param
     int mLife;                   //rest of life
-    int mMaxLife;                //Max life
+    int mMaxLife;                //Max life    
 };
 
 #endif /* defined(__DRGame__GameStatusType__) */

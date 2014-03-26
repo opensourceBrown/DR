@@ -53,6 +53,7 @@ private:
     CCArray                 *m_gridCellConnLineArray;
 
     GridCell                *m_currentSelCell;
+    CCLabelTTF              *m_bossDescTTF;
     bool                    m_needRefresh;
 };
 

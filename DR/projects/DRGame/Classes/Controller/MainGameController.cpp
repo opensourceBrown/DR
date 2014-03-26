@@ -10,6 +10,7 @@
 #include "MainGameStatusBar.h"
 #include "WeaponConfigure.h"
 #include "WeaponController.h"
+#include "MainGameToolBar.h"
 
 //test
 #define PASS_STAGE_KILL_MONSTER         100
@@ -107,7 +108,8 @@ void MainGameController::updateStatusData()
         statusBar->setPortionProgress(mCurPortion);
         statusBar->setKillMonsterProgress(mCurStageKillMonster);
         statusBar->setCoinProgress(mCurStageCoin);
-        statusBar->setRoundValue(DRUserDefault::sharedUserDefault()->getRoundCount());
+        statusBar->setRoundValue(mCurStageRound);
+        statusBar->setScoreProgress(mCurStageScore);
     } while (0);
 }
 
@@ -155,25 +157,31 @@ void MainGameController::selectMagic(MagicType pID)
             default:
                 break;
         }
+        
+        MainGameToolBar *toolBar=((MainGameScene *)m_scene)->getToolBar();
+        if (toolBar) {
+            toolBar->refreshMagicCD(mMagic.mCDTime);
+        }
     }
 }
 
-bool MainGameController::judgeIsTriggerMagic()
+bool MainGameController::judgeIsTriggerMagic(CCArray *pArray)
 {
     bool tRet=false;
     switch (mMagic.mMagicType) {
         case kMagicType_Steal:{     //get 1 coin per monster every round
             CC_BREAK_IF(mMagic.mCDTime>0);
             do {
-                CC_BREAK_IF(!mStageConnectedElements || mStageConnectedElements->count()<=0);
-                for (int i=0; i<mStageConnectedElements->count(); i++) {
-                    GridCell *cell=dynamic_cast<GridCell *>(mStageConnectedElements->objectAtIndex(i));
+                CC_BREAK_IF(!pArray || pArray->count()<=0);
+                for (int i=0; i<pArray->count(); i++) {
+                    GridCell *cell=dynamic_cast<GridCell *>(pArray->objectAtIndex(i));
                     CC_BREAK_IF(!cell);
                     
                     GridElementProperty *block=cell->getCellProperty();
                     CC_BREAK_IF(!block);
                     if (block->mType==kElementType_Monster){
                         tRet=true;
+                        mMagic.mCDTime=18;
                         break;
                     }
                 }
@@ -242,21 +250,23 @@ bool MainGameController::judgeIsTriggerMagic()
     return tRet;
 }
 
-void MainGameController::triggerMagic(MagicType pID)
+void MainGameController::triggerMagic(MagicType pID,CCArray *pArray)
 {
     do {
         switch (pID) {
             case kMagicType_Steal:{     //get 1 coin per monster every round
                 do {
-                    CC_BREAK_IF(!mStageConnectedElements || mStageConnectedElements->count()<=0);
-                    for (int i=0; i<mStageConnectedElements->count(); i++) {
-                        GridCell *cell=dynamic_cast<GridCell *>(mStageConnectedElements->objectAtIndex(i));
+                    CC_BREAK_IF(!pArray || pArray->count()<=0);
+                    for (int i=0; i<pArray->count(); i++) {
+                        GridCell *cell=dynamic_cast<GridCell *>(pArray->objectAtIndex(i));
                         CC_BREAK_IF(!cell);
                         
                         GridElementProperty *block=cell->getCellProperty();
                         CC_BREAK_IF(!block);
                         if (block->mType==kElementType_Monster){
                             DRUserDefault::sharedUserDefault()->setCoin(DRUserDefault::sharedUserDefault()->getCoin()+1);
+                            mCurStageCoin++;
+                            CCLog("--------");
                         }
                     }
                 } while (0);
@@ -427,14 +437,21 @@ void MainGameController::statisticsDataPerRound()
             GridElementProperty *block=cell->getCellProperty();
             CC_BREAK_IF(!block);
             if (block->mType==kElementType_Monster) {
-                
-                if (totalDamagePerRound >= block->mMonsterProperty.mLife) {
+                if (totalDamagePerRound >= block->mMonsterProperty.mLife+block->mMonsterProperty.mDefence) {
                     block->mMonsterProperty.mLife = 0;
                     
                     DRUserDefault::sharedUserDefault()->setKillMonsterCount(DRUserDefault::sharedUserDefault()->getKillMonsterCount()+1);
                     mCurStageKillMonster++;
+                    
+                    if (block->mMonsterProperty.mType==kBustyType_Common) {
+                        DRUserDefault::sharedUserDefault()->setScore(DRUserDefault::sharedUserDefault()->getScore()+1);
+                        mCurStageScore++;
+                    }else{
+                        DRUserDefault::sharedUserDefault()->setScore(DRUserDefault::sharedUserDefault()->getScore()+1);
+                        mCurStageScore++;
+                    }
                 } else {
-                    block->mMonsterProperty.mLife -= totalDamagePerRound;
+                    block->mMonsterProperty.mLife -= (totalDamagePerRound-block->mMonsterProperty.mDefence);
                 }
                 
             }else if(block->mType==kElementType_Coin){
@@ -483,6 +500,9 @@ void MainGameController::statisticsDataPerRound()
                             }
                         }
                         mCurShield=weaponShield*mCurShield-(block->mMonsterProperty.mDamage-mCurShield*weaponShield>=0?(block->mMonsterProperty.mDamage-mCurShield*weaponShield):0);
+                        if (mCurShield>mPlayerProperty.mMaxShield) {
+                            mCurShield=mPlayerProperty.mMaxShield;
+                        }
                         if (mCurShield<=0) {
                             mCurShield=0;
                             mCurPortion-=block->mMonsterProperty.mDamage;
@@ -508,7 +528,6 @@ int MainGameController::computeTotalDamageOfRound()
             WeaponConfigure *item=dynamic_cast<WeaponConfigure *>(weaponsConf->objectAtIndex(i));
             CC_BREAK_IF(!item);
             if (item->mWeaponNumber==mPlayerProperty.mWeaponID) {
-                CCLog("-----------------------------------------");
                 weapon=item;
                 break;
             }
@@ -536,6 +555,7 @@ int MainGameController::computeTotalDamageOfRound()
         
         if (hasMonster) {
             if (weapon) {
+                CCLog("----------weapon");
                 totalDamagePerRound+=(int)(weapon->mBasicDamage);
             }
             totalDamagePerRound+=mPlayerProperty.mBasicDamage;
@@ -551,8 +571,9 @@ void MainGameController::resetStageStatusData()
     mCurStageKillMonster=0;
     mCurStageCoin=0;
     mCurPortion=0;
-    mCurShield=0;
+    mCurShield=mPlayerProperty.mMaxShield;
     mCurStageScore=0;
+    mCurStageRound=0;
 }
 
 bool MainGameController::judgeGameStageIsEnd()
@@ -576,6 +597,7 @@ void MainGameController::endCurrentStage()
     //end game stage:save game status data
     do{
         resetStageStatusData();
+        updateStatusData();
         CCLog("_______________stage end");
     }while(0);
 }
@@ -614,9 +636,6 @@ bool MainGameController::clearConnectedElements()
         
         CC_BREAK_IF(!mStageConnectedElements);
         
-        if (judgeIsTriggerMagic()) {
-            triggerMagic(mMagic.mMagicType);
-        }
         statisticsDataPerRound();
         
         //set grid element property status
@@ -704,11 +723,30 @@ bool MainGameController::clearConnectedElements()
         gridLayer->setUpdateTip(true);
         gridLayer->updateGrid();
     } while (0);
-        
+    
+    CCArray *connectedEle=CCArray::create();
+    connectedEle->addObjectsFromArray(mStageConnectedElements);
     mStageConnectedElements->removeAllObjects();
     
-    mMagic.mCDTime--;
+    if (mMagic.mID>0) {
+        mMagic.mCDTime--;
+        MainGameToolBar *toolBar=((MainGameScene *)m_scene)->getToolBar();
+        if (toolBar) {
+            toolBar->refreshMagicCD(mMagic.mCDTime);
+        }
+    }
+    if (judgeIsTriggerMagic(connectedEle)) {
+        triggerMagic(mMagic.mMagicType,connectedEle);
+    }
+    MainGameToolBar *toolBar=((MainGameScene *)m_scene)->getToolBar();
+    if (toolBar) {
+        toolBar->refreshMagicCD(mMagic.mCDTime);
+    }
+    
     DRUserDefault::sharedUserDefault()->setRoundCount(DRUserDefault::sharedUserDefault()->getRoundCount()+1);
+    mCurStageRound++;
+    DRUserDefault::sharedUserDefault()->setScore(DRUserDefault::sharedUserDefault()->getScore()+1);
+    mCurStageScore++;
     
     updateStatusData();
 	//√øªÿ∫œΩ· ¯∂º≈–∂œµ±«∞πÿø® «∑ÒΩ· ¯

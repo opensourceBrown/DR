@@ -17,6 +17,7 @@ public:
     void    addMagic(MagicType pID);
     void    resetMagicSkill();
     void    magicItemClicked(CCObject *pSender);
+    void    refreshMagicCD(int pValue);                 //test
     
     //test
     void    weaponItemClicked(CCObject *pSender);
@@ -36,6 +37,8 @@ private:
 private:
 	CCLayerColor			*m_containerLayer;
     CCArray                 *m_magicArray;
+    
+    CCLabelTTF              *m_magicCDTTF;
 };
 
 #endif
