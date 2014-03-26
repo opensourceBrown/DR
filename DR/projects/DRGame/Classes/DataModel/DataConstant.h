@@ -51,7 +51,7 @@ typedef enum{
     kBossBustyType_Acidic,          //每一回合把一个血瓶变成酸。删除酸的时候Player会受到跟这个Ｂｏｓｓ的攻击力同等的伤害。
     kBossBustyType_Vampire,         //每次对Player攻击时，自己会回复同等生命值。
     kBossBustyType_Golden,          //每一回合Boss的头上的数字会减少，到0时，Boss会逃跑。
-    kBossBustyType_Freezing,        //随机把自己周围的２个block解冻。被解冻的block无法被消除。每一回合被解冻的block都会重新判断。
+    kBossBustyType_Freezing,        //随机把自己周围的２个block冰冻。被冰冻的block无法被消除。每一回合被冰冻的block都会重新判断。
     kBossBustyType_Mage,            //此Ｂｏｓｓ出现时无法使用魔法
     kBossBustyType_Corrosive,       //此Ｂｏｓｓ出现时无法回复盾
     kBossBustyType_Overseer,        //每一回合把一个剑变成怪兽
