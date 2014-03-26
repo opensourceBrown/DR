@@ -24,7 +24,9 @@ MainGameController::MainGameController():
     mCurPortion(0),
     mCurStageKillMonster(0),
     mCurStageCoin(0),
-    mCurStageScore(0)
+    mCurStageScore(0),
+    mSpiky(false),
+    mMageEnable(true)
 {
     mMagic.init();
     mPlayerProperty.init();
@@ -168,6 +170,9 @@ void MainGameController::selectMagic(MagicType pID)
 bool MainGameController::judgeIsTriggerMagic(CCArray *pArray)
 {
     bool tRet=false;
+    if (mMageEnable) {
+        return tRet;
+    }
     switch (mMagic.mMagicType) {
         case kMagicType_Steal:{     //get 1 coin per monster every round
             CC_BREAK_IF(mMagic.mCDTime>0);
@@ -388,7 +393,7 @@ void MainGameController::triggerBossSkill()
                 } else if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Healer) {
                     //TODO:让所有受到伤害的怪兽回复生命值到最大值。
                     hasBossHealer = true;
-                    break;
+                    continue;
                 }
             }
         }
@@ -430,6 +435,8 @@ void MainGameController::statisticsDataPerRound()
 
         
         int totalDamagePerRound = this->computeTotalDamageOfRound();
+        bool hasMonsterHurt = false;        //是否在消除怪
+        bool hasSpikyClear = false;         //反弹怪是否全消除了(目前仅考虑只有一只的情况)
         for (int i=0; i<mStageConnectedElements->count(); i++) {
             GridCell *cell=dynamic_cast<GridCell *>(mStageConnectedElements->objectAtIndex(i));
             CC_BREAK_IF(!cell);
@@ -438,8 +445,8 @@ void MainGameController::statisticsDataPerRound()
             CC_BREAK_IF(!block);
             if (block->mType==kElementType_Monster) {
                 if (totalDamagePerRound >= block->mMonsterProperty.mLife+block->mMonsterProperty.mDefence) {
+                    hasMonsterHurt = true;
                     block->mMonsterProperty.mLife = 0;
-                    
                     DRUserDefault::sharedUserDefault()->setKillMonsterCount(DRUserDefault::sharedUserDefault()->getKillMonsterCount()+1);
                     mCurStageKillMonster++;
                     
@@ -449,6 +456,17 @@ void MainGameController::statisticsDataPerRound()
                     }else{
                         DRUserDefault::sharedUserDefault()->setScore(DRUserDefault::sharedUserDefault()->getScore()+1);
                         mCurStageScore++;
+                        if (block->mMonsterProperty.mType == kBustyType_Boss) {
+                            if (block->mMonsterProperty.mSkillType == kBossBustyType_Spiky) {
+                                mCurrentSpikyCount--;
+                                if (mCurrentSpikyCount<=0) {
+                                    mCurrentSpikyCount = 0;
+                                    hasSpikyClear = true;
+                                }
+                            } else if (block->mMonsterProperty.mSkillType == kBossBustyType_Mage) {
+                                mMageEnable = true;
+                            }
+                        }
                     }
                 } else {
                     block->mMonsterProperty.mLife -= (totalDamagePerRound-block->mMonsterProperty.mDefence);
@@ -475,6 +493,16 @@ void MainGameController::statisticsDataPerRound()
                     mCurPortion=mPlayerProperty.mMaxHealth;
                 }
             }
+        }
+        
+        if (hasMonsterHurt && mSpiky) { //有反弹boss
+            mCurPortion-=totalDamagePerRound;
+            if (mCurPortion<=0) {
+                mCurPortion=0;
+            }
+        }
+        if (hasSpikyClear) {
+            mSpiky = false;
         }
     }while(0);
     
@@ -797,6 +825,17 @@ bool MainGameController::generateGridCell(unsigned int rIndex,unsigned int vInde
             blockProperty->generateGridElementDataByCSV(true);
             
             blockProperty->saveToDictionary(rDict);
+        }
+        
+        //生成boss时判断状态逻辑
+        if (blockProperty->mMonsterProperty.mType == kBustyType_Boss) {
+            
+            if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Spiky) {
+                mSpiky = true;
+                mCurrentSpikyCount++;
+            } else if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Mage) {
+                mMageEnable = false;
+            }
         }
         
         if (rIndex*GRID_VOLUME+vIndex<mGridPropertyContainer->count() && mGridPropertyContainer->objectAtIndex(rIndex*GRID_VOLUME+vIndex)) {
