@@ -114,7 +114,6 @@ void MainGameGridLayer::addGridCellToLayer(GridElementProperty *gProperty)
         case kElementType_Monster:
         {
             //select monster image according to the type
-            //select monster image according to the type
             if (gProperty->mMonsterProperty.mType==kBustyType_Common) {
                 typeStr=CCString::create("Grid_cell_monster.png");
             }else if (gProperty->mMonsterProperty.mType==kBustyType_Boss){
@@ -126,7 +125,7 @@ void MainGameGridLayer::addGridCellToLayer(GridElementProperty *gProperty)
             typeStr=CCString::create("Grid_cell_sword.png");
             break;
         case kElementType_Bow:
-            typeStr=CCString::create("Grid_cell_sword.png");                //暂时都写成剑
+            typeStr=CCString::create("Grid_cell_bow.png");                //暂时都写成剑
             break;
         case kElementType_Coin:
             typeStr=CCString::create("Grid_cell_coin.png");
@@ -167,6 +166,47 @@ void MainGameGridLayer::addGridCellToLayer(GridElementProperty *gProperty)
 void MainGameGridLayer::updateGrid()
 {
     scheduleOnce(schedule_selector(MainGameGridLayer::refreshGrid), 0.2);
+}
+
+void MainGameGridLayer::refreshCell(unsigned int rIndex,unsigned int vIndexf)
+{
+    do {
+        GridCell *cell=dynamic_cast<GridCell *>(m_GridCellArray->objectAtIndex(rIndex*GRID_VOLUME+vIndexf));
+        CC_BREAK_IF(!cell);
+        GridElementProperty *gProperty=cell->getCellProperty();
+        CC_BREAK_IF(!gProperty);
+        CCString *typeStr=NULL;
+        switch (gProperty->mType) {
+            case kElementType_Monster:
+            {
+                //select monster image according to the type
+                if (gProperty->mMonsterProperty.mType==kBustyType_Common) {
+                    typeStr=CCString::create("Grid_cell_monster.png");
+                }else if (gProperty->mMonsterProperty.mType==kBustyType_Boss){
+                    typeStr=CCString::create("Grid_cell_boss_monster.jpg");
+                }
+            }
+                break;
+            case kElementType_Sword:
+                typeStr=CCString::create("Grid_cell_sword.png");
+                break;
+            case kElementType_Bow:
+                typeStr=CCString::create("Grid_cell_bow.png");
+                break;
+            case kElementType_Coin:
+                typeStr=CCString::create("Grid_cell_coin.png");
+                break;
+            case kElementType_Potion:
+                typeStr=CCString::create("Grid_cell_potion.png");
+                break;
+            case kElementType_Shield:
+                typeStr=CCString::create("Grid_cell_shield.png");
+                break;
+            default:
+                break;
+        }
+        cell->refreshCell(typeStr->getCString());
+    } while (0);
 }
 
 void MainGameGridLayer::refreshGrid(float pDelta)
@@ -217,7 +257,7 @@ void MainGameGridLayer::addGridCell(unsigned int rIndex,unsigned int vIndex)
                 typeStr=CCString::create("Grid_cell_sword.png");
                 break;
             case kElementType_Bow:
-                typeStr=CCString::create("Grid_cell_sword.png");                //暂时都写成剑
+                typeStr=CCString::create("Grid_cell_bow.png");
                 break;
             case kElementType_Coin:
                 typeStr=CCString::create("Grid_cell_coin.png");
@@ -227,6 +267,8 @@ void MainGameGridLayer::addGridCell(unsigned int rIndex,unsigned int vIndex)
                 break;
             case kElementType_Shield:
                 typeStr=CCString::create("Grid_cell_shield.png");
+                break;
+            default:
                 break;
         }
         GridCell *item=GridCell::createWithFrameName(typeStr->getCString());
@@ -351,7 +393,7 @@ void MainGameGridLayer::moveAnimationCompleteCallback(CCObject *pSender)
         CC_BREAK_IF(!m_delegate);
         CC_BREAK_IF(!m_needRefresh);
         m_needRefresh=false;
-        ((MainGameController *)m_delegate)->triggerBossSkill();
+        ((MainGameController *)m_delegate)->cleanAnimationCompeleteCallback();
     } while (0);
 }
 

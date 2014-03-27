@@ -17,6 +17,7 @@ public:
     
     static GridCell* createWithFrameName(const char *pszFileName);
 
+    void refreshCell(const char *pszFileName);
     void refreshMonsterPropertyLabel();         //refresh Monster`s attack,defence or life
     
     void setCellProperty(GridElementProperty *pElement);

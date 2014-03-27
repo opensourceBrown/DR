@@ -32,6 +32,32 @@ GridCell* GridCell::createWithFrameName(const char *pszFileName)
     return NULL;
 }
 
+void GridCell::refreshCell(const char *pszFileName)
+{
+    do {
+        CC_BREAK_IF(!pszFileName);
+        if (m_elementGridImg) {
+            m_elementGridImg->removeFromParentAndCleanup(true);
+            m_elementGridImg=NULL;
+        }
+        m_elementGridImg=CCSprite::createWithSpriteFrameName(pszFileName);
+        CC_BREAK_IF(!m_elementGridImg);
+        this->setContentSize(m_elementGridImg->getContentSize());
+        addChild(m_elementGridImg);
+        
+        if (m_property && m_property->mType==kElementType_Monster) {
+            refreshMonsterPropertyLabel();
+        }else{
+            CC_BREAK_IF(!m_AttackValueTTF);
+            CC_BREAK_IF(!m_DefenceValueTTF);
+            CC_BREAK_IF(!m_LifeValueTTF);
+            m_AttackValueTTF->setVisible(false);
+            m_DefenceValueTTF->setVisible(false);
+            m_LifeValueTTF->setVisible(false);
+        }
+    } while (0);
+}
+
 void GridCell::refreshMonsterPropertyLabel()
 {
     if (m_AttackValueTTF != NULL) {
@@ -40,6 +66,7 @@ void GridCell::refreshMonsterPropertyLabel()
         
         m_AttackValueTTF->setAnchorPoint(ccp(0.5,0.5));
         m_AttackValueTTF->setContentSize(CCSizeMake(20, 15));
+        m_AttackValueTTF->setVisible(true);
     }
     
     if (m_DefenceValueTTF != NULL) {
@@ -48,6 +75,7 @@ void GridCell::refreshMonsterPropertyLabel()
         
         m_DefenceValueTTF->setAnchorPoint(ccp(0.5,0.5));
         m_DefenceValueTTF->setContentSize(CCSizeMake(20, 15));
+        m_DefenceValueTTF->setVisible(true);
     }
     
     if (m_LifeValueTTF != NULL) {
@@ -56,6 +84,7 @@ void GridCell::refreshMonsterPropertyLabel()
         
         m_LifeValueTTF->setAnchorPoint(ccp(0.5,0.5));
         m_LifeValueTTF->setContentSize(CCSizeMake(20, 15));
+        m_LifeValueTTF->setVisible(true);
     }
 }
 

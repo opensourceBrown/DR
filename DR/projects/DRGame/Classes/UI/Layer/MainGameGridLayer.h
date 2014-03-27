@@ -30,6 +30,8 @@ public:
     
     void refreshMonsterPropertyLabelOfAllGridCell();
     void setUpdateTip(bool pValue){m_needRefresh=pValue;}
+    
+    void refreshCell(unsigned int rIndex,unsigned int vIndexf);
 private:
     void constructUI();
     void addGridCellToLayer(GridElementProperty *gProperty);

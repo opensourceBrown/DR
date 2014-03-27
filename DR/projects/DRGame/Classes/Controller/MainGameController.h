@@ -48,7 +48,7 @@ public:
     void equipWeapon(unsigned int pID);
     void disableWeapon(unsigned int pID);
     
-    void triggerBossSkill();
+    void cleanAnimationCompeleteCallback();
     
     void refreshWeapon();
 
@@ -82,14 +82,19 @@ private:
     
     bool judgeIsTriggerMagic(CCArray *pArray);
     void triggerMagic(MagicType pID,CCArray *pArray);
-    
+    void triggerMagicAfterCleanAnimation();
+    void triggerMagicAnimation(MagicType pID);
     void triggerWeapon(unsigned int pID);
+    
+    void triggerBossSkill();
     
     void recoverMonsterLifeFull();
     
     void statisticsDataPerRound();
     int  computeTotalDamageOfRound();
     void resetStageStatusData();
+    
+    void cleanAndRefreshGrid();
 
 private:
 	unsigned int			mCoins;						//√ø“ªπÿø®(stage£©¿€º∆µƒΩ±“
@@ -124,6 +129,8 @@ private:
     MagicProperty           mMagic;
     
     CCArray                 *mGridPropertyContainer;
+    
+    bool                    mMagicTriggerTip;           //remember the trigger status of some delay magic
 private:
 
 };
