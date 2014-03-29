@@ -134,7 +134,7 @@ void MainGameController::selectMagic(MagicType pID)
             case kMagicType_BoostHealth:
                 mMagic.mCDTime=20;
                 break;
-            case kMagicType_BigGameHunter:
+            case kMagicType_Scavenge:
                 mMagic.mCDTime=20;
                 break;
             case kMagicType_Shatter:
@@ -189,41 +189,16 @@ bool MainGameController::judgeIsTriggerMagic(CCArray *pArray)
         case kMagicType_Fireball:
         case kMagicType_CounterAttack:
         case kMagicType_GoldenTouch:
-        case kMagicType_BoostHealth:{
+        case kMagicType_BoostHealth:
+        case kMagicType_Scavenge:
+        case kMagicType_Shatter:
+        case kMagicType_BoostGold:
+        case kMagicType_Teleport:
+        case kMagicType_Heal:{
             do {
                 if (mMagic.mCDTime==0) {
                     tRet=true;
                 }
-            } while (0);
-            break;
-        }
-        case kMagicType_BigGameHunter:{
-            do {
-                
-            } while (0);
-            break;
-        }
-        case kMagicType_Shatter:{
-            do {
-                
-            } while (0);
-            break;
-        }
-        case kMagicType_BoostGold:{
-            do {
-                
-            } while (0);
-            break;
-        }
-        case kMagicType_Teleport:{
-            do {
-                
-            } while (0);
-            break;
-        }
-        case kMagicType_Heal:{
-            do {
-                
             } while (0);
             break;
         }
@@ -343,10 +318,6 @@ void MainGameController::triggerMagic(MagicType pID,CCArray *pArray)
                 mMagicTriggerTip=false;
                 break;
             }
-            case kMagicType_BigGameHunter:{
-                
-                break;
-            }
             case kMagicType_BoostGold:{
                 do{
                     for (int i=0; i<pArray->count(); i++) {
@@ -390,7 +361,7 @@ void MainGameController::triggerMagicAfterCleanAnimation()
                             GridElementProperty *block=cell->getCellProperty();
                             CC_BREAK_IF(!block);
                             if (block->mType==kElementType_Sword) {
-                                block->mType==kElementType_Coin;
+                                block->mType=kElementType_Coin;
                             }
                             GridElementProperty *eleBlock=dynamic_cast<GridElementProperty *>(mGridPropertyContainer->objectAtIndex(i*GRID_VOLUME+j));;
                             CC_BREAK_IF(!eleBlock);
@@ -435,6 +406,32 @@ void MainGameController::triggerMagicAfterCleanAnimation()
                 mMagic.mCDTime=23;
                 mMagicTriggerTip=false;
                 triggerMagicAnimation(kMagicType_Shatter);
+                break;
+            }
+            case kMagicType_Scavenge:{
+                MainGameGridLayer *gridLayer = ((MainGameScene *)m_scene)->getGridLayer();
+                CC_BREAK_IF(!gridLayer);
+                
+                for (int i=0; i<GRID_ROW; i++) {
+                    for (int j=0; j<GRID_VOLUME; j++) {
+                        GridCell *cell=gridLayer->getGridCell(i, j);
+                        CC_BREAK_IF(!cell);
+                        GridElementProperty *block=cell->getCellProperty();
+                        CC_BREAK_IF(!block);
+                        if (block->mType==kElementType_Sword) {
+                            block->mType=kElementType_Shield;
+                        }
+                        GridElementProperty *eleBlock=dynamic_cast<GridElementProperty *>(mGridPropertyContainer->objectAtIndex(i*GRID_VOLUME+j));;
+                        CC_BREAK_IF(!eleBlock);
+                        if (eleBlock->mType==kElementType_Sword) {
+                            eleBlock->mType=kElementType_Shield;
+                        }
+                        gridLayer->refreshCell(i, j);
+                    }
+                }
+                mMagic.mCDTime=20;
+                mMagicTriggerTip=false;
+                triggerMagicAnimation(kMagicType_Scavenge);
                 break;
             }
             case kMagicType_Teleport:{

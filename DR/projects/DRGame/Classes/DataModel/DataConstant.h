@@ -68,7 +68,7 @@ typedef enum{
     kMagicType_CounterAttack,
     kMagicType_GoldenTouch,
     kMagicType_BoostHealth,
-    kMagicType_BigGameHunter,
+    kMagicType_Scavenge,
     kMagicType_Shatter,
     kMagicType_BoostGold,
     kMagicType_Teleport,
