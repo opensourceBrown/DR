@@ -450,7 +450,6 @@ void MainGameGridLayer::addConnectLine(GridCell *fCell,GridCell *sCell)
             tRotate=(sBlockProperty->mIndex.rIndex<fBlockProperty->mIndex.rIndex)?((sBlockProperty->mIndex.vIndex>fBlockProperty->mIndex.vIndex)?-45:-135):((sBlockProperty->mIndex.vIndex>fBlockProperty->mIndex.vIndex)?45:135);
         }else if(abs(fBlockProperty->mIndex.rIndex-sBlockProperty->mIndex.rIndex)==2 || abs(fBlockProperty->mIndex.vIndex-sBlockProperty->mIndex.vIndex)==2){
             tRotate=(sBlockProperty->mIndex.rIndex<fBlockProperty->mIndex.rIndex)?((fBlockProperty->mIndex.rIndex-sBlockProperty->mIndex.rIndex==1)?((sBlockProperty->mIndex.vIndex>fBlockProperty->mIndex.vIndex)?-30:-150):((sBlockProperty->mIndex.vIndex>fBlockProperty->mIndex.vIndex)?-65:-115)):((sBlockProperty->mIndex.rIndex-fBlockProperty->mIndex.rIndex==1)?((sBlockProperty->mIndex.vIndex>fBlockProperty->mIndex.vIndex)?30:150):((sBlockProperty->mIndex.vIndex>fBlockProperty->mIndex.vIndex)?65:115));
-            CCLog("----------rotate:%f",tRotate);
         }
         
         line->setRotation(tRotate);

@@ -531,7 +531,7 @@ void MainGameController::triggerBossSkill()
             
             if (blockProperty->mType == kElementType_Monster
                 && blockProperty->mMonsterProperty.mType == kBustyType_Boss) {
-                if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Chaotic || blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Healer) {
+                if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Chaotic) {
                     //TODO:Chaotic boss,随机移动自己的地方
                     int randomIndex = 0;
                     do {
