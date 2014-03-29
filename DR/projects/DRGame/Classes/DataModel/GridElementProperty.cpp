@@ -157,6 +157,7 @@ void GridElementProperty::configureBossProperty()
             mMonsterProperty.mSkillType = kBossBustyType_Poisonous;
             mMonsterProperty.mName = "Poisonous";
             mMonsterProperty.mDescription = "Poisonous";
+            mMonsterProperty.mValidRound=5;
             break;
         }
         case 3:{

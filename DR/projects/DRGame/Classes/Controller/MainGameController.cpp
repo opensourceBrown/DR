@@ -550,7 +550,13 @@ void MainGameController::triggerBossSkill()
                     //notify the grid layer to exchange cell in m_GridCellArray
                     gridLayer->exchangeGridCell(blockProperty->mIndex.rIndex*GRID_VOLUME+blockProperty->mIndex.vIndex, randomBlockProperty->mIndex.rIndex*GRID_VOLUME+randomBlockProperty->mIndex.vIndex);
                 } else if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Poisonous) {
-                    
+                    if (blockProperty->mMonsterProperty.mValidRound>0) {
+                        mCurPortion-=(mPlayerProperty.mMaxHealth/10);
+                        if (mCurPortion<0) {
+                            mCurPortion=0;
+                        }
+                        blockProperty->mMonsterProperty.mValidRound--;
+                    }
                 }else if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Healer){
                     //TODO:让所有受到伤害的怪兽回复生命值到最大值。
                     hasBossHealer = true;
@@ -563,6 +569,7 @@ void MainGameController::triggerBossSkill()
             gridLayer->refreshMonsterPropertyLabelOfAllGridCell();
         }
         gridLayer->updateGrid();
+        updateStatusData();
     }while(0);
 }
 
