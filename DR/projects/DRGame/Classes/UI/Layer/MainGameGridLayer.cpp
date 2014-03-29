@@ -436,11 +436,9 @@ void MainGameGridLayer::addConnectLine(GridCell *fCell,GridCell *sCell)
         CC_BREAK_IF(!line);
         line->setAnchorPoint(ccp(0,0.5));
         float tScaleX=1;
-        if (fBlockProperty->mIndex.rIndex==sBlockProperty->mIndex.rIndex || fBlockProperty->mIndex.vIndex==sBlockProperty->mIndex.vIndex) {
-            tScaleX=m_containerLayer->getContentSize().width/GRID_VOLUME/line->getContentSize().width;
-        }else{
-            tScaleX=m_containerLayer->getContentSize().width/GRID_VOLUME*1.42/line->getContentSize().width;
-        }
+        
+        tScaleX=((m_containerLayer->getContentSize().width+fCell->getContentSize().width)/GRID_VOLUME/line->getContentSize().width)*powf(powf(abs(fBlockProperty->mIndex.rIndex-sBlockProperty->mIndex.rIndex), 2)+powf(abs(fBlockProperty->mIndex.vIndex-sBlockProperty->mIndex.vIndex), 2), 0.5);
+        
         line->setScaleX(tScaleX);
         line->setPosition(ccp(fCell->getPosition().x-fCell->getContentSize().width/2,fCell->getPosition().y+m_containerLayer->getContentSize().height/GRID_ROW/2+fCell->getGridNodeHeight()/2));
         
@@ -448,8 +446,11 @@ void MainGameGridLayer::addConnectLine(GridCell *fCell,GridCell *sCell)
         //judge the relative postion relationship for the two cells
         if (fBlockProperty->mIndex.rIndex==sBlockProperty->mIndex.rIndex || fBlockProperty->mIndex.vIndex==sBlockProperty->mIndex.vIndex) {
             tRotate=(fBlockProperty->mIndex.rIndex==sBlockProperty->mIndex.rIndex)?((sBlockProperty->mIndex.vIndex>fBlockProperty->mIndex.vIndex)?0:-180):(sBlockProperty->mIndex.rIndex>fBlockProperty->mIndex.rIndex?90:-90);
-        }else{
+        }else if(abs(fBlockProperty->mIndex.rIndex-sBlockProperty->mIndex.rIndex)==abs(fBlockProperty->mIndex.vIndex-sBlockProperty->mIndex.vIndex)){
             tRotate=(sBlockProperty->mIndex.rIndex<fBlockProperty->mIndex.rIndex)?((sBlockProperty->mIndex.vIndex>fBlockProperty->mIndex.vIndex)?-45:-135):((sBlockProperty->mIndex.vIndex>fBlockProperty->mIndex.vIndex)?45:135);
+        }else if(abs(fBlockProperty->mIndex.rIndex-sBlockProperty->mIndex.rIndex)==2 || abs(fBlockProperty->mIndex.vIndex-sBlockProperty->mIndex.vIndex)==2){
+            tRotate=(sBlockProperty->mIndex.rIndex<fBlockProperty->mIndex.rIndex)?((fBlockProperty->mIndex.rIndex-sBlockProperty->mIndex.rIndex==1)?((sBlockProperty->mIndex.vIndex>fBlockProperty->mIndex.vIndex)?-30:-150):((sBlockProperty->mIndex.vIndex>fBlockProperty->mIndex.vIndex)?-65:-115)):((sBlockProperty->mIndex.rIndex-fBlockProperty->mIndex.rIndex==1)?((sBlockProperty->mIndex.vIndex>fBlockProperty->mIndex.vIndex)?30:150):((sBlockProperty->mIndex.vIndex>fBlockProperty->mIndex.vIndex)?65:115));
+            CCLog("----------rotate:%f",tRotate);
         }
         
         line->setRotation(tRotate);

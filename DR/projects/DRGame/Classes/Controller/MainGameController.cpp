@@ -318,13 +318,10 @@ void MainGameController::triggerMagic(MagicType pID,CCArray *pArray)
                 break;
             }
             case kMagicType_CounterAttack:{
-                //delay 1 round to trigger magic
+                //monster attack itself
                 mMagic.mCDTime=23;
                 break;
             }
-            case kMagicType_GoldenTouch:
-                //change sword to gold coin which is not in mStageConnectedElements after clean animation
-                break;
             case kMagicType_BoostHealth:{
                 do{
                     for (int i=0; i<pArray->count(); i++) {
@@ -350,9 +347,6 @@ void MainGameController::triggerMagic(MagicType pID,CCArray *pArray)
                 
                 break;
             }
-            case kMagicType_Shatter:
-                //half the monster's property(shield & damage):delay trigger
-                break;
             case kMagicType_BoostGold:{
                 do{
                     for (int i=0; i<pArray->count(); i++) {
@@ -401,7 +395,7 @@ void MainGameController::triggerMagicAfterCleanAnimation()
                             GridElementProperty *eleBlock=dynamic_cast<GridElementProperty *>(mGridPropertyContainer->objectAtIndex(i*GRID_VOLUME+j));;
                             CC_BREAK_IF(!eleBlock);
                             if (eleBlock->mType==kElementType_Sword) {
-                                eleBlock->mType==kElementType_Coin;
+                                eleBlock->mType=kElementType_Coin;
                             }
                             gridLayer->refreshCell(i, j);
                         }
@@ -413,7 +407,34 @@ void MainGameController::triggerMagicAfterCleanAnimation()
                 break;
             }
             case kMagicType_Shatter:{
-                
+                //half the monster's property(shield & damage)
+                do {
+                    MainGameGridLayer *gridLayer = ((MainGameScene *)m_scene)->getGridLayer();
+                    CC_BREAK_IF(!gridLayer);
+                    
+                    for (int i=0; i<GRID_ROW; i++) {
+                        for (int j=0; j<GRID_VOLUME; j++) {
+                            GridCell *cell=gridLayer->getGridCell(i, j);
+                            CC_BREAK_IF(!cell);
+                            GridElementProperty *block=cell->getCellProperty();
+                            CC_BREAK_IF(!block);
+                            if (block->mType==kElementType_Monster) {
+                                block->mMonsterProperty.mDamage=block->mMonsterProperty.mDamage/2;
+                                block->mMonsterProperty.mDefence=block->mMonsterProperty.mDefence/2;
+                            }
+                            GridElementProperty *eleBlock=dynamic_cast<GridElementProperty *>(mGridPropertyContainer->objectAtIndex(i*GRID_VOLUME+j));;
+                            CC_BREAK_IF(!eleBlock);
+                            if (eleBlock->mType==kElementType_Monster) {
+                                eleBlock->mMonsterProperty.mDamage=eleBlock->mMonsterProperty.mDamage/2;
+                                eleBlock->mMonsterProperty.mDefence=eleBlock->mMonsterProperty.mDefence/2;
+                            }
+                            gridLayer->refreshCell(i, j);
+                        }
+                    }
+                } while (0);
+                mMagic.mCDTime=23;
+                mMagicTriggerTip=false;
+                triggerMagicAnimation(kMagicType_Shatter);
                 break;
             }
             case kMagicType_Teleport:{
@@ -657,7 +678,7 @@ void MainGameController::statisticsDataPerRound()
         MainGameGridLayer *gridLayer = ((MainGameScene *)m_scene)->getGridLayer();
         CC_BREAK_IF(!gridLayer);
         
-        if (mMagicTriggerTip && mMagic.mMagicType==kMagicType_CounterAttack && mMagic.mCDTime==23) {
+        if (mMagicTriggerTip && mMagic.mMagicType==kMagicType_CounterAttack && mMagic.mCDTime==22) {
             //CounterAttack magic
             for (int i=0; i<GRID_ROW; i++) {
                 for (int j=0; j<GRID_VOLUME; j++) {
@@ -679,6 +700,8 @@ void MainGameController::statisticsDataPerRound()
                                 DRUserDefault::sharedUserDefault()->setScore(DRUserDefault::sharedUserDefault()->getScore()+1);
                                 mCurStageScore++;
                             }
+                            
+                            insertCellIntoConnectedArray(block->mIndex.rIndex, block->mIndex.vIndex);
                         }else{
                             if (block->mMonsterProperty.mDefence>0 && block->mMonsterProperty.mDefence>=block->mMonsterProperty.mDamage) {
                                 block->mMonsterProperty.mDefence -= block->mMonsterProperty.mDamage;
@@ -686,6 +709,7 @@ void MainGameController::statisticsDataPerRound()
                                 block->mMonsterProperty.mLife -= (block->mMonsterProperty.mDamage-block->mMonsterProperty.mDefence);
                                 block->mMonsterProperty.mDefence = 0;
                             }
+                            gridLayer->refreshCell(block->mIndex.rIndex, block->mIndex.vIndex);
                         }
                     }
                 }
