@@ -668,6 +668,20 @@ void MainGameController::statisticsDataPerRound()
         int totalDamagePerRound = this->computeTotalDamageOfRound();
         bool hasMonsterHurt = false;        //是否在消除怪
         bool hasSpikyClear = false;         //反弹怪是否全消除了(目前仅考虑只有一只的情况)
+        bool hasCorrosiveBoss=false;
+        
+        for (int i=0; i<GRID_ROW; i++) {
+            for (int j=0; j<GRID_VOLUME; j++) {
+                GridCell *cell=gridLayer->getGridCell(i, j);
+                CC_BREAK_IF(!cell);
+                GridElementProperty *block=cell->getCellProperty();
+                CC_BREAK_IF(!block);
+                if (block->mType==kElementType_Monster && block->mMonsterProperty.mType==kBossBustyType_Corrosive && block->mMonsterProperty.mLife>0) {
+                    hasCorrosiveBoss=true;
+                    break;
+                }
+            }
+        }
         for (int i=0; i<mStageConnectedElements->count(); i++) {
             GridCell *cell=dynamic_cast<GridCell *>(mStageConnectedElements->objectAtIndex(i));
             CC_BREAK_IF(!cell);
@@ -714,9 +728,11 @@ void MainGameController::statisticsDataPerRound()
                 DRUserDefault::sharedUserDefault()->setCoin(DRUserDefault::sharedUserDefault()->getCoin()+1);
                 mCurStageCoin++;
             }else if(block->mType==kElementType_Shield){
-                mCurShield++;
-                if (mCurShield>mPlayerProperty.mMaxShield) {
-                    mCurShield=mPlayerProperty.mMaxShield;
+                if (!hasCorrosiveBoss) {
+                    mCurShield++;
+                    if (mCurShield>mPlayerProperty.mMaxShield) {
+                        mCurShield=mPlayerProperty.mMaxShield;
+                    }
                 }
             }else if(block->mType==kElementType_Potion){
                 int weaponPortion=1;
