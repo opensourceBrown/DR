@@ -68,11 +68,15 @@ typedef enum{
     kMagicType_CounterAttack,
     kMagicType_GoldenTouch,
     kMagicType_BoostHealth,
-    kMagicType_Scavenge,
+    kMagicType_BigGameHunter,
     kMagicType_Shatter,
     kMagicType_BoostGold,
     kMagicType_Teleport,
     kMagicType_Heal,
+    kMagicType_TreasureChamber,
+    kMagicType_ManaPotion,
+    kMagicType_Earthquake,
+    kMagicType_Scavenge,
 }MagicType;
 
 //定义魔法的结构
@@ -197,6 +201,7 @@ typedef struct{
     float                   mLife;
     float                   mMaxLife;
     float                   mDamage;
+    unsigned int            mValidRound;            //有效回合数
 }BustyProperty;
 
 //定义关卡结构

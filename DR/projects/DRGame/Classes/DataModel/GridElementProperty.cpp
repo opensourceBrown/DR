@@ -150,24 +150,93 @@ void GridElementProperty::configureBossProperty()
         case 1:{
             mMonsterProperty.mSkillType = kBossBustyType_Chaotic;
             mMonsterProperty.mName = "chaotic";
-            mMonsterProperty.mDescription = "random exchange the position";
+            mMonsterProperty.mDescription = "chaotic";
             break;
         }
         case 2:{
-            mMonsterProperty.mSkillType = kBossBustyType_Healer;
-            mMonsterProperty.mName = "healer";
-            mMonsterProperty.mDescription = "recover other monster to max value";
+            mMonsterProperty.mSkillType = kBossBustyType_Poisonous;
+            mMonsterProperty.mName = "Poisonous";
+            mMonsterProperty.mDescription = "Poisonous";
             break;
         }
-        case 3:
+        case 3:{
+            mMonsterProperty.mSkillType = kBossBustyType_Healer;
+            mMonsterProperty.mName = "healer";
+            mMonsterProperty.mDescription = "healer";
+            break;
+        }
+        case 4:{
             mMonsterProperty.mSkillType = kBossBustyType_Spiky;
+            mMonsterProperty.mName = "spiky";
+            mMonsterProperty.mDescription = "spiky";
             break;
-        case 4:
+        }
+        case 5:{
+            mMonsterProperty.mSkillType = kBossBustyType_Acidic;
+            mMonsterProperty.mName = "Acidic";
+            mMonsterProperty.mDescription = "Acidic";
+            break;
+        }
+        case 6:{
+            mMonsterProperty.mSkillType = kBossBustyType_Vampire;
+            mMonsterProperty.mName = "Vampire";
+            mMonsterProperty.mDescription = "Vampire";
+            break;
+        }
+        case 7:{
+            mMonsterProperty.mSkillType = kBossBustyType_Golden;
+            mMonsterProperty.mName = "Golden";
+            mMonsterProperty.mDescription = "Golden";
+            break;
+        }
+        case 8:{
+            mMonsterProperty.mSkillType = kBossBustyType_Freezing;
+            mMonsterProperty.mName = "Freezing";
+            mMonsterProperty.mDescription = "Freezing";
+            break;
+        }
+        case 9:{
             mMonsterProperty.mSkillType = kBossBustyType_Mage;
+            mMonsterProperty.mName = "Mage";
+            mMonsterProperty.mDescription = "Mage";
             break;
-        default:
+        }
+        case 10:{
+            mMonsterProperty.mSkillType = kBossBustyType_Corrosive;
+            mMonsterProperty.mName = "Corrosive";
+            mMonsterProperty.mDescription = "Corrosive";
+            break;
+        }
+        case 11:{
+            mMonsterProperty.mSkillType = kBossBustyType_Overseer;
+            mMonsterProperty.mName = "Overseer";
+            mMonsterProperty.mDescription = "Overseer";
+            break;
+        }
+        case 12:{
+            mMonsterProperty.mSkillType = kBossBustyType_Flaming;
+            mMonsterProperty.mName = "Flaming";
+            mMonsterProperty.mDescription = "Flaming";
+            break;
+        }
+        case 13:{
+            mMonsterProperty.mSkillType = kBossBustyType_Trampling;
+            mMonsterProperty.mName = "Trampling";
+            mMonsterProperty.mDescription = "Trampling";
+            break;
+        }
+        case 14:{
+            mMonsterProperty.mSkillType = kBossBustyType_Kamikaze;
+            mMonsterProperty.mName = "Kamikaze";
+            mMonsterProperty.mDescription = "Kamikaze";
+            break;
+        }
+        default:{
             mMonsterProperty.mSkillType = kBossBustyType_Chaotic;
+            mMonsterProperty.mName = "Chaotic";
+            mMonsterProperty.mDescription = "Chaotic";
             break;
+        }
     }
     mMonsterProperty.mDefence = bossConfigure->mF + bossConfigure->mG*(float)gameStatus->mNumberOfRound;      //defence = f + g * round
     mMonsterProperty.mMaxLife = bossConfigure->mD + bossConfigure->mE*(float)gameStatus->mNumberOfRound;      //life = d + e * round
