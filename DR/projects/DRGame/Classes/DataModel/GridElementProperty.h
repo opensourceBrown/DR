@@ -25,11 +25,13 @@ public:
     ElementType             mType;              //monster,sword,shield,Potion and so on
     unsigned int            mID;                //boss id, 0 is normal
     BustyProperty           mMonsterProperty;
+    bool                    mbBroken;           //if boken or not,when shield or sword worked
     
     void init(){
         mIndex.rIndex=0;
         mIndex.vIndex=0;
         mType=kElementType_Coin;
+        mbBroken = false;
         mID=0;
         
         m_status=false;

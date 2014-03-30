@@ -88,7 +88,8 @@ private:
     
     void triggerBossSkill();
     
-    void recoverMonsterLifeFull();
+    void recoverMonsterLifeFull();              //将所有怪物恢复满血
+    void markRandomSwordOrShieldBroken();       //将一个剑或者盾标记为毁坏的
     
     void statisticsDataPerRound();
     int  computeTotalDamageOfRound();

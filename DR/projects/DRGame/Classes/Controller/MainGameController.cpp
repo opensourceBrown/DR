@@ -586,6 +586,7 @@ void MainGameController::triggerBossSkill()
         CC_BREAK_IF(!gridLayer);
         
         bool hasBossHealer = false;
+        bool hasBossTrampling = false;
         for (int i=0; i<GRID_ROW*GRID_VOLUME; i++) {
             
             GridElementProperty *blockProperty=dynamic_cast<GridElementProperty *>(mGridPropertyContainer->objectAtIndex(i));
@@ -594,7 +595,7 @@ void MainGameController::triggerBossSkill()
             if (blockProperty->mType == kElementType_Monster
                 && blockProperty->mMonsterProperty.mType == kBustyType_Boss) {
                 if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Chaotic) {
-                    //TODO:Chaotic boss,随机移动自己的地方
+                    //Chaotic boss,随机移动自己的地方
                     int randomIndex = 0;
                     do {
                         randomIndex = arc4random()%(GRID_ROW*GRID_VOLUME);
@@ -623,7 +624,7 @@ void MainGameController::triggerBossSkill()
                         blockProperty->mMonsterProperty.mValidRound--;
                     }
                 } else if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Healer){
-                    //TODO:让所有受到伤害的怪兽回复生命值到最大值。
+                    //让所有受到伤害的怪兽回复生命值到最大值。
                     hasBossHealer = true;
                 } else if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Vampire) {
                     int vampiredLife = blockProperty->mMonsterProperty.mLife + blockProperty->mMonsterProperty.mDamage;     //吸血boss吸血后的生命值
@@ -632,6 +633,9 @@ void MainGameController::triggerBossSkill()
                     } else {
                         blockProperty->mMonsterProperty.mLife = vampiredLife;
                     }
+                } else if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Trampling) {
+                    //践踏boss，随机破坏一个剑或者盾
+                    hasBossTrampling = true;
                 }
             }
         }
@@ -639,6 +643,9 @@ void MainGameController::triggerBossSkill()
         if (hasBossHealer) {
             recoverMonsterLifeFull();
             gridLayer->refreshMonsterPropertyLabelOfAllGridCell();
+        }
+        if (hasBossTrampling) {
+            markRandomSwordOrShieldBroken();
         }
         gridLayer->updateGrid();
         updateStatusData();
@@ -660,6 +667,33 @@ void MainGameController::recoverMonsterLifeFull()
                     geProperty->mMonsterProperty.mLife = geProperty->mMonsterProperty.mMaxLife;
                 }
             }
+        }
+    } while (0);
+}
+
+void MainGameController::markRandomSwordOrShieldBroken()
+{
+    do {
+        CCArray *toMarkGrids = CCArray::createWithCapacity(0);
+        MainGameGridLayer *gridLayer = ((MainGameScene *)m_scene)->getGridLayer();
+        for (int i=0; i<GRID_ROW; i++) {
+            for (int j=0; j<GRID_VOLUME; j++) {
+                GridCell *cell=gridLayer->getGridCell(i, j);
+                CC_BREAK_IF(!cell);
+                GridElementProperty *geProperty = cell->getCellProperty();
+                CC_BREAK_IF(!geProperty);
+                if (geProperty->mType == kElementType_Bow
+                    || geProperty->mType == kElementType_Sword
+                    || geProperty->mType == kElementType_Shield) {
+                    toMarkGrids->addObject(geProperty);
+                }
+            }
+        }
+        
+        if (toMarkGrids->count() > 0) {
+            int randomIndex = arc4random() % toMarkGrids->count();
+            GridElementProperty *gProperty = (GridElementProperty *)toMarkGrids->objectAtIndex(randomIndex);
+            gProperty->mbBroken = true;
         }
     } while (0);
 }
@@ -733,7 +767,7 @@ void MainGameController::statisticsDataPerRound()
                 DRUserDefault::sharedUserDefault()->setCoin(DRUserDefault::sharedUserDefault()->getCoin()+1);
                 mCurStageCoin++;
             }else if(block->mType==kElementType_Shield){
-                if (!hasCorrosiveBoss) {
+                if (!hasCorrosiveBoss && !block->mbBroken) {
                     mCurShield++;
                     if (mCurShield>mPlayerProperty.mMaxShield) {
                         mCurShield=mPlayerProperty.mMaxShield;
@@ -873,7 +907,8 @@ int MainGameController::computeTotalDamageOfRound()
             
             GridElementProperty *block=cell->getCellProperty();
             CC_BREAK_IF(!block);
-            if (block->mType==kElementType_Sword || block->mType == kElementType_Bow) {
+            if ((block->mType==kElementType_Sword || block->mType == kElementType_Bow)
+                && !block->mbBroken) {
                 totalDamagePerRound+=mPlayerProperty.mWeaponDamage;
                 if (weapon) {
                     totalDamagePerRound+=(int)(weapon->mWeaponDamage);
