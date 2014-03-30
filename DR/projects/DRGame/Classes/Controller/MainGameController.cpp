@@ -22,7 +22,8 @@ MainGameController::MainGameController():
     mCurStageScore(0),
     mSpiky(false),
     mMageEnable(true),
-    mMagicTriggerTip(false)
+    mMagicTriggerTip(false),
+    mCurrentSpikyCount(0)
 {
     mMagic.init();
     mPlayerProperty.init();
@@ -222,7 +223,7 @@ void MainGameController::triggerMagic(MagicType pID,CCArray *pArray)
                 CC_BREAK_IF(!cell);
                 GridElementProperty *block=cell->getCellProperty();
                 CC_BREAK_IF(!block);
-                if (block->mType==kElementType_Monster && block->mMonsterProperty.mType==kBossBustyType_Mage && block->mMonsterProperty.mLife>0) {
+                if (block->mType==kElementType_Monster && block->mMonsterProperty.mSkillType==kBossBustyType_Mage && block->mMonsterProperty.mLife>0) {
                     hasMageBoss=true;
                     break;
                 }
@@ -385,7 +386,7 @@ void MainGameController::triggerMagicAfterCleanAnimation()
                 CC_BREAK_IF(!cell);
                 GridElementProperty *block=cell->getCellProperty();
                 CC_BREAK_IF(!block);
-                if (block->mType==kElementType_Monster && block->mMonsterProperty.mType==kBossBustyType_Mage && block->mMonsterProperty.mLife>0) {
+                if (block->mType==kElementType_Monster && block->mMonsterProperty.mSkillType==kBossBustyType_Mage && block->mMonsterProperty.mLife>0) {
                     hasMageBoss=true;
                     break;
                 }
@@ -621,9 +622,16 @@ void MainGameController::triggerBossSkill()
                         }
                         blockProperty->mMonsterProperty.mValidRound--;
                     }
-                }else if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Healer){
+                } else if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Healer){
                     //TODO:让所有受到伤害的怪兽回复生命值到最大值。
                     hasBossHealer = true;
+                } else if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Vampire) {
+                    int vampiredLife = blockProperty->mMonsterProperty.mLife + blockProperty->mMonsterProperty.mDamage;     //吸血boss吸血后的生命值
+                    if (vampiredLife > blockProperty->mMonsterProperty.mMaxLife) {
+                        blockProperty->mMonsterProperty.mLife = blockProperty->mMonsterProperty.mMaxLife;
+                    } else {
+                        blockProperty->mMonsterProperty.mLife = vampiredLife;
+                    }
                 }
             }
         }
@@ -667,7 +675,7 @@ void MainGameController::statisticsDataPerRound()
         
         int totalDamagePerRound = this->computeTotalDamageOfRound();
         bool hasMonsterHurt = false;        //是否在消除怪
-        bool hasSpikyClear = false;         //反弹怪是否全消除了(目前仅考虑只有一只的情况)
+        bool hasSpikyClear = mCurrentSpikyCount==0?true:false;         //反弹怪是否全消除了
         bool hasCorrosiveBoss=false;
         
         for (int i=0; i<GRID_ROW; i++) {
@@ -676,7 +684,7 @@ void MainGameController::statisticsDataPerRound()
                 CC_BREAK_IF(!cell);
                 GridElementProperty *block=cell->getCellProperty();
                 CC_BREAK_IF(!block);
-                if (block->mType==kElementType_Monster && block->mMonsterProperty.mType==kBossBustyType_Corrosive && block->mMonsterProperty.mLife>0) {
+                if (block->mType==kElementType_Monster && block->mMonsterProperty.mSkillType==kBossBustyType_Corrosive && block->mMonsterProperty.mLife>0) {
                     hasCorrosiveBoss=true;
                     break;
                 }
@@ -695,22 +703,19 @@ void MainGameController::statisticsDataPerRound()
                     DRUserDefault::sharedUserDefault()->setKillMonsterCount(DRUserDefault::sharedUserDefault()->getKillMonsterCount()+1);
                     mCurStageKillMonster++;
                     
-                    if (block->mMonsterProperty.mType==kBustyType_Common) {
-                        DRUserDefault::sharedUserDefault()->setScore(DRUserDefault::sharedUserDefault()->getScore()+1);
-                        mCurStageScore++;
-                    }else{
-                        DRUserDefault::sharedUserDefault()->setScore(DRUserDefault::sharedUserDefault()->getScore()+1);
-                        mCurStageScore++;
-                        if (block->mMonsterProperty.mType == kBustyType_Boss) {
-                            if (block->mMonsterProperty.mSkillType == kBossBustyType_Spiky) {
-                                mCurrentSpikyCount--;
-                                if (mCurrentSpikyCount<=0) {
-                                    mCurrentSpikyCount = 0;
-                                    hasSpikyClear = true;
-                                }
-                            } else if (block->mMonsterProperty.mSkillType == kBossBustyType_Mage) {
-                                mMageEnable = true;
+                    DRUserDefault::sharedUserDefault()->setScore(DRUserDefault::sharedUserDefault()->getScore()+1);
+                    mCurStageScore++;
+                    
+                    if (block->mMonsterProperty.mType==kBustyType_Boss) {
+                        
+                        if (block->mMonsterProperty.mSkillType == kBossBustyType_Spiky) {
+                            mCurrentSpikyCount--;
+                            if (mCurrentSpikyCount<=0) {
+                                mCurrentSpikyCount = 0;
+                                hasSpikyClear = true;
                             }
+                        } else if (block->mMonsterProperty.mSkillType == kBossBustyType_Mage) {
+                            mMageEnable = true;
                         }
                     }
                 } else {
@@ -721,7 +726,7 @@ void MainGameController::statisticsDataPerRound()
                         block->mMonsterProperty.mDefence = 0;
                     }
                 }
-                if (block->mMonsterProperty.mType==kBossBustyType_Mage && block->mMonsterProperty.mLife>0) {
+                if (block->mMonsterProperty.mSkillType==kBossBustyType_Mage && block->mMonsterProperty.mLife>0) {
                     hasMageBoss=true;
                 }
             }else if(block->mType==kElementType_Coin){

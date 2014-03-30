@@ -114,6 +114,7 @@ private:
     int                     mTotalDamagePerRound;       //damage of current Round
     bool                    mSpiky;                     //判断当前状态是否反弹伤害
     int                     mCurrentSpikyCount;         //反弹boss的数量
+    int                     mCurrentVampireCount;       //吸血boss的数量
     bool                    mMageEnable;                //场上存在Mage Boss时，此值为true，禁止释放魔法
     
     //current valid magic in current game stage
