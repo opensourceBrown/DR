@@ -644,7 +644,8 @@ void MainGameController::triggerBossSkill()
                         hasBossGoldenRun = true;
                         
                         if (mRunGoldenBossContainer == NULL) {
-                            mRunGoldenBossContainer = CCArray::createWithCapacity(0);
+                            mRunGoldenBossContainer = CCArray::create();
+                            mRunGoldenBossContainer->retain();
                         }
                         mRunGoldenBossContainer->addObject(blockProperty);
                     }
@@ -724,10 +725,30 @@ void MainGameController::cleanRunGoldenBoss()
     for (int i = 0; i < mRunGoldenBossContainer->count(); i++) {
         //set grid element property status
         GridElementProperty *gProperty = (GridElementProperty *)mRunGoldenBossContainer->objectAtIndex(i);
+        CC_BREAK_IF(!gProperty);
         insertCellIntoConnectedArray(gProperty->mIndex.rIndex, gProperty->mIndex.vIndex);
-        DRUserDefault::sharedUserDefault()->setScore(DRUserDefault::sharedUserDefault()->getScore()+1);
-        mCurStageScore++;
     }
+    //set grid element property status
+    for (int i=0; i<mStageConnectedElements->count(); i++) {
+        GridCell *cell=dynamic_cast<GridCell *>(mStageConnectedElements->objectAtIndex(i));
+        CC_BREAK_IF(!cell);
+        
+        GridElementProperty *block=cell->getCellProperty();
+        CC_BREAK_IF(!block);
+        
+        GridElementProperty *item=dynamic_cast<GridElementProperty *>(mGridPropertyContainer->objectAtIndex(block->mIndex.rIndex*GRID_VOLUME+block->mIndex.vIndex));
+        CC_BREAK_IF(!item);
+        if (block->mType==kElementType_Monster && block->mMonsterProperty.mType==kBossBustyType_Golden) {
+            block->setStatus(true);
+            item->setStatus(true);
+            
+            DRUserDefault::sharedUserDefault()->setScore(DRUserDefault::sharedUserDefault()->getScore()+1);
+            mCurStageScore++;
+            DRUserDefault::sharedUserDefault()->setKillMonsterCount(DRUserDefault::sharedUserDefault()->getKillMonsterCount()+1);
+            mCurStageKillMonster++;
+        }
+    }
+    
     cleanAndRefreshGrid();
     updateStatusData();
     
@@ -803,7 +824,7 @@ void MainGameController::statisticsDataPerRound()
                 DRUserDefault::sharedUserDefault()->setCoin(DRUserDefault::sharedUserDefault()->getCoin()+1);
                 mCurStageCoin++;
             }else if(block->mType==kElementType_Shield){
-                if (!hasCorrosiveBoss && !block->mbBroken) {
+                if (!hasCorrosiveBoss && !(block->mbBroken)) {
                     mCurShield++;
                     if (mCurShield>mPlayerProperty.mMaxShield) {
                         mCurShield=mPlayerProperty.mMaxShield;
