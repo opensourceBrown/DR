@@ -636,6 +636,17 @@ void MainGameController::triggerBossSkill()
                 } else if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Trampling) {
                     //践踏boss，随机破坏一个剑或者盾
                     hasBossTrampling = true;
+                } else if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Golden) {
+                    blockProperty->mMonsterProperty.mValidRound--;
+                    if (blockProperty->mMonsterProperty.mValidRound == 0) {
+                        
+                    }
+                } else if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Kamikaze) {
+                    blockProperty->mMonsterProperty.mValidRound--;
+                    if (blockProperty->mMonsterProperty.mValidRound == 0) {
+                        mCurPortion = mPlayerProperty.mMaxHealth/2;
+                        blockProperty->mMonsterProperty.mValidRound = 5;
+                    }
                 }
             }
         }

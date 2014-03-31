@@ -188,6 +188,7 @@ void GridElementProperty::configureBossProperty()
             mMonsterProperty.mSkillType = kBossBustyType_Golden;
             mMonsterProperty.mName = "Golden";
             mMonsterProperty.mDescription = "Golden";
+            mMonsterProperty.mValidRound=5;
             break;
         }
         case 8:{
@@ -230,6 +231,7 @@ void GridElementProperty::configureBossProperty()
             mMonsterProperty.mSkillType = kBossBustyType_Kamikaze;
             mMonsterProperty.mName = "Kamikaze";
             mMonsterProperty.mDescription = "Kamikaze";
+            mMonsterProperty.mValidRound=5;
             break;
         }
         default:{
