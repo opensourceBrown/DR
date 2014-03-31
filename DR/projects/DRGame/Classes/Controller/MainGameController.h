@@ -90,6 +90,7 @@ private:
     
     void recoverMonsterLifeFull();              //将所有怪物恢复满血
     void markRandomSwordOrShieldBroken();       //将一个剑或者盾标记为毁坏的
+    void cleanRunGoldenBoss();                  //移除跳跑的golden boss
     
     void statisticsDataPerRound();
     int  computeTotalDamageOfRound();
@@ -131,6 +132,7 @@ private:
     MagicProperty           mMagic;
     
     CCArray                 *mGridPropertyContainer;
+    CCArray                 *mRunGoldenBossContainer;
     
     bool                    mMagicTriggerTip;           //remember the trigger status of some delay magic
 private:

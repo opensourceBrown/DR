@@ -23,7 +23,8 @@ MainGameController::MainGameController():
     mSpiky(false),
     mMageEnable(true),
     mMagicTriggerTip(false),
-    mCurrentSpikyCount(0)
+    mCurrentSpikyCount(0),
+    mRunGoldenBossContainer(NULL)
 {
     mMagic.init();
     mPlayerProperty.init();
@@ -587,6 +588,7 @@ void MainGameController::triggerBossSkill()
         
         bool hasBossHealer = false;
         bool hasBossTrampling = false;
+        bool hasBossGoldenRun = false;
         for (int i=0; i<GRID_ROW*GRID_VOLUME; i++) {
             
             GridElementProperty *blockProperty=dynamic_cast<GridElementProperty *>(mGridPropertyContainer->objectAtIndex(i));
@@ -639,13 +641,18 @@ void MainGameController::triggerBossSkill()
                 } else if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Golden) {
                     blockProperty->mMonsterProperty.mValidRound--;
                     if (blockProperty->mMonsterProperty.mValidRound == 0) {
+                        hasBossGoldenRun = true;
                         
+                        if (mRunGoldenBossContainer == NULL) {
+                            mRunGoldenBossContainer = CCArray::createWithCapacity(0);
+                        }
+                        mRunGoldenBossContainer->addObject(blockProperty);
                     }
                 } else if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Kamikaze) {
                     blockProperty->mMonsterProperty.mValidRound--;
                     if (blockProperty->mMonsterProperty.mValidRound == 0) {
-                        mCurPortion = mPlayerProperty.mMaxHealth/2;
-                        blockProperty->mMonsterProperty.mValidRound = 5;
+                        mCurPortion = mCurPortion/2;
+                        blockProperty->mMonsterProperty.mValidRound = 2;
                     }
                 }
             }
@@ -653,11 +660,14 @@ void MainGameController::triggerBossSkill()
         
         if (hasBossHealer) {
             recoverMonsterLifeFull();
-            gridLayer->refreshMonsterPropertyLabelOfAllGridCell();
         }
         if (hasBossTrampling) {
             markRandomSwordOrShieldBroken();
         }
+        if (hasBossGoldenRun) {
+            cleanRunGoldenBoss();
+        }
+        gridLayer->refreshMonsterPropertyLabelOfAllGridCell();
         gridLayer->updateGrid();
         updateStatusData();
     }while(0);
@@ -707,6 +717,21 @@ void MainGameController::markRandomSwordOrShieldBroken()
             gProperty->mbBroken = true;
         }
     } while (0);
+}
+
+void MainGameController::cleanRunGoldenBoss()
+{
+    for (int i = 0; i < mRunGoldenBossContainer->count(); i++) {
+        //set grid element property status
+        GridElementProperty *gProperty = (GridElementProperty *)mRunGoldenBossContainer->objectAtIndex(i);
+        insertCellIntoConnectedArray(gProperty->mIndex.rIndex, gProperty->mIndex.vIndex);
+        DRUserDefault::sharedUserDefault()->setScore(DRUserDefault::sharedUserDefault()->getScore()+1);
+        mCurStageScore++;
+    }
+    cleanAndRefreshGrid();
+    updateStatusData();
+    
+    mRunGoldenBossContainer->removeAllObjects();
 }
 
 void MainGameController::statisticsDataPerRound()
