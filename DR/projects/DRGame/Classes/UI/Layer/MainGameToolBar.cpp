@@ -3,6 +3,8 @@
 #include "WeaponController.h"
 #include "DRUserDefault.h"
 
+#define MAGIC_MENU_TAG          100
+
 MainGameToolBar::MainGameToolBar():
     m_containerLayer(NULL),
     m_magicArray(NULL),
@@ -128,6 +130,7 @@ void  MainGameToolBar::constructUI()
         CCMenu *magicMenu=CCMenu::createWithArray(magicArray);
         CC_BREAK_IF(!magicMenu);
         magicMenu->setPosition(CCPointZero);
+        magicMenu->setTag(MAGIC_MENU_TAG);
         m_containerLayer->addChild(magicMenu);
         CC_SAFE_RELEASE(magicArray);
         
@@ -201,6 +204,26 @@ void MainGameToolBar::resetMagicSkill()
         m_magicArray->removeAllObjects();
         CC_BREAK_IF(!m_magicCDTTF);
         m_magicCDTTF->setVisible(false);
+    } while (0);
+}
+
+void MainGameToolBar::enableMagic()
+{
+    do {
+        CC_BREAK_IF(!m_containerLayer);
+        CCMenu *magicMenu = (CCMenu *)m_containerLayer->getChildByTag(MAGIC_MENU_TAG);
+        CC_BREAK_IF(!magicMenu);
+        magicMenu->setEnabled(true);
+    } while (0);
+}
+
+void MainGameToolBar::disableMagic()
+{
+    do {
+        CC_BREAK_IF(!m_containerLayer);
+        CCMenu *magicMenu = (CCMenu *)m_containerLayer->getChildByTag(MAGIC_MENU_TAG);
+        CC_BREAK_IF(!magicMenu);
+        magicMenu->setEnabled(false);
     } while (0);
 }
 

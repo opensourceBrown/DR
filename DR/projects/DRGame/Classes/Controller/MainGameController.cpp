@@ -211,10 +211,10 @@ bool MainGameController::judgeIsTriggerMagic(CCArray *pArray)
     return tRet;
 }
 
-void MainGameController::triggerMagic(MagicType pID,CCArray *pArray)
+bool MainGameController::judgeIsEnableMagic()
 {
+    bool tRet=true;
     do {
-        bool hasMageBoss=false;
         MainGameGridLayer *gridLayer = ((MainGameScene *)m_scene)->getGridLayer();
         CC_BREAK_IF(!gridLayer);
         
@@ -225,11 +225,35 @@ void MainGameController::triggerMagic(MagicType pID,CCArray *pArray)
                 GridElementProperty *block=cell->getCellProperty();
                 CC_BREAK_IF(!block);
                 if (block->mType==kElementType_Monster && block->mMonsterProperty.mSkillType==kBossBustyType_Mage && block->mMonsterProperty.mLife>0) {
-                    hasMageBoss=true;
+                    tRet=false;
                     break;
                 }
             }
         }
+    } while (0);
+    
+    return tRet;
+}
+
+void MainGameController::triggerMagic(MagicType pID,CCArray *pArray)
+{
+    do {
+        bool hasMageBoss=(judgeIsEnableMagic()==false);
+//        MainGameGridLayer *gridLayer = ((MainGameScene *)m_scene)->getGridLayer();
+//        CC_BREAK_IF(!gridLayer);
+//        
+//        for (int i=0; i<GRID_ROW; i++) {
+//            for (int j=0; j<GRID_VOLUME; j++) {
+//                GridCell *cell=gridLayer->getGridCell(i, j);
+//                CC_BREAK_IF(!cell);
+//                GridElementProperty *block=cell->getCellProperty();
+//                CC_BREAK_IF(!block);
+//                if (block->mType==kElementType_Monster && block->mMonsterProperty.mSkillType==kBossBustyType_Mage && block->mMonsterProperty.mLife>0) {
+//                    hasMageBoss=true;
+//                    break;
+//                }
+//            }
+//        }
         
         switch (pID) {
             case kMagicType_Steal:{     //get 1 coin per monster every round
@@ -377,22 +401,22 @@ void MainGameController::triggerMagicAfterCleanAnimation()
 {
     do {
         CC_BREAK_IF(mMagic.mID<=0 || mMagic.mCDTime>0);
-        bool hasMageBoss=false;
-        MainGameGridLayer *gridLayer = ((MainGameScene *)m_scene)->getGridLayer();
-        CC_BREAK_IF(!gridLayer);
-        
-        for (int i=0; i<GRID_ROW; i++) {
-            for (int j=0; j<GRID_VOLUME; j++) {
-                GridCell *cell=gridLayer->getGridCell(i, j);
-                CC_BREAK_IF(!cell);
-                GridElementProperty *block=cell->getCellProperty();
-                CC_BREAK_IF(!block);
-                if (block->mType==kElementType_Monster && block->mMonsterProperty.mSkillType==kBossBustyType_Mage && block->mMonsterProperty.mLife>0) {
-                    hasMageBoss=true;
-                    break;
-                }
-            }
-        }
+        bool hasMageBoss=(judgeIsEnableMagic()==false);;
+//        MainGameGridLayer *gridLayer = ((MainGameScene *)m_scene)->getGridLayer();
+//        CC_BREAK_IF(!gridLayer);
+//        
+//        for (int i=0; i<GRID_ROW; i++) {
+//            for (int j=0; j<GRID_VOLUME; j++) {
+//                GridCell *cell=gridLayer->getGridCell(i, j);
+//                CC_BREAK_IF(!cell);
+//                GridElementProperty *block=cell->getCellProperty();
+//                CC_BREAK_IF(!block);
+//                if (block->mType==kElementType_Monster && block->mMonsterProperty.mSkillType==kBossBustyType_Mage && block->mMonsterProperty.mLife>0) {
+//                    hasMageBoss=true;
+//                    break;
+//                }
+//            }
+//        }
         
         switch (mMagic.mID) {
             case kMagicType_GoldenTouch:{
@@ -1168,6 +1192,11 @@ bool MainGameController::clearConnectedElements()
     MainGameToolBar *toolBar=((MainGameScene *)m_scene)->getToolBar();
     if (toolBar) {
         toolBar->refreshMagicCD(mMagic.mCDTime);
+        if (judgeIsEnableMagic()) {
+            toolBar->enableMagic();
+        }else{
+            toolBar->disableMagic();
+        }
     }
     
     DRUserDefault::sharedUserDefault()->setRoundCount(DRUserDefault::sharedUserDefault()->getRoundCount()+1);

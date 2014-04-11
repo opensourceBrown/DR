@@ -18,6 +18,8 @@ public:
     void    resetMagicSkill();
     void    magicItemClicked(CCObject *pSender);
     void    refreshMagicCD(int pValue);                 //test
+    void    enableMagic();
+    void    disableMagic();
     
     //test
     void    weaponItemClicked(CCObject *pSender);
