@@ -811,10 +811,9 @@ void MainGameController::statisticsDataPerRound()
                     }
                 } else {
                     if (block->mMonsterProperty.mDefence>0 && block->mMonsterProperty.mDefence>=totalDamagePerRound) {
-                        block->mMonsterProperty.mDefence -= totalDamagePerRound;
                     }else{
                         block->mMonsterProperty.mLife -= (totalDamagePerRound-block->mMonsterProperty.mDefence);
-                        block->mMonsterProperty.mDefence = 0;
+                        block->mMonsterProperty.mLife = 0;
                     }
                 }
                 if (block->mMonsterProperty.mSkillType==kBossBustyType_Mage && block->mMonsterProperty.mLife>0) {
@@ -887,10 +886,9 @@ void MainGameController::statisticsDataPerRound()
                             insertCellIntoConnectedArray(block->mIndex.rIndex, block->mIndex.vIndex);
                         }else{
                             if (block->mMonsterProperty.mDefence>0 && block->mMonsterProperty.mDefence>=block->mMonsterProperty.mDamage) {
-                                block->mMonsterProperty.mDefence -= block->mMonsterProperty.mDamage;
                             }else{
                                 block->mMonsterProperty.mLife -= (block->mMonsterProperty.mDamage-block->mMonsterProperty.mDefence);
-                                block->mMonsterProperty.mDefence = 0;
+                                block->mMonsterProperty.mLife = 0;
                             }
                             gridLayer->refreshCell(block->mIndex.rIndex, block->mIndex.vIndex);
                         }

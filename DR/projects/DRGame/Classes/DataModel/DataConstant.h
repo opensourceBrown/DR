@@ -44,20 +44,20 @@ typedef struct{
 //定义boss怪的类型
 typedef enum{
     kBossBustyType_None=0,
-    kBossBustyType_Chaotic,         //每一回合随机移动自己的地方
-    kBossBustyType_Poisonous,       //每次攻击会使Player的状态变成毒。毒的效果是让Player每一回合受到最大生命之的１０％的伤害。无法被盾抵抗。效果持续５回合。
-    kBossBustyType_Healer,          //让所有受到伤害的怪兽回复生命值到最大值。
-    kBossBustyType_Spiky,           //每次受到伤害会把同等伤害反弹给Player
-    kBossBustyType_Acidic,          //每一回合把一个血瓶变成酸。删除酸的时候Player会受到跟这个Ｂｏｓｓ的攻击力同等的伤害。
-    kBossBustyType_Vampire,         //每次对Player攻击时，自己会回复同等生命值。(Completed)
-    kBossBustyType_Golden,          //每一回合Boss的头上的数字会减少，到0时，Boss会逃跑。
-    kBossBustyType_Freezing,        //随机把自己周围的２个block冰冻。被冰冻的block无法被消除。每一回合被冰冻的block都会重新判断。
-    kBossBustyType_Mage,            //此Ｂｏｓｓ出现时无法使用魔法
-    kBossBustyType_Corrosive,       //此Ｂｏｓｓ出现时无法回复盾
-    kBossBustyType_Overseer,        //每一回合把一个剑变成怪兽
-    kBossBustyType_Flaming,         //使自己周围block燃烧，如果删掉燃烧的block，Player会受到跟此Boss同等的伤害。
-    kBossBustyType_Trampling,       //每一回合随机破坏一个剑或者盾，删除被坏的block没有任何效果会发生。(Magic is Coding)
-    kBossBustyType_Kamikaze,        //每一回合Boss的头上的数字会减少，到0时，Player的血量会变成一半。之后Count Down再次开始。
+    kBossBustyType_Chaotic  = 1,         //每一回合随机移动自己的地方
+    kBossBustyType_Poisonous= 2,       //每次攻击会使Player的状态变成毒。毒的效果是让Player每一回合受到最大生命之的１０％的伤害。无法被盾抵抗。效果持续５回合。
+    kBossBustyType_Healer   = 3,          //让所有受到伤害的怪兽回复生命值到最大值。
+    kBossBustyType_Spiky    = 4,           //每次受到伤害会把同等伤害反弹给Player
+    kBossBustyType_Acidic   = 5,          //每一回合把一个血瓶变成酸。删除酸的时候Player会受到跟这个Ｂｏｓｓ的攻击力同等的伤害。
+    kBossBustyType_Vampire  = 6,         //每次对Player攻击时，自己会回复同等生命值。(Completed)
+    kBossBustyType_Golden   = 7,          //每一回合Boss的头上的数字会减少，到0时，Boss会逃跑。
+    kBossBustyType_Freezing = 8,        //随机把自己周围的２个block冰冻。被冰冻的block无法被消除。每一回合被冰冻的block都会重新判断。
+    kBossBustyType_Mage     = 9,            //此Ｂｏｓｓ出现时无法使用魔法
+    kBossBustyType_Corrosive= 10,       //此Ｂｏｓｓ出现时无法回复盾
+    kBossBustyType_Overseer = 11,        //每一回合把一个剑变成怪兽
+    kBossBustyType_Flaming  = 12,         //使自己周围block燃烧，如果删掉燃烧的block，Player会受到跟此Boss同等的伤害。
+    kBossBustyType_Trampling= 13,       //每一回合随机破坏一个剑或者盾，删除被坏的block没有任何效果会发生。(Magic is Coding)
+    kBossBustyType_Kamikaze = 14,        //每一回合Boss的头上的数字会减少，到0时，Player的血量会变成一半。之后Count Down再次开始。
 }BossBustyType;
 
 //定义魔法类型
