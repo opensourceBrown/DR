@@ -123,6 +123,7 @@ void MainGameController::selectMagic(MagicType pID)
         switch (pID) {
             case kMagicType_Steal:
                 mMagic.mCDTime=18;
+                mMagic.mActive = true;
                 break;
             case kMagicType_Fireball:
                 mMagic.mCDTime=19;
@@ -165,27 +166,17 @@ void MainGameController::selectMagic(MagicType pID)
 bool MainGameController::judgeIsTriggerMagic(CCArray *pArray)
 {
     bool tRet=false;
-    if (mMageEnable) {
+    if (!mMageEnable) {
         return tRet;
     }
     switch (mMagic.mMagicType) {
         case kMagicType_Steal:{     //get 1 coin per monster every round
-            CC_BREAK_IF(mMagic.mCDTime>0);
-            do {
-                CC_BREAK_IF(!pArray || pArray->count()<=0);
-                for (int i=0; i<pArray->count(); i++) {
-                    GridCell *cell=dynamic_cast<GridCell *>(pArray->objectAtIndex(i));
-                    CC_BREAK_IF(!cell);
-                    
-                    GridElementProperty *block=cell->getCellProperty();
-                    CC_BREAK_IF(!block);
-                    if (block->mType==kElementType_Monster){
-                        tRet=true;
-                        mMagic.mCDTime=18;
-                        break;
-                    }
-                }
-            } while (0);
+            if (mMagic.mActive) {
+                tRet = true;
+                mMagic.mActive = false;
+            } else {
+                tRet = false;
+            }
             break;
         }
         case kMagicType_Fireball:

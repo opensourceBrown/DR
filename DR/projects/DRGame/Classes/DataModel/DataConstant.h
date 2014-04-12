@@ -83,11 +83,13 @@ typedef enum{
 typedef struct{
 	MagicType				mMagicType;
 	unsigned int			mID;
+    bool                    mActive;        //魔法是否被激活
 	int			mCDTime;
     
     void init(){
         mMagicType=kMagicType_None;
         mID=0;
+        mActive = false;
         mCDTime=0;
     }
 }MagicProperty;
