@@ -613,71 +613,74 @@ void MainGameController::triggerBossSkill()
         bool hasBossHealer = false;
         bool hasBossTrampling = false;
         bool hasBossGoldenRun = false;
-        for (int i=0; i<GRID_ROW*GRID_VOLUME; i++) {
-            
-            GridElementProperty *blockProperty=dynamic_cast<GridElementProperty *>(mGridPropertyContainer->objectAtIndex(i));
-            CC_BREAK_IF(!blockProperty);
-            
-            if (blockProperty->mType == kElementType_Monster
-                && blockProperty->mMonsterProperty.mType == kBustyType_Boss) {
-                if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Chaotic) {
-                    //Chaotic boss,随机移动自己的地方
-                    int randomIndex = 0;
-                    do {
-                        randomIndex = arc4random()%(GRID_ROW*GRID_VOLUME);
-                    } while ((randomIndex/GRID_VOLUME==blockProperty->mIndex.rIndex) && (randomIndex%GRID_VOLUME==blockProperty->mIndex.vIndex));
-                    
-                    GridElementProperty *randomBlockProperty=dynamic_cast<GridElementProperty *>(mGridPropertyContainer->objectAtIndex(randomIndex));
-                    CC_BREAK_IF(!randomBlockProperty);
-                    
-                    //update the vIndex after exchange the two elements
-                    int tIndex=blockProperty->mIndex.rIndex;
-                    int vIndex=blockProperty->mIndex.vIndex;
-                    blockProperty->mIndex.rIndex=randomBlockProperty->mIndex.rIndex;
-                    blockProperty->mIndex.vIndex=randomBlockProperty->mIndex.vIndex;
-                    randomBlockProperty->mIndex.rIndex=tIndex;
-                    randomBlockProperty->mIndex.vIndex=vIndex;
-                    mGridPropertyContainer->exchangeObject(blockProperty, randomBlockProperty);
-                    
-                    //notify the grid layer to exchange cell in m_GridCellArray
-                    gridLayer->exchangeGridCell(blockProperty->mIndex.rIndex*GRID_VOLUME+blockProperty->mIndex.vIndex, randomBlockProperty->mIndex.rIndex*GRID_VOLUME+randomBlockProperty->mIndex.vIndex);
-                } else if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Poisonous) {
-                    if (blockProperty->mMonsterProperty.mValidRound>0) {
-                        mCurPortion-=(mPlayerProperty.mMaxHealth/10);
-                        if (mCurPortion<0) {
-                            mCurPortion=0;
-                        }
-                        blockProperty->mMonsterProperty.mValidRound--;
-                    }
-                } else if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Healer){
-                    //让所有受到伤害的怪兽回复生命值到最大值。
-                    hasBossHealer = true;
-                } else if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Vampire) {
-                    int vampiredLife = blockProperty->mMonsterProperty.mLife + blockProperty->mMonsterProperty.mDamage;     //吸血boss吸血后的生命值
-                    if (vampiredLife > blockProperty->mMonsterProperty.mMaxLife) {
-                        blockProperty->mMonsterProperty.mLife = blockProperty->mMonsterProperty.mMaxLife;
-                    } else {
-                        blockProperty->mMonsterProperty.mLife = vampiredLife;
-                    }
-                } else if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Trampling) {
-                    //践踏boss，随机破坏一个剑或者盾
-                    hasBossTrampling = true;
-                } else if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Golden) {
-                    blockProperty->mMonsterProperty.mValidRound--;
-                    if (blockProperty->mMonsterProperty.mValidRound == 0) {
-                        hasBossGoldenRun = true;
+        for (int i=0; i<GRID_ROW; i++) {
+            for (int j=0; j<GRID_VOLUME; j++) {
+                GridCell *cell=gridLayer->getGridCell(i, j);
+                CC_BREAK_IF(!cell);
+                GridElementProperty *blockProperty=cell->getCellProperty();
+                CC_BREAK_IF(!blockProperty);
+                
+                if (blockProperty->mType == kElementType_Monster
+                    && blockProperty->mMonsterProperty.mType == kBustyType_Boss) {
+                    if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Chaotic) {
+                        //Chaotic boss,随机移动自己的地方
+                        int randomIndex = 0;
+                        do {
+                            randomIndex = arc4random()%(GRID_ROW*GRID_VOLUME);
+                        } while ((randomIndex/GRID_VOLUME==blockProperty->mIndex.rIndex) && (randomIndex%GRID_VOLUME==blockProperty->mIndex.vIndex));
                         
-                        if (mRunGoldenBossContainer == NULL) {
-                            mRunGoldenBossContainer = CCArray::create();
-                            mRunGoldenBossContainer->retain();
+                        GridElementProperty *randomBlockProperty=dynamic_cast<GridElementProperty *>(mGridPropertyContainer->objectAtIndex(randomIndex));
+                        CC_BREAK_IF(!randomBlockProperty);
+                        
+                        //update the vIndex after exchange the two elements
+                        int tIndex=blockProperty->mIndex.rIndex;
+                        int vIndex=blockProperty->mIndex.vIndex;
+                        blockProperty->mIndex.rIndex=randomBlockProperty->mIndex.rIndex;
+                        blockProperty->mIndex.vIndex=randomBlockProperty->mIndex.vIndex;
+                        randomBlockProperty->mIndex.rIndex=tIndex;
+                        randomBlockProperty->mIndex.vIndex=vIndex;
+                        mGridPropertyContainer->exchangeObject(blockProperty, randomBlockProperty);
+                        
+                        //notify the grid layer to exchange cell in m_GridCellArray
+                        gridLayer->exchangeGridCell(blockProperty->mIndex.rIndex*GRID_VOLUME+blockProperty->mIndex.vIndex, randomBlockProperty->mIndex.rIndex*GRID_VOLUME+randomBlockProperty->mIndex.vIndex);
+                    } else if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Poisonous) {
+                        if (blockProperty->mMonsterProperty.mValidRound>0) {
+                            mCurPortion-=(mPlayerProperty.mMaxHealth/10);
+                            if (mCurPortion<0) {
+                                mCurPortion=0;
+                            }
+                            blockProperty->mMonsterProperty.mValidRound--;
                         }
-                        mRunGoldenBossContainer->addObject(blockProperty);
-                    }
-                } else if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Kamikaze) {
-                    blockProperty->mMonsterProperty.mValidRound--;
-                    if (blockProperty->mMonsterProperty.mValidRound == 0) {
-                        mCurPortion = mCurPortion/2;
-                        blockProperty->mMonsterProperty.mValidRound = 2;
+                    } else if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Healer){
+                        //让所有受到伤害的怪兽回复生命值到最大值。
+                        hasBossHealer = true;
+                    } else if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Vampire) {
+                        int vampiredLife = blockProperty->mMonsterProperty.mLife + blockProperty->mMonsterProperty.mDamage;     //吸血boss吸血后的生命值
+                        if (vampiredLife > blockProperty->mMonsterProperty.mMaxLife) {
+                            blockProperty->mMonsterProperty.mLife = blockProperty->mMonsterProperty.mMaxLife;
+                        } else {
+                            blockProperty->mMonsterProperty.mLife = vampiredLife;
+                        }
+                    } else if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Trampling) {
+                        //践踏boss，随机破坏一个剑或者盾
+                        hasBossTrampling = true;
+                    } else if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Golden) {
+                        blockProperty->mMonsterProperty.mValidRound--;
+                        if (blockProperty->mMonsterProperty.mValidRound == 0) {
+                            hasBossGoldenRun = true;
+                            
+                            if (mRunGoldenBossContainer == NULL) {
+                                mRunGoldenBossContainer = CCArray::create();
+                                mRunGoldenBossContainer->retain();
+                            }
+                            mRunGoldenBossContainer->addObject(blockProperty);
+                        }
+                    } else if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Kamikaze) {
+                        blockProperty->mMonsterProperty.mValidRound--;
+                        if (blockProperty->mMonsterProperty.mValidRound == 0) {
+                            mCurPortion = mCurPortion/2;
+                            blockProperty->mMonsterProperty.mValidRound = 2;
+                        }
                     }
                 }
             }
@@ -837,7 +840,6 @@ void MainGameController::statisticsDataPerRound()
                     if (block->mMonsterProperty.mDefence>0 && block->mMonsterProperty.mDefence>=totalDamagePerRound) {
                     }else{
                         block->mMonsterProperty.mLife -= (totalDamagePerRound-block->mMonsterProperty.mDefence);
-                        block->mMonsterProperty.mLife = 0;
                     }
                 }
                 if (block->mMonsterProperty.mSkillType==kBossBustyType_Mage && block->mMonsterProperty.mLife>0) {
