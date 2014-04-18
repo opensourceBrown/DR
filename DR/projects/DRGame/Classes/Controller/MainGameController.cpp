@@ -619,21 +619,22 @@ void MainGameController::triggerBossSkill()
                         do {
                             randomIndex = arc4random()%(GRID_ROW*GRID_VOLUME);
                         } while ((randomIndex/GRID_VOLUME==blockProperty->mIndex.rIndex) && (randomIndex%GRID_VOLUME==blockProperty->mIndex.vIndex));
-                        
                         GridElementProperty *randomBlockProperty=dynamic_cast<GridElementProperty *>(mGridPropertyContainer->objectAtIndex(randomIndex));
                         CC_BREAK_IF(!randomBlockProperty);
-                        
+                        GridElementProperty *block=dynamic_cast<GridElementProperty *>(mGridPropertyContainer->objectAtIndex(blockProperty->mIndex.rIndex*GRID_VOLUME+blockProperty->mIndex.vIndex));
+                        CC_BREAK_IF(!block);
                         //update the vIndex after exchange the two elements
-                        int tIndex=blockProperty->mIndex.rIndex;
-                        int vIndex=blockProperty->mIndex.vIndex;
-                        blockProperty->mIndex.rIndex=randomBlockProperty->mIndex.rIndex;
-                        blockProperty->mIndex.vIndex=randomBlockProperty->mIndex.vIndex;
+                        int tIndex=block->mIndex.rIndex;
+                        int vIndex=block->mIndex.vIndex;
+                        block->mIndex.rIndex=randomBlockProperty->mIndex.rIndex;
+                        block->mIndex.vIndex=randomBlockProperty->mIndex.vIndex;
                         randomBlockProperty->mIndex.rIndex=tIndex;
                         randomBlockProperty->mIndex.vIndex=vIndex;
-                        mGridPropertyContainer->exchangeObject(blockProperty, randomBlockProperty);
+                        
+                        mGridPropertyContainer->exchangeObject(block, randomBlockProperty);
                         
                         //notify the grid layer to exchange cell in m_GridCellArray
-                        gridLayer->exchangeGridCell(blockProperty->mIndex.rIndex*GRID_VOLUME+blockProperty->mIndex.vIndex, randomBlockProperty->mIndex.rIndex*GRID_VOLUME+randomBlockProperty->mIndex.vIndex);
+                        gridLayer->exchangeGridCell(blockProperty->mIndex.rIndex*GRID_VOLUME+blockProperty->mIndex.vIndex, randomIndex);
                     } else if (blockProperty->mMonsterProperty.mSkillType == kBossBustyType_Poisonous) {
                         if (blockProperty->mMonsterProperty.mValidRound>0) {
                             mCurPortion-=(mPlayerProperty.mMaxHealth/10);
@@ -783,6 +784,7 @@ void MainGameController::statisticsDataPerRound()
         CC_BREAK_IF(!mStageConnectedElements);
         
         int totalDamagePerRound = this->computeTotalDamageOfRound();
+        CCLog("totalDamagePerRound=%d",totalDamagePerRound);
         bool hasMonsterHurt = false;        //是否在消除怪
         bool hasSpikyClear = mCurrentSpikyCount==0?true:false;         //反弹怪是否全消除了
         bool hasCorrosiveBoss=false;
@@ -806,6 +808,7 @@ void MainGameController::statisticsDataPerRound()
             GridElementProperty *block=cell->getCellProperty();
             CC_BREAK_IF(!block);
             if (block->mType==kElementType_Monster) {
+                CCLog("monster life:%f,defence:%f",block->mMonsterProperty.mLife,block->mMonsterProperty.mDefence);
                 if (totalDamagePerRound >= block->mMonsterProperty.mLife+block->mMonsterProperty.mDefence) {
                     hasMonsterHurt = true;
                     block->mMonsterProperty.mLife = 0;
@@ -829,9 +832,11 @@ void MainGameController::statisticsDataPerRound()
                     }
                 } else {
                     if (block->mMonsterProperty.mDefence>0 && block->mMonsterProperty.mDefence>=totalDamagePerRound) {
+                        block->mMonsterProperty.mDefence -= totalDamagePerRound;
                     }else{
                         block->mMonsterProperty.mLife -= (totalDamagePerRound-block->mMonsterProperty.mDefence);
                     }
+                    cell->refreshMonsterPropertyLabel();
                 }
                 if (block->mMonsterProperty.mSkillType==kBossBustyType_Mage && block->mMonsterProperty.mLife>0) {
                     hasMageBoss=true;

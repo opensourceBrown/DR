@@ -153,6 +153,7 @@ void GridElementProperty::configureBossProperty()
             mMonsterProperty.mDescription = "chaotic";
             break;
         }
+            /*
         case 2:{
             mMonsterProperty.mSkillType = kBossBustyType_Poisonous;
             mMonsterProperty.mName = "Poisonous";
@@ -172,12 +173,12 @@ void GridElementProperty::configureBossProperty()
             mMonsterProperty.mDescription = "spiky";
             break;
         }
-        case 5:{
-            mMonsterProperty.mSkillType = kBossBustyType_Acidic;
-            mMonsterProperty.mName = "Acidic";
-            mMonsterProperty.mDescription = "Acidic";
-            break;
-        }
+//        case 5:{
+//            mMonsterProperty.mSkillType = kBossBustyType_Acidic;
+//            mMonsterProperty.mName = "Acidic";
+//            mMonsterProperty.mDescription = "Acidic";
+//            break;
+//        }
         case 6:{
             mMonsterProperty.mSkillType = kBossBustyType_Vampire;
             mMonsterProperty.mName = "Vampire";
@@ -191,12 +192,12 @@ void GridElementProperty::configureBossProperty()
             mMonsterProperty.mValidRound=2;
             break;
         }
-        case 8:{
-            mMonsterProperty.mSkillType = kBossBustyType_Freezing;
-            mMonsterProperty.mName = "Freezing";
-            mMonsterProperty.mDescription = "Freezing";
-            break;
-        }
+//        case 8:{
+//            mMonsterProperty.mSkillType = kBossBustyType_Freezing;
+//            mMonsterProperty.mName = "Freezing";
+//            mMonsterProperty.mDescription = "Freezing";
+//            break;
+//        }
         case 9:{
             mMonsterProperty.mSkillType = kBossBustyType_Mage;
             mMonsterProperty.mName = "Mage";
@@ -209,18 +210,18 @@ void GridElementProperty::configureBossProperty()
             mMonsterProperty.mDescription = "Corrosive";
             break;
         }
-        case 11:{
-            mMonsterProperty.mSkillType = kBossBustyType_Overseer;
-            mMonsterProperty.mName = "Overseer";
-            mMonsterProperty.mDescription = "Overseer";
-            break;
-        }
-        case 12:{
-            mMonsterProperty.mSkillType = kBossBustyType_Flaming;
-            mMonsterProperty.mName = "Flaming";
-            mMonsterProperty.mDescription = "Flaming";
-            break;
-        }
+//        case 11:{
+//            mMonsterProperty.mSkillType = kBossBustyType_Overseer;
+//            mMonsterProperty.mName = "Overseer";
+//            mMonsterProperty.mDescription = "Overseer";
+//            break;
+//        }
+//        case 12:{
+//            mMonsterProperty.mSkillType = kBossBustyType_Flaming;
+//            mMonsterProperty.mName = "Flaming";
+//            mMonsterProperty.mDescription = "Flaming";
+//            break;
+//        }
         case 13:{
             mMonsterProperty.mSkillType = kBossBustyType_Trampling;
             mMonsterProperty.mName = "Trampling";
@@ -234,6 +235,7 @@ void GridElementProperty::configureBossProperty()
             mMonsterProperty.mValidRound=2;
             break;
         }
+             */
         default:{
             mMonsterProperty.mSkillType = kBossBustyType_Chaotic;
             mMonsterProperty.mName = "Chaotic";
