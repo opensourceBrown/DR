@@ -171,9 +171,9 @@ bool MainGameController::judgeIsTriggerMagic(CCArray *pArray)
     }
     switch (mMagic.mMagicType) {
         case kMagicType_Steal:{     //get 1 coin per monster every round
-            if (mMagic.mActive) {
+            if (mMagic.mActive && mMagic.mCDTime==0) {
                 tRet = true;
-                mMagic.mActive = false;
+                //mMagic.mActive = false;
             } else {
                 tRet = false;
             }
