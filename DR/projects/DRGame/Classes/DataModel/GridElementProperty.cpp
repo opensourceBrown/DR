@@ -153,7 +153,7 @@ void GridElementProperty::configureBossProperty()
             mMonsterProperty.mDescription = "chaotic";
             break;
         }
-            /*
+            
         case 2:{
             mMonsterProperty.mSkillType = kBossBustyType_Poisonous;
             mMonsterProperty.mName = "Poisonous";
@@ -235,7 +235,7 @@ void GridElementProperty::configureBossProperty()
             mMonsterProperty.mValidRound=2;
             break;
         }
-             */
+             
         default:{
             mMonsterProperty.mSkillType = kBossBustyType_Chaotic;
             mMonsterProperty.mName = "Chaotic";
