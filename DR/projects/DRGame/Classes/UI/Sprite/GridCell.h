@@ -19,6 +19,7 @@ public:
 
     void refreshCell(const char *pszFileName);
     void refreshMonsterPropertyLabel();         //refresh Monster`s attack,defence or life
+    void refreshCountLabel();
     
     void setCellProperty(GridElementProperty *pElement);
     GridElementProperty *getCellProperty(){return m_property;}
@@ -32,6 +33,7 @@ public:
 private:
     bool initWith(const char *pszFileName);
     void constructMonsterCellEX();
+    void setCountLabelStatus(bool pValue);
 private:
     CCSprite            *m_elementGridImg;
     GridElementProperty *m_property;             //cell对应的结构属性
@@ -41,6 +43,7 @@ private:
     CCLabelTTF          *m_AttackValueTTF;
     CCLabelTTF          *m_DefenceValueTTF;
     CCLabelTTF          *m_LifeValueTTF;
+    CCLabelTTF          *m_countValueTTF;
 };
 
 #endif

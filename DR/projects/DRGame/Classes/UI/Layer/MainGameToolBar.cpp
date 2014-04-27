@@ -4,6 +4,7 @@
 #include "DRUserDefault.h"
 
 #define MAGIC_MENU_TAG          100
+#define CONTAINER_LAYER_TAG     200
 
 MainGameToolBar::MainGameToolBar():
     m_containerLayer(NULL),
@@ -58,6 +59,7 @@ void  MainGameToolBar::constructUI()
     do{
 		m_containerLayer=CCLayerColor::create(ccc4(255,0,0,255));
 		CC_BREAK_IF(!m_containerLayer);
+        m_containerLayer->setTag(CONTAINER_LAYER_TAG);
 		m_containerLayer->setContentSize(CCSizeMake(WIN_SIZE.width,100));
 		addChild(m_containerLayer);
         
@@ -131,6 +133,7 @@ void  MainGameToolBar::constructUI()
         CC_BREAK_IF(!magicMenu);
         magicMenu->setPosition(CCPointZero);
         magicMenu->setTag(MAGIC_MENU_TAG);
+        magicMenu->setEnabled(((MainGameController *)m_delegate)->judgeIsEnableMagic());
         m_containerLayer->addChild(magicMenu);
         CC_SAFE_RELEASE(magicArray);
         
@@ -220,8 +223,9 @@ void MainGameToolBar::enableMagic()
 void MainGameToolBar::disableMagic()
 {
     do {
-        CC_BREAK_IF(!m_containerLayer);
-        CCMenu *magicMenu = (CCMenu *)m_containerLayer->getChildByTag(MAGIC_MENU_TAG);
+        CCLayer *containerLayer=dynamic_cast<CCLayer *>(getChildByTag(CONTAINER_LAYER_TAG));
+        CC_BREAK_IF(!containerLayer);
+        CCMenu *magicMenu = (CCMenu *)containerLayer->getChildByTag(MAGIC_MENU_TAG);
         CC_BREAK_IF(!magicMenu);
         magicMenu->setEnabled(false);
     } while (0);

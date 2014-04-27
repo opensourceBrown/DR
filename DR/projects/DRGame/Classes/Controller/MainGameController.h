@@ -51,6 +51,7 @@ public:
     void cleanAnimationCompeleteCallback();
     
     void refreshWeapon();
+    bool judgeIsEnableMagic();
 
 private:
     bool initWith();
@@ -97,8 +98,6 @@ private:
     void resetStageStatusData();
     
     void cleanAndRefreshGrid();
-    
-    bool judgeIsEnableMagic();
 
 private:
 	unsigned int			mCoins;						//√ø“ªπÿø®(stage£©¿€º∆µƒΩ±“

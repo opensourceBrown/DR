@@ -757,7 +757,8 @@ void MainGameController::cleanRunGoldenBoss()
         
         GridElementProperty *item=dynamic_cast<GridElementProperty *>(mGridPropertyContainer->objectAtIndex(block->mIndex.rIndex*GRID_VOLUME+block->mIndex.vIndex));
         CC_BREAK_IF(!item);
-        if (block->mType==kElementType_Monster && block->mMonsterProperty.mType==kBossBustyType_Golden) {
+        if (block->mType==kElementType_Monster && block->mMonsterProperty.mSkillType==kBossBustyType_Golden) {
+            CCLog("111111111");
             block->setStatus(true);
             item->setStatus(true);
             
