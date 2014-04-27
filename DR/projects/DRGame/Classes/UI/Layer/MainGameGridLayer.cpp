@@ -598,6 +598,17 @@ void MainGameGridLayer::refreshMonsterPropertyLabelOfAllGridCell()
         for(int i=0;i<m_GridCellArray->count();i++){
 			GridCell *cell=dynamic_cast<GridCell *>(m_GridCellArray->objectAtIndex(i));
 			CC_BREAK_IF(!cell);
+            GridElementProperty *block=cell->getCellProperty();
+            CC_BREAK_IF(!block);
+            if (block->mbBroken==true) {
+                CCString *brokenStr=NULL;
+                if (block->mType==kElementType_Sword) {
+                    brokenStr=CCString::create("Grid_cell_sword_broken.png");
+                }else if (block->mType==kElementType_Shield){
+                    brokenStr=CCString::create("Grid_cell_shield_broken.png");
+                }
+                cell->refreshCell(brokenStr->getCString());
+            }
             cell->refreshMonsterPropertyLabel();
 		}
     }while(0);

@@ -723,8 +723,7 @@ void MainGameController::markRandomSwordOrShieldBroken()
                 CC_BREAK_IF(!cell);
                 GridElementProperty *geProperty = cell->getCellProperty();
                 CC_BREAK_IF(!geProperty);
-                if (geProperty->mType == kElementType_Bow
-                    || geProperty->mType == kElementType_Sword
+                if (geProperty->mType == kElementType_Sword
                     || geProperty->mType == kElementType_Shield) {
                     toMarkGrids->addObject(cell);
                 }

@@ -12,7 +12,11 @@
 #include "DataMangager.h"
 #include "BossFileConfigure.h"
 
-GridElementProperty::GridElementProperty()
+GridElementProperty::GridElementProperty():
+    mbBroken(false),
+    mID(0),
+    m_status(false),
+    mType(kElementType_UnDefined)
 {
     
 }
@@ -246,10 +250,9 @@ void GridElementProperty::configureBossProperty()
     }
      */
     //test
-    mMonsterProperty.mSkillType = kBossBustyType_Poisonous;
-    mMonsterProperty.mName = "Poisonous";
-    mMonsterProperty.mDescription = "Poisonous";
-    mMonsterProperty.mValidRound=5;
+    mMonsterProperty.mSkillType = kBossBustyType_Trampling;
+    mMonsterProperty.mName = "Trampling";
+    mMonsterProperty.mDescription = "Trampling";
     
     mMonsterProperty.mDefence = bossConfigure->mF + bossConfigure->mG*(float)gameStatus->mNumberOfRound;      //defence = f + g * round
     mMonsterProperty.mMaxLife = bossConfigure->mD + bossConfigure->mE*(float)gameStatus->mNumberOfRound;      //life = d + e * round
