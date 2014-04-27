@@ -103,13 +103,12 @@ void GridCell::refreshCountLabel()
     do {
         CC_BREAK_IF(!m_countValueTTF);
         CC_BREAK_IF(!m_property);
-        if (m_property->mMonsterProperty.mType == kBustyType_Boss && m_property->mMonsterProperty.mSkillType==kBossBustyType_Golden) {
+        if (m_property->mMonsterProperty.mType == kBustyType_Boss && (m_property->mMonsterProperty.mSkillType==kBossBustyType_Golden || m_property->mMonsterProperty.mSkillType==kBossBustyType_Kamikaze)) {
             if (m_countValueTTF->isVisible()==false) {
                 m_countValueTTF->setVisible(true);
             }
             CCString *countStr=CCString::createWithFormat("%d",m_property->mMonsterProperty.mValidRound);
             m_countValueTTF->setString(countStr->getCString());
-            CCLog("-----------------------count:%s",countStr->getCString());
         }else{
             m_countValueTTF->setVisible(false);
         }
@@ -215,10 +214,9 @@ void GridCell::constructMonsterCellEX()
             m_countValueTTF->setColor(ccc3(0,255,0));
             this->addChild(m_countValueTTF);
             
-            if (m_property->mMonsterProperty.mType == kBustyType_Boss && m_property->mMonsterProperty.mSkillType==kBossBustyType_Golden) {
+            if (m_property->mMonsterProperty.mType == kBustyType_Boss && (m_property->mMonsterProperty.mSkillType==kBossBustyType_Golden || m_property->mMonsterProperty.mSkillType==kBossBustyType_Kamikaze)) {
                 m_countValueTTF->setVisible(true);
                 CCString *countStr=CCString::createWithFormat("%d",m_property->mMonsterProperty.mValidRound);
-                CCLog("+++++++++++countStr=%s",countStr->getCString());
                 m_countValueTTF->setString(countStr->getCString());
             }else{
                 m_countValueTTF->setVisible(false);

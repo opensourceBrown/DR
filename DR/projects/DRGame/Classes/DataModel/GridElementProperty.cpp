@@ -237,7 +237,7 @@ void GridElementProperty::configureBossProperty()
             mMonsterProperty.mSkillType = kBossBustyType_Kamikaze;
             mMonsterProperty.mName = "Kamikaze";
             mMonsterProperty.mDescription = "Kamikaze";
-            mMonsterProperty.mValidRound=2;
+            mMonsterProperty.mValidRound=5;
             break;
         }
              
@@ -250,9 +250,10 @@ void GridElementProperty::configureBossProperty()
     }
      */
     //test
-    mMonsterProperty.mSkillType = kBossBustyType_Trampling;
-    mMonsterProperty.mName = "Trampling";
-    mMonsterProperty.mDescription = "Trampling";
+    mMonsterProperty.mSkillType = kBossBustyType_Kamikaze;
+    mMonsterProperty.mName = "Kamikaze";
+    mMonsterProperty.mDescription = "Kamikaze";
+    mMonsterProperty.mValidRound=2;
     
     mMonsterProperty.mDefence = bossConfigure->mF + bossConfigure->mG*(float)gameStatus->mNumberOfRound;      //defence = f + g * round
     mMonsterProperty.mMaxLife = bossConfigure->mD + bossConfigure->mE*(float)gameStatus->mNumberOfRound;      //life = d + e * round
