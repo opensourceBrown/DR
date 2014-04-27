@@ -726,14 +726,17 @@ void MainGameController::markRandomSwordOrShieldBroken()
                 if (geProperty->mType == kElementType_Bow
                     || geProperty->mType == kElementType_Sword
                     || geProperty->mType == kElementType_Shield) {
-                    toMarkGrids->addObject(geProperty);
+                    toMarkGrids->addObject(cell);
                 }
             }
         }
         
         if (toMarkGrids->count() > 0) {
             int randomIndex = arc4random() % toMarkGrids->count();
-            GridElementProperty *gProperty = (GridElementProperty *)toMarkGrids->objectAtIndex(randomIndex);
+            GridCell *cell=(GridCell *)toMarkGrids->objectAtIndex(randomIndex);
+            CC_BREAK_IF(!cell);
+            GridElementProperty *gProperty =cell->getCellProperty();
+            CC_BREAK_IF(!gProperty);
             gProperty->mbBroken = true;
         }
     } while (0);
@@ -785,7 +788,6 @@ void MainGameController::statisticsDataPerRound()
         CC_BREAK_IF(!mStageConnectedElements);
         
         int totalDamagePerRound = this->computeTotalDamageOfRound();
-        CCLog("totalDamagePerRound=%d",totalDamagePerRound);
         bool hasMonsterHurt = false;        //是否在消除怪
         bool hasSpikyClear = mCurrentSpikyCount==0?true:false;         //反弹怪是否全消除了
         bool hasCorrosiveBoss=false;
@@ -813,6 +815,7 @@ void MainGameController::statisticsDataPerRound()
                 if (totalDamagePerRound >= block->mMonsterProperty.mLife+block->mMonsterProperty.mDefence) {
                     hasMonsterHurt = true;
                     block->mMonsterProperty.mLife = 0;
+                    
                     DRUserDefault::sharedUserDefault()->setKillMonsterCount(DRUserDefault::sharedUserDefault()->getKillMonsterCount()+1);
                     mCurStageKillMonster++;
                     
@@ -829,6 +832,10 @@ void MainGameController::statisticsDataPerRound()
                             }
                         } else if (block->mMonsterProperty.mSkillType == kBossBustyType_Mage) {
                             mMageEnable = true;
+                        } else if (block->mMonsterProperty.mSkillType == kBossBustyType_Poisonous){
+                            CCLog("player poisonous");
+                            mPlayerProperty.mStatus=kPlayerStatus_Poisonous;
+                            mPlayerProperty.mValidRound=5;
                         }
                     }
                 } else {
@@ -877,6 +884,17 @@ void MainGameController::statisticsDataPerRound()
             mSpiky = false;
         }
     }while(0);
+    
+    if (mPlayerProperty.mStatus== kPlayerStatus_Poisonous) {
+        mCurPortion-=(mPlayerProperty.mMaxHealth/10);
+        if (mCurPortion<0) {
+            mCurPortion=0;
+        }
+        mPlayerProperty.mValidRound--;
+        if (mPlayerProperty.mValidRound<=0) {
+            mPlayerProperty.mStatus=kPlayerStatus_Normal;
+        }
+    }
     
     //statistics the unconnected cell status data(shield and portion)
     do {

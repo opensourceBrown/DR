@@ -246,9 +246,9 @@ void GridElementProperty::configureBossProperty()
     }
      */
     //test
-    mMonsterProperty.mSkillType = kBossBustyType_Golden;
-    mMonsterProperty.mName = "Golden";
-    mMonsterProperty.mDescription = "Golden";
+    mMonsterProperty.mSkillType = kBossBustyType_Poisonous;
+    mMonsterProperty.mName = "Poisonous";
+    mMonsterProperty.mDescription = "Poisonous";
     mMonsterProperty.mValidRound=5;
     
     mMonsterProperty.mDefence = bossConfigure->mF + bossConfigure->mG*(float)gameStatus->mNumberOfRound;      //defence = f + g * round

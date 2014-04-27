@@ -108,6 +108,12 @@ typedef enum{
     kOccupationType_Trader,						//商人
 }OccupationType;
 
+//玩家状态
+typedef enum {
+    kPlayerStatus_Normal=0,                     //正常状态
+    kPlayerStatus_Poisonous,                    //中毒
+}PlayerStatus;
+
 //定义装备结构
 typedef struct{
 	char mName[GENERAL_CHAR_LENGTH];			//装备名称
@@ -163,6 +169,8 @@ typedef struct{
     }
 }OccupationProperty;
 
+
+
 //定义玩家结构
 typedef struct{
     OccupationType mType;
@@ -176,6 +184,8 @@ typedef struct{
 	float 	mLeech;								//吸血，通过攻击可以恢复的血量
 	float 	mCriticalDamageRate;				//暴击概率
 	float	mPierce;							//穿透率
+    PlayerStatus mStatus;                       //玩家状态
+    unsigned int mValidRound;                   //对于特殊的boss技能使用，一般不用
 	
     void init(){
         mType=kOccupationType_Human;
@@ -189,6 +199,8 @@ typedef struct{
         mLeech=0;
         mCriticalDamageRate=0;
         mPierce=0;
+        mStatus=kPlayerStatus_Normal;
+        mValidRound=0;
     }
 }PlayerProperty;
 
