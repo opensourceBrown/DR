@@ -301,7 +301,7 @@ void MainGameController::triggerMagic(MagicType pID,CCArray *pArray)
                                 DRUserDefault::sharedUserDefault()->setCoin(DRUserDefault::sharedUserDefault()->getCoin()+1);
                                 mCurStageCoin++;
                             }else if (block->mType==kElementType_Potion){
-                                mCurPortion++;
+                                mCurPortion+=mPlayerProperty.mHealthPerPotion;
                                 if (mCurPortion>mPlayerProperty.mMaxHealth) {
                                     mCurPortion=mPlayerProperty.mMaxHealth;
                                 }
@@ -346,7 +346,7 @@ void MainGameController::triggerMagic(MagicType pID,CCArray *pArray)
                             GridElementProperty *block=item->getCellProperty();
                             CC_BREAK_IF(!block);
                             if (block->mType==kElementType_Potion){
-                                mCurPortion++;
+                                mCurPortion+=mPlayerProperty.mHealthPerPotion;
                                 if (mCurPortion>mPlayerProperty.mMaxHealth) {
                                     mCurPortion=mPlayerProperty.mMaxHealth;
                                 }
@@ -832,7 +832,6 @@ void MainGameController::statisticsDataPerRound()
                         } else if (block->mMonsterProperty.mSkillType == kBossBustyType_Mage) {
                             mMageEnable = true;
                         } else if (block->mMonsterProperty.mSkillType == kBossBustyType_Poisonous){
-                            CCLog("player poisonous");
                             mPlayerProperty.mStatus=kPlayerStatus_Poisonous;
                             mPlayerProperty.mValidRound=5;
                         }
@@ -859,7 +858,7 @@ void MainGameController::statisticsDataPerRound()
                     }
                 }
             }else if(block->mType==kElementType_Potion){
-                int weaponPortion=1;
+                int weaponPortion=mPlayerProperty.mHealthPerPotion;
                 if (mPlayerProperty.mWeaponID) {
                     WeaponConfigure *weapon=WeaponController::shareInstance()->getWeapon(mPlayerProperty.mWeaponID);
                     if (weapon) {
@@ -961,7 +960,7 @@ void MainGameController::statisticsDataPerRound()
                     weaponShield=weapon->mDefencePerShield;
                 }
             }
-            mCurShield=weaponShield*mCurShield-totalDamage;
+            mCurShield=weaponShield*mCurShield-totalDamage/mPlayerProperty.mDefencePerShield;
             if (mCurShield>0 && mCurShield>mPlayerProperty.mMaxShield) {
                 mCurShield=mPlayerProperty.mMaxShield;
             }
